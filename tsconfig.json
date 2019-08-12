@@ -1,25 +1,38 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react"
+      "target": "es2015",
+      "module": "es2015",
+      "moduleResolution": "node",
+      "jsx": "react",
+      "outDir": "lib",
+      "rootDir": "src",
+      "allowSyntheticDefaultImports": true,
+      "noImplicitAny": true,
+      "preserveConstEnums": true,
+      "allowJs": false,
+      "sourceMap": true,
+      "noImplicitReturns": true,
+      "noUnusedParameters": true,
+      "noUnusedLocals": true,
+      "skipLibCheck": true,
+      "typeRoots": [
+          "./src/@types",
+          "./node_modules/@types",
+      ],
   },
-  "include": [
-    "src"
-  ]
+  "filesGlob": [
+      "typings/index.d.ts",
+      "src/**/*.ts",
+      "src/**/*.tsx"
+  ],
+  "types": [
+      "react",
+      "jest",
+      "node"
+  ],
+  "exclude": [
+      "build",
+      "node_modules"
+  ],
+  "compileOnSave": false
 }

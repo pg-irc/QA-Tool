@@ -1,6 +1,7 @@
 import * as constants from '../../application/constants';
 import { ManualUserLocationStore } from './types';
 import { ManualUserLocationAction } from './actions';
+export { ManualUserLocationStore };
 
 export const buildDefaultStore = (): ManualUserLocationStore => (
     {}

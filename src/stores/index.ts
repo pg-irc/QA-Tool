@@ -7,6 +7,11 @@ export interface Store {
     readonly topics: topics.TopicStore;
 }
 
+export const buildDefaultStore = (): Store => ({
+    manualUserLocation: manual_user_location.buildDefaultStore(),
+    topics: topics.buildDefaultStore(),
+});
+
 export const reducer = combineReducers<Store>({
     manualUserLocation: manual_user_location.reducer,
     topics: topics.reducer,

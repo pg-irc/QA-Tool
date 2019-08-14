@@ -1,7 +1,11 @@
 import * as constants from '../../application/constants';
-import { TopicStore } from './types';
 import { TopicAction } from './actions';
-export { TopicStore };
+
+export type Topic = string;
+
+export interface TopicStore {
+    readonly topicId?: Topic;
+}
 
 export const buildDefaultStore = (): TopicStore => {
     return {

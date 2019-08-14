@@ -1,7 +1,14 @@
 import * as constants from '../../application/constants';
-import { ManualUserLocationStore } from './types';
 import { ManualUserLocationAction } from './actions';
-export { ManualUserLocationStore };
+
+export interface LatLng {
+    readonly latitude: number;
+    readonly longitude: number;
+}
+
+export interface ManualUserLocationStore {
+    readonly manualUserLocation?: LatLng;
+}
 
 export const buildDefaultStore = (): ManualUserLocationStore => (
     {}

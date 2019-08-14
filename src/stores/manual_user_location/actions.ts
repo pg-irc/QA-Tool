@@ -1,6 +1,6 @@
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
-import { LatLng } from './types';
+import { LatLng } from './index';
 
 export type SetManualUserLocationAction = Readonly<ReturnType<typeof setManualUserLocation>>;
 

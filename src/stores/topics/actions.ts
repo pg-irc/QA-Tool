@@ -1,6 +1,6 @@
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
-import { Topic } from './types';
+import { Topic } from './index';
 
 export type SetTopicAction = Readonly<ReturnType<typeof setTopic>>;
 

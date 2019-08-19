@@ -1,11 +1,8 @@
 import React from 'react';
+import { UrlTemplate } from './url_template/url_template'; 
 
-const App: React.FC = (): JSX.Element =>   {
-  return (
-    <div>
-      Hello World
-    </div>
-  );
-}
-
-export default App;
+export const App = (): JSX.Element => (
+  <div>
+    <UrlTemplate/>
+  </div>
+);

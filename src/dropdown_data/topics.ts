@@ -1,13 +1,6 @@
-export type Name = string;
-export type Value = string;
+import { DropdownData } from './types';
 
-export type TopicsData = ReadonlyArray<URLTemplateData>;
-
-export interface URLTemplateData {
-    readonly [data: string]: Name;
-}
-
-export const topicsForQA: TopicsData = [
+export const topicsForQA: DropdownData = [
     {
         name: 'Get your BC Services Card', value: 'get-your-bc-services-card',
     },

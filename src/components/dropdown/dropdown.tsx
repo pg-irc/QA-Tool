@@ -1,8 +1,8 @@
 import React from 'react';
-import { TopicsData, URLTemplateData } from '../../dropdown_data/topics';
+import { DropdownData, URLTemplateData } from '../../dropdown_data/types';
 import { SelectedOption } from '../url_template/url_template';
 
-export type DropdownData = TopicsData;
+export type DropdownOptions = DropdownData;
 
 export interface DropdownProps {
   readonly selectedOption: SelectedOption;

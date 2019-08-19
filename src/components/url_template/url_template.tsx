@@ -1,9 +1,11 @@
+// tslint:disable:no-expression-statement
 import React, { useState, Dispatch, SetStateAction } from 'react';
 import { Dropdown } from '../dropdown/dropdown';
 import { topicsForQA } from '../../dropdown_data/topics';
 import { manualLocationsForQA } from '../../dropdown_data/manual_locations';
 
 export type SelectedOption = string;
+
 export type SetOption = Dispatch<SetStateAction<string>>;
 
 export const UrlTemplate = (): JSX.Element => {
@@ -12,11 +14,28 @@ export const UrlTemplate = (): JSX.Element => {
     const onSetTopic = (event: React.ChangeEvent<HTMLSelectElement>): void => setTopic(event.target.value);
     const onSetManualLocation = (event: React.ChangeEvent<HTMLSelectElement>): void => setManualLocation(event.target.value);
     return (
-    <div>
-       Topics: <Dropdown selectedOption={selectedTopic} onSetOption={onSetTopic} dropdownData={topicsForQA}/>
-       Location: <Dropdown selectedOption={selectedManualLocation} onSetOption={onSetManualLocation} dropdownData={manualLocationsForQA}/>
-       <p>Topic: {selectedTopic}</p>
-       <p>Location: {selectedManualLocation}</p>
-    </div>
+        <div>
+            Topics: <Dropdown selectedOption={selectedTopic} onSetOption={onSetTopic} dropdownData={topicsForQA} />
+            Location: <Dropdown selectedOption={selectedManualLocation} onSetOption={onSetManualLocation} dropdownData={manualLocationsForQA} />
+            <ClearButton setTopic={setTopic} setManualLocation={setManualLocation} />
+            <p>Topic: {selectedTopic}</p>
+            <p>Location: {selectedManualLocation}</p>
+        </div>
     );
+};
+
+export interface ClearButtonProps {
+    readonly selectedTopic?: SelectedOption;
+    readonly selectedManualLocation?: SelectedOption;
+    readonly setTopic: SetOption;
+    readonly setManualLocation: SetOption;
+}
+
+const ClearButton = (props: ClearButtonProps): JSX.Element => (
+    <button onClick={(): void => clearSelectedOptions(props)}>Clear</button>
+);
+
+const clearSelectedOptions = (props: ClearButtonProps): void => {
+    props.setTopic('');
+    props.setManualLocation('');
 };

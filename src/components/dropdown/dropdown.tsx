@@ -16,7 +16,7 @@ export interface DropdownActions {
 type Props = DropdownProps & DropdownActions;
 
 export const Dropdown = (props: Props): JSX.Element => (
-  <select onChange={props.onSetOption}>
+  <select value={props.selectedOption} onChange={props.onSetOption}>
     {renderDropdownOptions(props.dropdownData)}
   </select>
 );

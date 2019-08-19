@@ -27,5 +27,5 @@ const renderDropdownOptions = (options: DropdownData) => {
 };
 
 const drowpdownOption = (option: URLTemplateData): JSX.Element => (
-  <option key={option.name} value={option.value}>{option.value}</option>
+  <option key={option.name} value={option.value}>{option.name}</option>
 );

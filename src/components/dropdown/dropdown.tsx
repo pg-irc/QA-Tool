@@ -1,14 +1,22 @@
 import React from 'react';
 import { TopicsData, URLTemplateData } from '../../dropdown_data/topics';
+import { SelectedOption } from '../url_template/url_template';
 
 export type DropdownData = TopicsData;
 
 export interface DropdownProps {
+  readonly selectedOption: SelectedOption;
   readonly dropdownData: DropdownData;
 }
 
-export const Dropdown = (props: DropdownProps): JSX.Element => (
-  <select>
+export interface DropdownActions {
+  onSetOption(event: React.ChangeEvent<HTMLSelectElement>): void;
+}
+
+type Props = DropdownProps & DropdownActions;
+
+export const Dropdown = (props: Props): JSX.Element => (
+  <select onChange={props.onSetOption}>
     {renderDropdownOptions(props.dropdownData)}
   </select>
 );

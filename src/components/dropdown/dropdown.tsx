@@ -17,6 +17,7 @@ type Props = DropdownProps & DropdownActions;
 
 export const Dropdown = (props: Props): JSX.Element => (
   <select value={props.selectedOption} onChange={props.onSetOption}>
+    <option value='' disabled>Select an option</option>
     {renderDropdownOptions(props.dropdownData)}
   </select>
 );

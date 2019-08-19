@@ -1,5 +1,5 @@
 import React from 'react';
-import { TopicsData } from '../../dropdown_data/topics';
+import { TopicsData, URLTemplateData } from '../../dropdown_data/topics';
 
 export type DropdownData = TopicsData;
 
@@ -15,9 +15,9 @@ export const Dropdown = (props: DropdownProps): JSX.Element => (
 
 // tslint:disable:typedef
 const renderDropdownOptions = (options: DropdownData) => {
-  return options.map((value: string) => drowpdownOption(value));
+  return options.map((option: URLTemplateData) => drowpdownOption(option));
 };
 
-const drowpdownOption = (value: string): JSX.Element => (
-  <option key={value} value={value}>{value}</option>
+const drowpdownOption = (option: URLTemplateData): JSX.Element => (
+  <option key={option.name} value={option.value}>{option.value}</option>
 );

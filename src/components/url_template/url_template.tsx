@@ -1,14 +1,22 @@
 // tslint:disable:no-expression-statement
+// tslint:disable:no-any
 import React, { useState, Dispatch, SetStateAction } from 'react';
 import { Dropdown } from '../dropdown/dropdown';
 import { topicsForQA } from '../../dropdown_data/topics';
 import { manualLocationsForQA } from '../../dropdown_data/manual_locations';
+import { ServiceMap, SetServices } from '../services/types';
+import { requestServicesAtLocation } from '../../api/get_services_at_location';
 
 export type SelectedOption = string;
 
 export type SetOption = Dispatch<SetStateAction<string>>;
 
-export const UrlTemplate = (): JSX.Element => {
+export interface Props {
+    readonly services: ServiceMap;
+    readonly setServices: SetServices;
+}
+
+export const UrlTemplate = (props: Props): JSX.Element => {
     const [selectedTopic, setTopic]: [SelectedOption, SetOption] = useState('');
     const [selectedManualLocation, setManualLocation]: [SelectedOption, SetOption] = useState('');
     const onSetTopic = (event: React.ChangeEvent<HTMLSelectElement>): void => setTopic(event.target.value);
@@ -18,7 +26,8 @@ export const UrlTemplate = (): JSX.Element => {
             Topics: <Dropdown selectedOption={selectedTopic} onSetOption={onSetTopic} dropdownData={topicsForQA} />
             Location: <Dropdown selectedOption={selectedManualLocation} onSetOption={onSetManualLocation} dropdownData={manualLocationsForQA} />
             <ClearButton setTopic={setTopic} setManualLocation={setManualLocation} />
-            <SendButton />
+            <SendButton selectedTopic={selectedTopic} selectedManualLocation={selectedManualLocation} 
+                services={props.services} setServices={props.setServices}/>
             <p>Topic: {selectedTopic}</p>
             <p>Location: {selectedManualLocation}</p>
         </div>
@@ -42,8 +51,12 @@ const clearSelectedOptions = (props: ClearButtonProps): void => {
 export interface SendButtonProps {
     readonly selectedTopic: SelectedOption;
     readonly selectedManualLocation: SelectedOption;
+    readonly services: ServiceMap;
+    readonly setServices: SetServices;
 }
 
-const SendButton = (): JSX.Element => (
-    <button>Send</button>
-);
+const SendButton = (props: SendButtonProps): JSX.Element => (
+    <button onClick={(): Promise<ServiceMap> => requestServicesAtLocation(props.selectedTopic,props.selectedManualLocation, props.setServices)}>
+        Send
+    </button>
+ );

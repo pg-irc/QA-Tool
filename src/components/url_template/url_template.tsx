@@ -18,6 +18,7 @@ export const UrlTemplate = (): JSX.Element => {
             Topics: <Dropdown selectedOption={selectedTopic} onSetOption={onSetTopic} dropdownData={topicsForQA} />
             Location: <Dropdown selectedOption={selectedManualLocation} onSetOption={onSetManualLocation} dropdownData={manualLocationsForQA} />
             <ClearButton setTopic={setTopic} setManualLocation={setManualLocation} />
+            <SendButton />
             <p>Topic: {selectedTopic}</p>
             <p>Location: {selectedManualLocation}</p>
         </div>
@@ -25,8 +26,6 @@ export const UrlTemplate = (): JSX.Element => {
 };
 
 export interface ClearButtonProps {
-    readonly selectedTopic?: SelectedOption;
-    readonly selectedManualLocation?: SelectedOption;
     readonly setTopic: SetOption;
     readonly setManualLocation: SetOption;
 }
@@ -39,3 +38,12 @@ const clearSelectedOptions = (props: ClearButtonProps): void => {
     props.setTopic('');
     props.setManualLocation('');
 };
+
+export interface SendButtonProps {
+    readonly selectedTopic: SelectedOption;
+    readonly selectedManualLocation: SelectedOption;
+}
+
+const SendButton = (): JSX.Element => (
+    <button>Send</button>
+);

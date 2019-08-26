@@ -1,27 +1,29 @@
 // tslint:disable:no-expression-statement
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { SelectedOption } from '../components/url_template/url_template';
-import { ServiceMap, SetServices } from '../components/services/types';
+import { ServiceMap } from '../components/services/types';
+import { isResponseError } from './is_response_error';
+import { servicesAtLocationValidator, isValidationError } from '../json_schemas/validator';
 
-export interface AxiosResponse {
-    // tslint:disable-next-line:no-any
-    readonly data: any;
- }
-
-export const requestServicesAtLocation = 
-    async (topic: SelectedOption, manualLocation: SelectedOption, setServices: SetServices): Promise<ServiceMap> => {
+export const servicesAtLocation = async (topic: SelectedOption, manualLocation: SelectedOption): Promise<ServiceMap> => {
     const endpoint = 'services_at_location';
     const query = `user_location=${manualLocation}&related_to_topic=${topic}`;
     const url = buildUrl(endpoint, query);
-    const response = await getServicesAtLocation(url);
-    setServices(response);
-    return response;
+    const response = await servicesAtLocationAPIRequest(url);
+
+    if (isResponseError(response)) {
+        console.log('Error, pass error values');
+    }
+    const validator = (servicesAtLocationValidator(response.data));
+    if (isValidationError(validator)) {
+        console.log('Fails schema validation, pass error values');
+    }
+    return response.data;
 };
 
-const getServicesAtLocation = async (url: string): Promise<ServiceMap> => {
+const servicesAtLocationAPIRequest = async (url: string): Promise<AxiosResponse> => {
     const data = await axios.get(url)
-    // tslint:disable-next-line:no-any
-      .then((response: any): ServiceMap => {
+      .then((response: AxiosResponse): AxiosResponse => {
         return response;
     });
     return data;

@@ -1,11 +1,10 @@
 // tslint:disable:no-expression-statement
-// tslint:disable:no-any
 import React, { useState, Dispatch, SetStateAction } from 'react';
 import { Dropdown } from '../dropdown/dropdown';
 import { topicsForQA } from '../../dropdown_data/topics';
 import { manualLocationsForQA } from '../../dropdown_data/manual_locations';
 import { ServiceMap, SetServices } from '../services/types';
-import { requestServicesAtLocation } from '../../api/get_services_at_location';
+import { servicesAtLocation } from '../../api/get_services_at_location';
 
 export type SelectedOption = string;
 
@@ -26,7 +25,7 @@ export const UrlTemplate = (props: Props): JSX.Element => {
             Topics: <Dropdown selectedOption={selectedTopic} onSetOption={onSetTopic} dropdownData={topicsForQA} />
             Location: <Dropdown selectedOption={selectedManualLocation} onSetOption={onSetManualLocation} dropdownData={manualLocationsForQA} />
             <ClearButton setTopic={setTopic} setManualLocation={setManualLocation} />
-            <SendButton selectedTopic={selectedTopic} selectedManualLocation={selectedManualLocation} 
+            <SendButton selectedTopic={selectedTopic} selectedManualLocation={selectedManualLocation}
                 services={props.services} setServices={props.setServices}/>
             <p>Topic: {selectedTopic}</p>
             <p>Location: {selectedManualLocation}</p>
@@ -56,7 +55,13 @@ export interface SendButtonProps {
 }
 
 const SendButton = (props: SendButtonProps): JSX.Element => (
-    <button onClick={(): Promise<ServiceMap> => requestServicesAtLocation(props.selectedTopic,props.selectedManualLocation, props.setServices)}>
+    <button onClick={(): Promise<ServiceMap> => updateServicesAtLocation(props.selectedTopic, props.selectedManualLocation, props.setServices)}>
         Send
     </button>
  );
+
+const updateServicesAtLocation = async (topic: SelectedOption, manualLocation: SelectedOption, setServices: SetServices): Promise<ServiceMap> => {
+    const servicesAtLocationJSON = await servicesAtLocation(topic, manualLocation);
+    setServices(servicesAtLocationJSON);
+    return servicesAtLocationJSON;
+};

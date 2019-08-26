@@ -5,6 +5,7 @@ import { ServiceMap, SetServices } from '../components/services/types';
 
 export const App = (): JSX.Element => {
   const [services, setServices]: [ServiceMap, SetServices] = useState({});
+  console.log(services);
   return (
     <div>
       <UrlTemplate services={services} setServices={setServices}/>

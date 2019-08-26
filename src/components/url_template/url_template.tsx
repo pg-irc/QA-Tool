@@ -3,7 +3,7 @@ import React, { useState, Dispatch, SetStateAction } from 'react';
 import { Dropdown } from '../dropdown/dropdown';
 import { topicsForQA } from '../../dropdown_data/topics';
 import { manualLocationsForQA } from '../../dropdown_data/manual_locations';
-import { ServiceMap, SetServices } from '../services/types';
+import { Services, SetServices } from '../services/types';
 import { servicesAtLocation } from '../../api/get_services_at_location';
 
 export type SelectedOption = string;
@@ -11,7 +11,7 @@ export type SelectedOption = string;
 export type SetOption = Dispatch<SetStateAction<string>>;
 
 export interface Props {
-    readonly services: ServiceMap;
+    readonly services: Services;
     readonly setServices: SetServices;
 }
 
@@ -50,17 +50,17 @@ const clearSelectedOptions = (props: ClearButtonProps): void => {
 export interface SendButtonProps {
     readonly selectedTopic: SelectedOption;
     readonly selectedManualLocation: SelectedOption;
-    readonly services: ServiceMap;
+    readonly services: Services;
     readonly setServices: SetServices;
 }
 
 const SendButton = (props: SendButtonProps): JSX.Element => (
-    <button onClick={(): Promise<ServiceMap> => updateServicesAtLocation(props.selectedTopic, props.selectedManualLocation, props.setServices)}>
+    <button onClick={(): Promise<Services> => updateServicesAtLocation(props.selectedTopic, props.selectedManualLocation, props.setServices)}>
         Send
     </button>
  );
 
-const updateServicesAtLocation = async (topic: SelectedOption, manualLocation: SelectedOption, setServices: SetServices): Promise<ServiceMap> => {
+const updateServicesAtLocation = async (topic: SelectedOption, manualLocation: SelectedOption, setServices: SetServices): Promise<Services> => {
     const servicesAtLocationJSON = await servicesAtLocation(topic, manualLocation);
     setServices(servicesAtLocationJSON);
     return servicesAtLocationJSON;

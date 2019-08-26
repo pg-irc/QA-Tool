@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction } from 'react';
-export type Id = string;
 
 export interface PhoneNumber {
     readonly type: string;
@@ -17,7 +16,7 @@ export interface Address {
 }
 
 export interface Service {
-    readonly id: Id;
+    readonly id: string;
     readonly latitude?: number;
     readonly longitude?: number;
     readonly name: string;
@@ -29,8 +28,53 @@ export interface Service {
     readonly organizationName: string;
 }
 
-export interface ServiceMap {
+export type SetServices = Dispatch<SetStateAction<Services>>;
+
+export interface ValidServices {
     readonly [serviceId: string]: Service;
 }
 
-export type SetServices = Dispatch<SetStateAction<ServiceMap>>;
+export interface InvalidServices {
+    readonly errorMessage: string;
+}
+export type Services = ValidServices | InvalidServices;
+
+export interface ValidatedPhoneNumberJSON {
+    readonly phone_number_type: string;
+    readonly phone_number: string;
+}
+
+export interface ValidatedAddressJSON {
+    readonly id: number;
+    readonly address: string;
+    readonly city: string;
+    readonly state_province: string;
+    readonly postal_code: string;
+    readonly country: string;
+}
+
+export interface ValidatedAddressWithTypeJSON {
+    readonly address_type: string;
+    readonly address: ValidatedAddressJSON;
+}
+
+export interface ValidatedServiceJSON {
+    readonly id: string;
+    readonly name: string;
+    readonly description: string;
+    readonly organization_url: string;
+    readonly organization_email: string;
+    readonly organization_name: string;
+}
+
+export interface ValidatedLocationJSON {
+    readonly latitude?: number;
+    readonly longitude?: number;
+    readonly phone_numbers: ReadonlyArray<ValidatedPhoneNumberJSON>;
+    readonly addresses: ReadonlyArray<ValidatedAddressWithTypeJSON>;
+}
+
+export interface ValidatedServiceAtLocationJSON {
+    readonly service: ValidatedServiceJSON;
+    readonly location: ValidatedLocationJSON;
+}

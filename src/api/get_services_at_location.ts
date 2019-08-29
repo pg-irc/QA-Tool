@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 import { SelectedOption } from '../components/url_template/url_template';
 import * as ServiceTypes from '../components/services/types';
 import { isResponseError } from './is_response_error';
-import { servicesAtLocationValidator, isValidationError } from '../json_schemas/validator';
+import { servicesAtLocationValidator, isValidationError } from '../components/services/services_schemas/validator';
 import * as R from 'ramda';
 
 export const servicesAtLocation = async (topic: SelectedOption, manualLocation: SelectedOption): Promise<ServiceTypes.Services> => {

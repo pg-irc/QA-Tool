@@ -1,5 +1,5 @@
 import React from 'react';
-import { DropdownData, URLTemplateData } from '../../dropdown_data/types';
+import { DropdownData, URLTemplateData } from './dropdown_data/types';
 import { SelectedOption } from '../url_template/url_template';
 
 export type DropdownOptions = DropdownData;

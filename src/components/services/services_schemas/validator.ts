@@ -1,6 +1,6 @@
 // tslint:disable:no-any no-var-requires
 // This is the documenated syntax for Ajv. Using an import here causes a runtime error.
-import { serviceAtLocationArray } from './services_schemas';
+import { serviceAtLocationArray } from '.';
 const Ajv = require('ajv');
 
 interface ValidatorResponse {

@@ -1,8 +1,8 @@
 // tslint:disable:no-expression-statement
 import React, { useState, Dispatch, SetStateAction } from 'react';
 import { Dropdown } from '../dropdown/dropdown';
-import { topicsForQA } from '../../dropdown_data/topics';
-import { manualLocationsForQA } from '../../dropdown_data/manual_locations';
+import { topicsForQA } from '../dropdown/dropdown_data/topics';
+import { manualLocationsForQA } from '../dropdown/dropdown_data/manual_locations';
 import { Services, SetServices } from '../services/types';
 import { servicesAtLocation } from '../../api/get_services_at_location';
 

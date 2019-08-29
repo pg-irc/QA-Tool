@@ -13,15 +13,16 @@ export const servicesAtLocation = async (topic: SelectedOption, manualLocation: 
     const response = await servicesAtLocationAPIRequest(url);
 
     if (isResponseError(response)) {
-        return { errorMessage: response.statusText };
+        return { type: 'Services:Error', errorMessage: response.statusText };
     }
     const validator = (servicesAtLocationValidator(response.data));
     if (isValidationError(validator)) {
-        return { errorMessage: 'Error: response data failed schema validation' };
+        return { type: 'Services:Error', errorMessage: 'Error: response data failed schema validation' };
     }
-    return response.data.map((val: ServiceTypes.ValidatedServiceAtLocationJSON) => serviceFromValidatedJSON(val));
+    return {
+        type: 'Services:Success', services: response.data.map((val: ServiceTypes.ValidatedServiceAtLocationJSON) => serviceFromValidatedJSON(val)),
+    };
 };
-
 const servicesAtLocationAPIRequest = async (url: string): Promise<AxiosResponse> => {
     const data = await axios.get(url)
       .then((response: AxiosResponse): AxiosResponse => {
@@ -31,7 +32,7 @@ const servicesAtLocationAPIRequest = async (url: string): Promise<AxiosResponse>
 };
 
 const buildUrl = (endpoint: string, query: string): string => {
-    const baseUrl = 'https://fierce-ravine-89308.herokuapp.com';
+    const baseUrl = 'https://pathways-production.herokuapp.com';
     const version = 'v1';
     return `${baseUrl}/${version}/${endpoint}?${query}`;
 };
@@ -65,4 +66,4 @@ const serviceFromValidatedJSON = (data: ServiceTypes.ValidatedServiceAtLocationJ
         email: data.service.organization_email,
         organizationName: data.service.organization_name,
     };
-}
+};

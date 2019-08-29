@@ -26,18 +26,30 @@ export interface Service {
     readonly website: string;
     readonly email: string;
     readonly organizationName: string;
+    readonly type?: string;
 }
 
 export type SetServices = Dispatch<SetStateAction<Services>>;
 
+export interface EmptyServices {
+    readonly type: 'Services:Empty';
+}
+
 export interface ValidServices {
-    readonly [serviceId: string]: Service;
+    readonly type: 'Services:Success';
+    readonly services: ReadonlyArray<Service>;
 }
 
 export interface InvalidServices {
+    readonly type: 'Services:Error';
     readonly errorMessage: string;
 }
-export type Services = ValidServices | InvalidServices;
+
+export interface LoadingServices {
+    readonly type: 'Services:Loading';
+}
+
+export type Services = ValidServices | InvalidServices | LoadingServices | EmptyServices;
 
 export interface ValidatedPhoneNumberJSON {
     readonly phone_number_type: string;

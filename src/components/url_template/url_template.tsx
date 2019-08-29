@@ -61,6 +61,7 @@ const SendButton = (props: SendButtonProps): JSX.Element => (
  );
 
 const updateServicesAtLocation = async (topic: SelectedOption, manualLocation: SelectedOption, setServices: SetServices): Promise<Services> => {
+    setServices({type: 'Services:Loading'});
     const servicesAtLocationJSON = await servicesAtLocation(topic, manualLocation);
     setServices(servicesAtLocationJSON);
     return servicesAtLocationJSON;

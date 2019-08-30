@@ -17,15 +17,16 @@ type Props = DropdownProps & DropdownActions;
 
 export const Dropdown = (props: Props): JSX.Element => (
   <select value={props.selectedOption} onChange={props.onSetOption}>
-    <option value='' disabled>Select an option</option>
     {renderDropdownOptions(props.dropdownData)}
   </select>
 );
 
-// tslint:disable:typedef
-const renderDropdownOptions = (options: DropdownData) => {
-  return options.map((option: URLTemplateData) => drowpdownOption(option));
-};
+const renderDropdownOptions = (options: DropdownData): JSX.Element => (
+  <>
+    <option value='' disabled>Select an option</option>
+    {options.map((option: URLTemplateData) => drowpdownOption(option))}
+  </>
+);
 
 const drowpdownOption = (option: URLTemplateData): JSX.Element => (
   <option key={option.name} value={option.value}>{option.name}</option>

@@ -5,13 +5,7 @@ import * as ServiceTypes from '../components/services/types';
 import { isResponseError } from './is_response_error';
 import { servicesAtLocationValidator, isValidationError } from '../components/services/services_schemas/validator';
 import * as R from 'ramda';
-
-export type URLList = ReadonlyArray<string>;
-
-const availableServerURLs: URLList = [
-    'https://pathways-production.herokuapp.com',
-    'https://fierce-ravine-89308.herokuapp.com',
-];
+import { availableServerURLs, URLList } from './available_servers';
 
 export const searchServices = async (topic: SelectedOption, manualLocation: SelectedOption): Promise<ServiceTypes.Services> => {
     const endpoint = 'services_at_location';
@@ -76,6 +70,6 @@ const serviceFromValidatedJSON = (data: ServiceTypes.ValidatedServiceAtLocationJ
     };
 };
 
-const chooseServerAtRandom = (urlList: ReadonlyArray<string>): string => {
+const chooseServerAtRandom = (urlList: URLList ): string => {
     return urlList[Math.floor(Math.random() * urlList.length)];
 };

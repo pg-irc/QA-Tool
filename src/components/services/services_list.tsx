@@ -6,43 +6,50 @@ export interface Props {
     readonly services: Services;
 }
 
-export const ServicesList = (props: Props): JSX.Element => {
-    if (props.services.type === 'Services:Loading') {
+export const ServicesList = (props: Props): JSX.Element => (
+    <div>
+        <h3>Services</h3>
+        {renderServicesBasedOnType(props.services)}
+    </div>
+);
+
+const renderServicesBasedOnType = (services: Services): JSX.Element => {
+    if (services.type === 'Services:Loading') {
         return (
             renderLoadingMessage()
         );
     }
 
-    if (props.services.type === 'Services:Success') {
+    if (services.type === 'Services:Success') {
         return (
-            renderList(props.services)
+            renderList(services)
         );
     }
 
-    if (props.services.type === 'Services:Error') {
+    if (services.type === 'Services:Error') {
         return (
-            renderErrorMessage(props.services)
+            renderErrorMessage(services)
         );
     }
     return (
-        <div>Empty</div>
+        <p>Empty</p>
     );
 };
 
 const renderList = (validServices: ValidServices): JSX.Element => (
-        <div>
+        <ol>
             {validServices.services.map((service: Service ) => <ServiceListItem key={service.id} service={service} />)}
-        </div>
+        </ol>
 );
 
 const renderErrorMessage = (invalidServices: InvalidServices): JSX.Element => (
-    <div>
+    <p>
         {invalidServices.errorMessage}
-    </div>
+    </p>
 );
 
 const renderLoadingMessage = (): JSX.Element => (
-    <div>
+    <p>
         Loading...
-    </div>
+    </p>
 );

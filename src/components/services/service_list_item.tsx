@@ -7,11 +7,11 @@ export interface Props {
 }
 
 export const ServiceListItem = (props: Props): JSX.Element => (
-    <div key={props.service.id}>
+    <li key={props.service.id}>
         { renderName(props.service.name) }
         { renderDescription(props.service.description) }
         { renderAddresses(filterPhysicalAddresses(props.service.addresses))}
-    </div>
+    </li>
 );
 
 export const renderName = (name: string): JSX.Element => (
@@ -24,9 +24,7 @@ export const renderDescription = (description: string): JSX.Element => (
 
 export const renderAddresses = (addresses: ReadonlyArray<Address>): ReadonlyArray<JSX.Element> => (
     addresses.map((address: Address) =>
-        <div key={address.id}>
-            <p>{address.address} {address.city}  {address.stateProvince} {address.postalCode ? address.postalCode : ''} </p>
-        </div>)
+            <p key={address.id}>{address.address} {address.city}  {address.stateProvince} {address.postalCode ? address.postalCode : ''} </p>)
 );
 
 const filterPhysicalAddresses = R.filter(R.propEq('type', 'physical_address'));

@@ -15,7 +15,7 @@ export interface Props {
     readonly setServices: SetServices;
 }
 
-export const UrlTemplate = (props: Props): JSX.Element => {
+export const APIQueryPicker = (props: Props): JSX.Element => {
     const [selectedTopic, setTopic]: [SelectedOption, SetOption] = useState('');
     const [selectedManualLocation, setManualLocation]: [SelectedOption, SetOption] = useState('');
     const onSetTopic = (event: React.ChangeEvent<HTMLSelectElement>): void => setTopic(event.target.value);

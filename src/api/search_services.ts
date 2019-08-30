@@ -6,6 +6,13 @@ import { isResponseError } from './is_response_error';
 import { servicesAtLocationValidator, isValidationError } from '../components/services/services_schemas/validator';
 import * as R from 'ramda';
 
+export type URLList = ReadonlyArray<string>;
+
+const availableServerURLs: URLList = [
+    'https://pathways-production.herokuapp.com',
+    'https://fierce-ravine-89308.herokuapp.com',
+];
+
 export const searchServices = async (topic: SelectedOption, manualLocation: SelectedOption): Promise<ServiceTypes.Services> => {
     const endpoint = 'services_at_location';
     const query = `user_location=${manualLocation}&related_to_topic=${topic}`;
@@ -33,7 +40,7 @@ const servicesAtLocationAPIRequest = async (url: string): Promise<AxiosResponse>
 };
 
 const buildUrl = (endpoint: string, query: string): string => {
-    const baseUrl = 'https://pathways-production.herokuapp.com';
+    const baseUrl = chooseServerAtRandom(availableServerURLs);
     const version = 'v1';
     return `${baseUrl}/${version}/${endpoint}?${query}`;
 };
@@ -67,4 +74,8 @@ const serviceFromValidatedJSON = (data: ServiceTypes.ValidatedServiceAtLocationJ
         email: data.service.organization_email,
         organizationName: data.service.organization_name,
     };
+};
+
+const chooseServerAtRandom = (urlList: ReadonlyArray<string>): string => {
+    return urlList[Math.floor(Math.random() * urlList.length)];
 };

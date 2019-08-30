@@ -6,7 +6,7 @@ import { isResponseError } from './is_response_error';
 import { servicesAtLocationValidator, isValidationError } from '../components/services/services_schemas/validator';
 import * as R from 'ramda';
 
-export const servicesAtLocation = async (topic: SelectedOption, manualLocation: SelectedOption): Promise<ServiceTypes.Services> => {
+export const searchServices = async (topic: SelectedOption, manualLocation: SelectedOption): Promise<ServiceTypes.Services> => {
     const endpoint = 'services_at_location';
     const query = `user_location=${manualLocation}&related_to_topic=${topic}`;
     const url = buildUrl(endpoint, query);

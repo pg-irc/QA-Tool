@@ -4,7 +4,7 @@ import { Dropdown } from '../dropdown/dropdown';
 import { topicsForQA } from '../dropdown/dropdown_data/topics';
 import { manualLocationsForQA } from '../dropdown/dropdown_data/manual_locations';
 import { Services, SetServices } from '../services/types';
-import { servicesAtLocation } from '../../api/get_services_at_location';
+import { searchServices } from '../../api/search_services';
 
 export type SelectedOption = string;
 
@@ -55,14 +55,14 @@ export interface SendButtonProps {
 }
 
 const SendButton = (props: SendButtonProps): JSX.Element => (
-    <button onClick={(): Promise<Services> => updateServicesAtLocation(props.selectedTopic, props.selectedManualLocation, props.setServices)}>
+    <button onClick={(): Promise<Services> => updateServices(props.selectedTopic, props.selectedManualLocation, props.setServices)}>
         Send
     </button>
  );
 
-const updateServicesAtLocation = async (topic: SelectedOption, manualLocation: SelectedOption, setServices: SetServices): Promise<Services> => {
+const updateServices = async (topic: SelectedOption, manualLocation: SelectedOption, setServices: SetServices): Promise<Services> => {
     setServices({type: 'Services:Loading'});
-    const servicesAtLocationJSON = await servicesAtLocation(topic, manualLocation);
+    const servicesAtLocationJSON = await searchServices(topic, manualLocation);
     setServices(servicesAtLocationJSON);
     return servicesAtLocationJSON;
 };

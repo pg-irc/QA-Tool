@@ -30,7 +30,7 @@ export const APIQueryPicker = (props: Props): JSX.Element => {
             <Dropdown title={'Topic'} selectedOption={selectedTopic} onSetOption={onSetTopic} dropdownData={topicsForQA} />
             <Dropdown title={'Location'} selectedOption={selectedManualLocation} onSetOption={onSetManualLocation}
                 dropdownData={manualLocationsForQA} />
-            <ClearButton setTopic={setTopic} setManualLocation={setManualLocation} />
+            <ClearButton setTopic={setTopic} setManualLocation={setManualLocation} setServices={props.setServices} />
             <SendButton selectedTopic={selectedTopic} selectedManualLocation={selectedManualLocation}
                 services={props.services} setServices={props.setServices} />
         </div>
@@ -40,6 +40,7 @@ export const APIQueryPicker = (props: Props): JSX.Element => {
 export interface ClearButtonProps {
     readonly setTopic: SetOption;
     readonly setManualLocation: SetOption;
+    readonly setServices: SetServices;
 }
 
 const ClearButton = (props: ClearButtonProps): JSX.Element => (
@@ -49,6 +50,7 @@ const ClearButton = (props: ClearButtonProps): JSX.Element => (
 const clearSelectedOptions = (props: ClearButtonProps): void => {
     props.setTopic('');
     props.setManualLocation('');
+    props.setServices({type: 'Services:Empty'});
 };
 
 export interface SendButtonProps {

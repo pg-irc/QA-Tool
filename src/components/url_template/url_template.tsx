@@ -55,14 +55,13 @@ export interface SendButtonProps {
 }
 
 const SendButton = (props: SendButtonProps): JSX.Element => (
-    <button onClick={(): Promise<Services> => updateServices(props.selectedTopic, props.selectedManualLocation, props.setServices)}>
+    <button onClick={(): Promise<void> => updateServices(props.selectedTopic, props.selectedManualLocation, props.setServices)}>
         Send
     </button>
  );
 
-const updateServices = async (topic: SelectedOption, manualLocation: SelectedOption, setServices: SetServices): Promise<Services> => {
+const updateServices = async (topic: SelectedOption, manualLocation: SelectedOption, setServices: SetServices): Promise<void> => {
     setServices({type: 'Services:Loading'});
     const servicesAtLocationJSON = await searchServices(topic, manualLocation);
     setServices(servicesAtLocationJSON);
-    return servicesAtLocationJSON;
 };

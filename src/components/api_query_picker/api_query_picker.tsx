@@ -10,10 +10,15 @@ export type SelectedOption = string;
 
 export type SetOption = Dispatch<SetStateAction<string>>;
 
-export interface Props {
+export interface APIQueryPickerProps {
     readonly services: Services;
+}
+
+export interface APIQueryPickerActions {
     readonly setServices: SetServices;
 }
+
+type Props = APIQueryPickerProps & APIQueryPickerActions;
 
 export const APIQueryPicker = (props: Props): JSX.Element => {
     const [selectedTopic, setTopic]: [SelectedOption, SetOption] = useState('');

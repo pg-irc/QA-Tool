@@ -26,7 +26,7 @@ export const UrlTemplate = (props: Props): JSX.Element => {
             Location: <Dropdown selectedOption={selectedManualLocation} onSetOption={onSetManualLocation} dropdownData={manualLocationsForQA} />
             <ClearButton setTopic={setTopic} setManualLocation={setManualLocation} />
             <SendButton selectedTopic={selectedTopic} selectedManualLocation={selectedManualLocation}
-                services={props.services} setServices={props.setServices}/>
+                services={props.services} setServices={props.setServices} />
             <p>Topic: {selectedTopic}</p>
             <p>Location: {selectedManualLocation}</p>
         </div>

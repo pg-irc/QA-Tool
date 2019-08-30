@@ -23,6 +23,7 @@ export const servicesAtLocation = async (topic: SelectedOption, manualLocation: 
         type: 'Services:Success', services: response.data.map((val: ServiceTypes.ValidatedServiceAtLocationJSON) => serviceFromValidatedJSON(val)),
     };
 };
+
 const servicesAtLocationAPIRequest = async (url: string): Promise<AxiosResponse> => {
     const data = await axios.get(url)
       .then((response: AxiosResponse): AxiosResponse => {

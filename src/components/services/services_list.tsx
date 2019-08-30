@@ -31,7 +31,7 @@ export const ServicesList = (props: Props): JSX.Element => {
 
 const renderList = (validServices: ValidServices): JSX.Element => (
         <div>
-            {validServices.services.map((service: Service ) => <ServiceListItem key={service.id} service={service}/>)}
+            {validServices.services.map((service: Service ) => <ServiceListItem key={service.id} service={service} />)}
         </div>
 );
 

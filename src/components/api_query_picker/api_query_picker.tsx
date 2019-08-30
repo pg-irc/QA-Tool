@@ -27,13 +27,12 @@ export const APIQueryPicker = (props: Props): JSX.Element => {
     const onSetManualLocation = (event: React.ChangeEvent<HTMLSelectElement>): void => setManualLocation(event.target.value);
     return (
         <div>
-            Topics: <Dropdown selectedOption={selectedTopic} onSetOption={onSetTopic} dropdownData={topicsForQA} />
-            Location: <Dropdown selectedOption={selectedManualLocation} onSetOption={onSetManualLocation} dropdownData={manualLocationsForQA} />
+            <Dropdown title={'Topic'} selectedOption={selectedTopic} onSetOption={onSetTopic} dropdownData={topicsForQA} />
+            <Dropdown title={'Location'} selectedOption={selectedManualLocation} onSetOption={onSetManualLocation}
+                dropdownData={manualLocationsForQA} />
             <ClearButton setTopic={setTopic} setManualLocation={setManualLocation} />
             <SendButton selectedTopic={selectedTopic} selectedManualLocation={selectedManualLocation}
                 services={props.services} setServices={props.setServices} />
-            <p>Topic: {selectedTopic}</p>
-            <p>Location: {selectedManualLocation}</p>
         </div>
     );
 };

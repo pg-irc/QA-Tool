@@ -7,6 +7,7 @@ export type DropdownOptions = DropdownData;
 export interface DropdownProps {
   readonly selectedOption: SelectedOption;
   readonly dropdownData: DropdownData;
+  readonly title: string;
 }
 
 export interface DropdownActions {
@@ -16,9 +17,12 @@ export interface DropdownActions {
 type Props = DropdownProps & DropdownActions;
 
 export const Dropdown = (props: Props): JSX.Element => (
-  <select value={props.selectedOption} onChange={props.onSetOption}>
-    {renderDropdownOptions(props.dropdownData)}
-  </select>
+  <>
+    <label>{props.title}</label>
+    <select value={props.selectedOption} onChange={props.onSetOption}>
+      {renderDropdownOptions(props.dropdownData)}
+    </select>
+  </>
 );
 
 const renderDropdownOptions = (options: DropdownData): JSX.Element => (

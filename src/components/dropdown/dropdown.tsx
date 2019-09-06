@@ -2,8 +2,6 @@ import React from 'react';
 import { DropdownData, URLTemplateData } from './dropdown_data/types';
 import { SelectedOption } from '../api_query_picker/api_query_picker';
 
-export type DropdownOptions = DropdownData;
-
 export interface DropdownProps {
   readonly selectedOption: SelectedOption;
   readonly dropdownData: DropdownData;

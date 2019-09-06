@@ -15,12 +15,12 @@ export interface DropdownActions {
 type Props = DropdownProps & DropdownActions;
 
 export const Dropdown = (props: Props): JSX.Element => (
-  <>
-    <label>{props.title}</label>
-    <select value={props.selectedOption} onChange={props.onSetOption}>
-      {renderDropdownOptions(props.dropdownData)}
-    </select>
-  </>
+  <React.Fragment>
+      <label>{props.title}</label>
+      <select value={props.selectedOption} onChange={props.onSetOption}>
+        {renderDropdownOptions(props.dropdownData)}
+      </select>
+  </React.Fragment>
 );
 
 const renderDropdownOptions = (options: DropdownData): JSX.Element => (

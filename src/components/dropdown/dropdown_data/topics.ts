@@ -1,6 +1,6 @@
-import { DropdownData } from './types';
+import { DropdownItemCollection } from './types';
 
-export const topicsForQA: DropdownData = [
+export const topicsForQA: DropdownItemCollection = [
     {
         name: 'Get your BC Services Card', value: 'get-your-bc-services-card',
     },

@@ -1,6 +1,6 @@
-import { DropdownData } from './types';
+import { DropdownItemCollection } from './types';
 
-export const manualLocationsForQA: DropdownData = [
+export const manualLocationsForQA: DropdownItemCollection = [
     {
         name: 'Vancouver', value: '-123.1207, +49.2827',
     },

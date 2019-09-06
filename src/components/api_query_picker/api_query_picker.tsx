@@ -33,9 +33,9 @@ export const APIQueryPicker = (props: Props): JSX.Element => {
     };
     return (
         <div>
-            <Dropdown title={'Topic'} selectedOption={selectedTopic} onSetOption={onSetTopic} dropdownData={topicsForQA} />
+            <Dropdown title={'Topic'} selectedOption={selectedTopic} onSetOption={onSetTopic} dropdownItemCollection={topicsForQA} />
             <Dropdown title={'Location'} selectedOption={selectedManualLocation} onSetOption={onSetManualLocation}
-                dropdownData={manualLocationsForQA} />
+                dropdownItemCollection={manualLocationsForQA} />
             <ClearButton clearSelectionOptions={clearSelectedOptions}/>
             <SendButton selectedTopic={selectedTopic} selectedManualLocation={selectedManualLocation}
                 services={props.services} setServices={props.setServices} />

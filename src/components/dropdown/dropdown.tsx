@@ -1,10 +1,10 @@
 import React from 'react';
-import { DropdownData, URLTemplateData } from './dropdown_data/types';
+import { DropdownItemCollection, DropdownItem } from './dropdown_data/types';
 import { SelectedOption } from '../api_query_picker/api_query_picker';
 
 export interface DropdownProps {
   readonly selectedOption: SelectedOption;
-  readonly dropdownData: DropdownData;
+  readonly dropdownItemCollection: DropdownItemCollection;
   readonly title: string;
 }
 
@@ -18,18 +18,18 @@ export const Dropdown = (props: Props): JSX.Element => (
   <React.Fragment>
       <label>{props.title}</label>
       <select value={props.selectedOption} onChange={props.onSetOption}>
-        {renderDropdownOptions(props.dropdownData)}
+        {renderAllDropdownOptions(props.dropdownItemCollection)}
       </select>
   </React.Fragment>
 );
 
-const renderDropdownOptions = (options: DropdownData): JSX.Element => (
+const renderAllDropdownOptions = (options: DropdownItemCollection): JSX.Element => (
   <>
     <option value='' disabled>Select an option</option>
-    {options.map((option: URLTemplateData) => drowpdownOption(option))}
+    {options.map((option: DropdownItem) => renderOneDropdownOption(option))}
   </>
 );
 
-const drowpdownOption = (option: URLTemplateData): JSX.Element => (
+const renderOneDropdownOption = (option: DropdownItem): JSX.Element => (
   <option key={option.name} value={option.value}>{option.name}</option>
 );

@@ -25,12 +25,17 @@ export const APIQueryPicker = (props: Props): JSX.Element => {
     const [selectedManualLocation, setManualLocation]: [SelectedOption, SetOption] = useState('');
     const onSetTopic = (event: React.ChangeEvent<HTMLSelectElement>): void => setTopic(event.target.value);
     const onSetManualLocation = (event: React.ChangeEvent<HTMLSelectElement>): void => setManualLocation(event.target.value);
+    const clearSelectedOptions = (): void => {
+       setTopic('');
+       setManualLocation('');
+       props.setServices({type: 'Services:Empty'});
+    };
     return (
         <div>
             <Dropdown title={'Topic'} selectedOption={selectedTopic} onSetOption={onSetTopic} dropdownData={topicsForQA} />
             <Dropdown title={'Location'} selectedOption={selectedManualLocation} onSetOption={onSetManualLocation}
                 dropdownData={manualLocationsForQA} />
-            <ClearButton setTopic={setTopic} setManualLocation={setManualLocation} setServices={props.setServices} />
+            <ClearButton clearSelectionOptions={clearSelectedOptions}/>
             <SendButton selectedTopic={selectedTopic} selectedManualLocation={selectedManualLocation}
                 services={props.services} setServices={props.setServices} />
         </div>
@@ -38,20 +43,12 @@ export const APIQueryPicker = (props: Props): JSX.Element => {
 };
 
 export interface ClearButtonProps {
-    readonly setTopic: SetOption;
-    readonly setManualLocation: SetOption;
-    readonly setServices: SetServices;
+    readonly clearSelectionOptions: () => void;
 }
 
 const ClearButton = (props: ClearButtonProps): JSX.Element => (
-    <button onClick={(): void => clearSelectedOptions(props)}>Clear</button>
+    <button onClick={(): void => props.clearSelectionOptions()}>Clear</button>
 );
-
-const clearSelectedOptions = (props: ClearButtonProps): void => {
-    props.setTopic('');
-    props.setManualLocation('');
-    props.setServices({type: 'Services:Empty'});
-};
 
 export interface SendButtonProps {
     readonly selectedTopic: SelectedOption;

@@ -1,8 +1,13 @@
-export type Name = string;
-export type Value = string;
-
 export type DropdownItemCollection = ReadonlyArray<DropdownItem>;
 
-export interface DropdownItem {
-    readonly [data: string]: Name;
+export type DropdownItem = LocationItem | TopicItem;
+
+export interface LocationItem {
+    readonly name: string;
+    readonly lat_long: string;
+}
+
+export interface TopicItem {
+    readonly name: string;
+    readonly topic_id: string;
 }

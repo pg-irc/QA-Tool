@@ -30,6 +30,13 @@ const renderAllDropdownOptions = (options: DropdownItemCollection): JSX.Element 
   </>
 );
 
-const renderOneDropdownOption = (option: DropdownItem): JSX.Element => (
-  <option key={option.name} value={option.value}>{option.name}</option>
-);
+const renderOneDropdownOption = (option: DropdownItem): JSX.Element => {
+  if ('lat_long' in option) {
+    return (
+      <option key={option.name} value={option.lat_long}>{option.name}</option>
+    );
+  }
+  return (
+    <option key={option.name} value={option.topic_id}>{option.name}</option>
+  );
+};

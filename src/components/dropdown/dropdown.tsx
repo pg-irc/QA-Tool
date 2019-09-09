@@ -24,10 +24,10 @@ export const Dropdown = (props: Props): JSX.Element => (
 );
 
 const renderAllDropdownOptions = (options: DropdownItemCollection): JSX.Element => (
-  <>
+  <React.Fragment>
     <option value='' disabled>Select an option</option>
     {options.map((option: DropdownItem) => renderOneDropdownOption(option))}
-  </>
+  </React.Fragment>
 );
 
 const renderOneDropdownOption = (option: DropdownItem): JSX.Element => {

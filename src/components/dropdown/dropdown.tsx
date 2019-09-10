@@ -1,5 +1,5 @@
 import React from 'react';
-import { DropdownItemCollection, DropdownItem } from './dropdown_data/types';
+import { DropdownItemCollection, DropdownItem } from '../../fixtures/dropdown_data/types';
 import { SelectedOption } from '../api_query_picker/api_query_picker';
 
 export interface DropdownProps {

@@ -2,11 +2,11 @@ import React from 'react';
 import { ValidServices, InvalidServices, Service, Services } from './types';
 import { ServiceListItem } from './service_list_item';
 
-export interface Props {
+export interface ServicesListProps {
     readonly services: Services;
 }
 
-export const ServicesList = (props: Props): JSX.Element => (
+export const ServicesList = (props: ServicesListProps): JSX.Element => (
     <div>
         <h3>Services</h3>
         {renderServicesBasedOnType(props.services)}

@@ -14,26 +14,16 @@ export const ServicesList = (props: ServicesListProps): JSX.Element => (
 );
 
 const renderServicesBasedOnType = (services: Services): JSX.Element => {
-    if (services.type === 'Services:Loading') {
-        return (
-            renderLoadingMessage()
-        );
+    switch (services.type) {
+        case 'Services:Loading':
+            return renderLoadingMessage();
+        case 'Services:Success':
+            return renderList(services);
+        case 'Services:Error':
+            return renderErrorMessage(services);
+        default:
+            return <p>Empty</p>;
     }
-
-    if (services.type === 'Services:Success') {
-        return (
-            renderList(services)
-        );
-    }
-
-    if (services.type === 'Services:Error') {
-        return (
-            renderErrorMessage(services)
-        );
-    }
-    return (
-        <p>Empty</p>
-    );
 };
 
 const renderList = (validServices: ValidServices): JSX.Element => (

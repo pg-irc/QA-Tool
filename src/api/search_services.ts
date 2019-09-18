@@ -5,13 +5,13 @@ import * as ServiceTypes from '../components/services/types';
 import { isResponseError } from './is_response_error';
 import { servicesAtLocationValidator, isValidationError } from '../components/services/services_schemas/validator';
 import * as R from 'ramda';
-import { availableServerURLs, URLList } from './available_servers';
+import { availableServerUrls, UrlList } from './available_servers';
 
 export const searchServices = async (topic: SelectedOption, manualLocation: SelectedOption): Promise<ServiceTypes.Services> => {
     const endpoint = 'services_at_location';
     const query = `user_location=${manualLocation}&related_to_topic=${topic}`;
     const url = buildUrl(endpoint, query);
-    const response = await servicesAtLocationAPIRequest(url);
+    const response = await servicesAtLocationApiRequest(url);
 
     if (isResponseError(response)) {
         return { type: 'Services:Error', errorMessage: response.statusText };
@@ -28,7 +28,7 @@ export const searchServices = async (topic: SelectedOption, manualLocation: Sele
     };
 };
 
-const servicesAtLocationAPIRequest = async (url: string): Promise<AxiosResponse> => {
+const servicesAtLocationApiRequest = async (url: string): Promise<AxiosResponse> => {
     const data = await axios.get(url)
       .then((response: AxiosResponse): AxiosResponse => {
         return response;
@@ -37,7 +37,7 @@ const servicesAtLocationAPIRequest = async (url: string): Promise<AxiosResponse>
 };
 
 const buildUrl = (endpoint: string, query: string): string => {
-    const baseUrl = chooseServerAtRandom(availableServerURLs);
+    const baseUrl = chooseServerAtRandom(availableServerUrls);
     const version = 'v1';
     return `${baseUrl}/${version}/${endpoint}?${query}`;
 };
@@ -73,7 +73,7 @@ const serviceFromValidatedJSON = (data: ServiceTypes.ValidatedServiceAtLocationJ
     };
 };
 
-const chooseServerAtRandom = (urlList: URLList ): string => {
+const chooseServerAtRandom = (urlList: UrlList ): string => {
     return urlList[Math.floor(Math.random() * urlList.length)];
 };
 

@@ -11,17 +11,17 @@ export type SelectedOption = string;
 
 export type SetOption = Dispatch<SetStateAction<string>>;
 
-export interface APIQueryPickerProps {
+export interface ApiQueryPickerProps {
     readonly services: Services;
 }
 
-export interface APIQueryPickerActions {
+export interface ApiQueryPickerActions {
     readonly setServices: SetServices;
 }
 
-type Props = APIQueryPickerProps & APIQueryPickerActions;
+type Props = ApiQueryPickerProps & ApiQueryPickerActions;
 
-export const APIQueryPicker = (props: Props): JSX.Element => {
+export const ApiQueryPicker = (props: Props): JSX.Element => {
     const [selectedTopic, setTopic]: [SelectedOption, SetOption] = useState('');
     const [selectedManualLocation, setManualLocation]: [SelectedOption, SetOption] = useState('');
     const onSetTopic = (event: React.ChangeEvent<HTMLSelectElement>): void => setTopic(event.target.value);

@@ -1,6 +1,6 @@
-export type URLList = ReadonlyArray<string>;
+export type UrlList = ReadonlyArray<string>;
 
-export const availableServerURLs: URLList = [
+export const availableServerUrls: UrlList = [
     'https://pathways-production.herokuapp.com',
     'https://fierce-ravine-89308.herokuapp.com',
 ];

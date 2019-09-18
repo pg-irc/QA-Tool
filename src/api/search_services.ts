@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 import { SelectedOption } from '../components/api_query_picker/api_query_picker';
 import * as ServiceTypes from '../components/services/types';
 import { isResponseError } from './is_response_error';
-import { servicesAtLocationValidator, isValidationError } from '../components/services/services_schemas/validator';
+import { servicesAtLocationValidator, isValidationError } from '../components/services/schemas/validator';
 import * as R from 'ramda';
 import { availableServerUrls, UrlList } from './available_servers';
 import buildUrl from 'build-url';

@@ -22,7 +22,7 @@ const renderServicesBasedOnType = (services: Services): JSX.Element => {
         case 'Services:Error':
             return renderErrorMessage(services);
         default:
-            return <p>Empty</p>;
+            return <p>No services</p>;
     }
 };
 

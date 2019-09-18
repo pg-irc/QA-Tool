@@ -20,6 +20,9 @@ export const searchServices = async (topic: SelectedOption, manualLocation: Sele
     if (isValidationError(validator)) {
         return { type: 'Services:Error', errorMessage: 'Error: response data failed schema validation' };
     }
+    if (isEmptyServicesList(response.data)) {
+        return { type: 'Services:Empty' };
+    }
     return {
         type: 'Services:Success', services: response.data.map((val: ServiceTypes.ValidatedServiceAtLocationJSON) => serviceFromValidatedJSON(val)),
     };
@@ -73,3 +76,7 @@ const serviceFromValidatedJSON = (data: ServiceTypes.ValidatedServiceAtLocationJ
 const chooseServerAtRandom = (urlList: URLList ): string => {
     return urlList[Math.floor(Math.random() * urlList.length)];
 };
+
+const isEmptyServicesList = (data: ReadonlyArray<[]>): boolean  => (
+    data.length <= 0
+);

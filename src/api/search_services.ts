@@ -36,7 +36,7 @@ const servicesAtLocationApiRequest = async (url: string): Promise<AxiosResponse>
 
 const buildUrlFromSelectedTopicAndLocation = (topic: SelectedOption, manualLocation: SelectedOption): string => {
     const path = 'v1/services_at_location';
-    const baseUrl = chooseServerAtRandom(availableServerUrls);
+    const baseUrl = chooseServerUrlAtRandom(availableServerUrls);
     const url = buildUrl(baseUrl, {
         path: path,
         queryParams: {
@@ -78,8 +78,9 @@ const serviceFromValidatedJSON = (data: ServiceTypes.ValidatedServiceAtLocationJ
     };
 };
 
-const chooseServerAtRandom = (urlList: UrlList ): string => {
-    return urlList[Math.floor(Math.random() * urlList.length)];
+const chooseServerUrlAtRandom = (urlList: UrlList ): string => {
+    const randomIndex = Math.floor(Math.random() * urlList.length);
+    return urlList[randomIndex];
 };
 
 const isEmptyServicesList = (data: ReadonlyArray<[]>): boolean  => (

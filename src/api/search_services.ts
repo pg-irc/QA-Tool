@@ -6,13 +6,11 @@ import { isResponseError } from './is_response_error';
 import { servicesAtLocationValidator, isValidationError } from '../components/services/services_schemas/validator';
 import * as R from 'ramda';
 import { availableServerUrls, UrlList } from './available_servers';
+import buildUrl from 'build-url';
 
 export const searchServices = async (topic: SelectedOption, manualLocation: SelectedOption): Promise<ServiceTypes.Services> => {
-    const endpoint = 'services_at_location';
-    const query = `user_location=${manualLocation}&related_to_topic=${topic}`;
-    const url = buildUrl(endpoint, query);
+    const url = buildUrlFromSelectedTopicAndLocation(topic, manualLocation);
     const response = await servicesAtLocationApiRequest(url);
-
     if (isResponseError(response)) {
         return { type: 'Services:Error', errorMessage: response.statusText };
     }
@@ -36,10 +34,17 @@ const servicesAtLocationApiRequest = async (url: string): Promise<AxiosResponse>
     return data;
 };
 
-const buildUrl = (endpoint: string, query: string): string => {
+const buildUrlFromSelectedTopicAndLocation = (topic: SelectedOption, manualLocation: SelectedOption): string => {
+    const path = 'v1/services_at_location';
     const baseUrl = chooseServerAtRandom(availableServerUrls);
-    const version = 'v1';
-    return `${baseUrl}/${version}/${endpoint}?${query}`;
+    const url = buildUrl(baseUrl, {
+        path: path,
+        queryParams: {
+            user_location: manualLocation,
+            related_to_topic: topic,
+        },
+    });
+    return url;
 };
 
 const serviceFromValidatedJSON = (data: ServiceTypes.ValidatedServiceAtLocationJSON): ServiceTypes.Service => {

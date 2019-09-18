@@ -16,7 +16,7 @@ export const searchServices = async (topic: SelectedOption, manualLocation: Sele
     if (isResponseError(response)) {
         return { type: 'Services:Error', errorMessage: response.statusText };
     }
-    const validator = (servicesAtLocationValidator(response.data));
+    const validator = servicesAtLocationValidator(response.data);
     if (isValidationError(validator)) {
         return { type: 'Services:Error', errorMessage: 'Error: response data failed schema validation' };
     }

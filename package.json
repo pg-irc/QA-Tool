@@ -24,7 +24,8 @@
     "start": "react-scripts start",
     "build": "tsc",
     "test": "jest",
-    "lint": "tslint src/**/*.ts src/**/*.tsx"
+    "lint": "tslint src/**/*.ts src/**/*.tsx",
+    "bt": "yarn build && yarn test"
   },
   "eslintConfig": {
     "extends": "react-app"

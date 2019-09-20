@@ -4,7 +4,7 @@ import { Dropdown } from '../dropdown/dropdown';
 import { topicsForQA } from '../../fixtures/dropdown_data/topics';
 import { locationsForQA } from '../../fixtures/dropdown_data/locations';
 import { Services, SetServices, LoadingServices } from '../services/types';
-import { searchServices } from '../../api/search_services';
+import { servicesApiRequest, validateServicesResponse } from '../../api/services';
 
 export type SelectedOption = string;
 
@@ -69,9 +69,10 @@ const SendButton = (props: SendButtonProps): JSX.Element => {
 };
 
 const updateServices = async (topic: SelectedOption, location: SelectedOption, setServices: SetServices): Promise<void> => {
+    const servicesResponse = await servicesApiRequest(topic, location);
     setServices(setServicesToLoadingType());
-    const servicesAtLocationJSON = await searchServices(topic, location);
-    setServices(servicesAtLocationJSON);
+    const errorOrSuccessServices = validateServicesResponse(servicesResponse);
+    setServices(errorOrSuccessServices);
 };
 
 const setServicesToLoadingType = (): LoadingServices  => (

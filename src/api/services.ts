@@ -8,9 +8,27 @@ import * as R from 'ramda';
 import { availableServerUrls, UrlList } from './available_servers';
 import buildUrl from 'build-url';
 
-export const searchServices = async (topic: SelectedOption, location: SelectedOption): Promise<ServiceTypes.Services> => {
+export const servicesApiRequest = async (topic: SelectedOption, location: SelectedOption): Promise<AxiosResponse> => {
     const url = buildUrlFromSelectedTopicAndLocation(topic, location);
-    const response = await servicesAtLocationApiRequest(url);
+    return await axios.get(url)
+    .then((response: AxiosResponse): AxiosResponse => {
+      return response;
+  });
+};
+
+const buildUrlFromSelectedTopicAndLocation = (topic: SelectedOption, location: SelectedOption): string => {
+    const path = 'v1/services_at_location';
+    const baseUrl = chooseServerUrlAtRandom(availableServerUrls);
+    return buildUrl(baseUrl, {
+        path: path,
+        queryParams: {
+            user_location: location,
+            related_to_topic: topic,
+        },
+    });
+};
+
+export const validateServicesResponse = (response: AxiosResponse): ServiceTypes.Services => {
     if (isResponseError(response)) {
         return { type: 'Services:Error', errorMessage: response.statusText };
     }
@@ -24,25 +42,6 @@ export const searchServices = async (topic: SelectedOption, location: SelectedOp
     return {
         type: 'Services:Success', services: response.data.map((val: ServiceTypes.ValidatedServiceAtLocationJSON) => serviceFromValidatedJSON(val)),
     };
-};
-
-const servicesAtLocationApiRequest = async (url: string): Promise<AxiosResponse> => {
-    return await axios.get(url)
-      .then((response: AxiosResponse): AxiosResponse => {
-        return response;
-    });
-};
-
-const buildUrlFromSelectedTopicAndLocation = (topic: SelectedOption, location: SelectedOption): string => {
-    const path = 'v1/services_at_location';
-    const baseUrl = chooseServerUrlAtRandom(availableServerUrls);
-    return buildUrl(baseUrl, {
-        path: path,
-        queryParams: {
-            user_location: location,
-            related_to_topic: topic,
-        },
-    });
 };
 
 const serviceFromValidatedJSON = (data: ServiceTypes.ValidatedServiceAtLocationJSON): ServiceTypes.Service => {

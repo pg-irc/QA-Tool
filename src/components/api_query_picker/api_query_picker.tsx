@@ -70,11 +70,11 @@ const SendButton = (props: SendButtonProps): JSX.Element => {
 
 const updateServices = async (topic: SelectedOption, location: SelectedOption, setServices: SetServices): Promise<void> => {
     const servicesResponse = await servicesApiRequest(topic, location);
-    setServices(setServicesToLoadingType());
+    setServices(buildServicesToLoadingType());
     const errorOrSuccessServices = validateServicesResponse(servicesResponse);
     setServices(errorOrSuccessServices);
 };
 
-const setServicesToLoadingType = (): LoadingServices  => (
+const buildServicesToLoadingType = (): LoadingServices  => (
     { type: 'Services:Loading' }
 );

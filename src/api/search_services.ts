@@ -63,7 +63,7 @@ const serviceFromValidatedJSON = (data: ServiceTypes.ValidatedServiceAtLocationJ
 
     return {
         id: data.service.id,
-        // These values come in the wrong order from the server
+        // These values come in the wrong order from the server see Issue #704 on pathways-frontend
         latitude: data.location.longitude,
         longitude: data.location.latitude,
         name: data.service.name,

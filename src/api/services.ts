@@ -8,7 +8,7 @@ import * as R from 'ramda';
 import { availableServerUrls, UrlList } from './available_servers';
 import buildUrl from 'build-url';
 
-export const servicesApiRequest = async (topic: SelectedOption, location: SelectedOption): Promise<AxiosResponse> => {
+export const requestServices = async (topic: SelectedOption, location: SelectedOption): Promise<AxiosResponse> => {
     const url = buildUrlFromSelectedTopicAndLocation(topic, location);
     return await axios.get(url)
     .then((response: AxiosResponse): AxiosResponse => {

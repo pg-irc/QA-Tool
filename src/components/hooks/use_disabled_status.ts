@@ -2,12 +2,10 @@
 import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { SelectedOption } from '../api_query_picker/api_query_picker';
 
-export type IsDisabled = boolean;
-
 export type SetDisabled = Dispatch<SetStateAction<boolean>>;
 
 export const useDisabledStatus = (topic: SelectedOption, location: SelectedOption): boolean => {
-    const [isDisabled, setDisabled]: [IsDisabled, SetDisabled] = useState<IsDisabled>(true);
+    const [isDisabled, setDisabled]: [boolean, SetDisabled] = useState<boolean>(true);
     useEffect(() => {
         if (topic && location) {
             setDisabled(false);

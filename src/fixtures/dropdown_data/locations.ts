@@ -1,6 +1,6 @@
 import { DropdownItemCollection } from './types';
 
-export const manualLocationsForQA: DropdownItemCollection = [
+export const locationsForQA: DropdownItemCollection = [
     {
         name: 'Vancouver', lat_long: '-123.1207, +49.2827',
     },

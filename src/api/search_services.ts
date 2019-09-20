@@ -8,8 +8,8 @@ import * as R from 'ramda';
 import { availableServerUrls, UrlList } from './available_servers';
 import buildUrl from 'build-url';
 
-export const searchServices = async (topic: SelectedOption, manualLocation: SelectedOption): Promise<ServiceTypes.Services> => {
-    const url = buildUrlFromSelectedTopicAndLocation(topic, manualLocation);
+export const searchServices = async (topic: SelectedOption, location: SelectedOption): Promise<ServiceTypes.Services> => {
+    const url = buildUrlFromSelectedTopicAndLocation(topic, location);
     const response = await servicesAtLocationApiRequest(url);
     if (isResponseError(response)) {
         return { type: 'Services:Error', errorMessage: response.statusText };
@@ -34,13 +34,13 @@ const servicesAtLocationApiRequest = async (url: string): Promise<AxiosResponse>
     return data;
 };
 
-const buildUrlFromSelectedTopicAndLocation = (topic: SelectedOption, manualLocation: SelectedOption): string => {
+const buildUrlFromSelectedTopicAndLocation = (topic: SelectedOption, location: SelectedOption): string => {
     const path = 'v1/services_at_location';
     const baseUrl = chooseServerUrlAtRandom(availableServerUrls);
     const url = buildUrl(baseUrl, {
         path: path,
         queryParams: {
-            user_location: manualLocation,
+            user_location: location,
             related_to_topic: topic,
         },
     });

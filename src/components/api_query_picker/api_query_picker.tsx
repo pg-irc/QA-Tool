@@ -2,7 +2,7 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
 import { Dropdown } from '../dropdown/dropdown';
 import { topicsForQA } from '../../fixtures/dropdown_data/topics';
-import { manualLocationsForQA } from '../../fixtures/dropdown_data/manual_locations';
+import { locationsForQA } from '../../fixtures/dropdown_data/locations';
 import { Services, SetServices } from '../services/types';
 import { searchServices } from '../../api/search_services';
 import { useDisabledStatus } from '../hooks/use_disabled_status';
@@ -23,21 +23,21 @@ type Props = ApiQueryPickerProps & ApiQueryPickerActions;
 
 export const ApiQueryPicker = (props: Props): JSX.Element => {
     const [selectedTopic, setTopic]: [SelectedOption, SetOption] = useState('');
-    const [selectedManualLocation, setManualLocation]: [SelectedOption, SetOption] = useState('');
+    const [location, setLocation]: [SelectedOption, SetOption] = useState('');
     const onSetTopic = (event: React.ChangeEvent<HTMLSelectElement>): void => setTopic(event.target.value);
-    const onSetManualLocation = (event: React.ChangeEvent<HTMLSelectElement>): void => setManualLocation(event.target.value);
+    const onSetLocation = (event: React.ChangeEvent<HTMLSelectElement>): void => setLocation(event.target.value);
     const clearSelectedOptions = (): void => {
        setTopic('');
-       setManualLocation('');
+       setLocation('');
        props.setServices({type: 'Services:Empty'});
     };
     return (
         <div>
             <Dropdown title={'Topic'} selectedOption={selectedTopic} onSetOption={onSetTopic} dropdownItemCollection={topicsForQA} />
-            <Dropdown title={'Location'} selectedOption={selectedManualLocation} onSetOption={onSetManualLocation}
-                dropdownItemCollection={manualLocationsForQA} />
+            <Dropdown title={'Location'} selectedOption={location} onSetOption={onSetLocation}
+                dropdownItemCollection={locationsForQA} />
             <ClearButton clearSelectionOptions={clearSelectedOptions}/>
-            <SendButton selectedTopic={selectedTopic} selectedManualLocation={selectedManualLocation}
+            <SendButton selectedTopic={selectedTopic} location={location}
                 services={props.services} setServices={props.setServices} />
         </div>
     );
@@ -53,24 +53,24 @@ const ClearButton = (props: ClearButtonProps): JSX.Element => (
 
 export interface SendButtonProps {
     readonly selectedTopic: SelectedOption;
-    readonly selectedManualLocation: SelectedOption;
+    readonly location: SelectedOption;
     readonly services: Services;
     readonly setServices: SetServices;
 }
 
 const SendButton = (props: SendButtonProps): JSX.Element => {
-    const disabledStatus = useDisabledStatus(props.selectedTopic, props.selectedManualLocation);
+    const disabledStatus = useDisabledStatus(props.selectedTopic, props.location);
     return (
         <button
             disabled={disabledStatus}
-            onClick={(): Promise<void> => updateServices(props.selectedTopic, props.selectedManualLocation, props.setServices)}>
+            onClick={(): Promise<void> => updateServices(props.selectedTopic, props.location, props.setServices)}>
             Send
         </button>
     );
 };
 
-const updateServices = async (topic: SelectedOption, manualLocation: SelectedOption, setServices: SetServices): Promise<void> => {
+const updateServices = async (topic: SelectedOption, location: SelectedOption, setServices: SetServices): Promise<void> => {
     setServices({type: 'Services:Loading'});
-    const servicesAtLocationJSON = await searchServices(topic, manualLocation);
+    const servicesAtLocationJSON = await searchServices(topic, location);
     setServices(servicesAtLocationJSON);
 };

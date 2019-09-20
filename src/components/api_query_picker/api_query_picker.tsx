@@ -3,7 +3,7 @@ import React, { useState, Dispatch, SetStateAction } from 'react';
 import { Dropdown } from '../dropdown/dropdown';
 import { topicsForQA } from '../../fixtures/dropdown_data/topics';
 import { locationsForQA } from '../../fixtures/dropdown_data/locations';
-import { Services, SetServices } from '../services/types';
+import { Services, SetServices, LoadingServices } from '../services/types';
 import { searchServices } from '../../api/search_services';
 
 export type SelectedOption = string;
@@ -69,7 +69,11 @@ const SendButton = (props: SendButtonProps): JSX.Element => {
 };
 
 const updateServices = async (topic: SelectedOption, location: SelectedOption, setServices: SetServices): Promise<void> => {
-    setServices({type: 'Services:Loading'});
+    setServices(setServicesToLoadingType());
     const servicesAtLocationJSON = await searchServices(topic, location);
     setServices(servicesAtLocationJSON);
 };
+
+const setServicesToLoadingType = (): LoadingServices  => (
+    { type: 'Services:Loading' }
+);

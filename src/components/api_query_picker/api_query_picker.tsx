@@ -5,7 +5,6 @@ import { topicsForQA } from '../../fixtures/dropdown_data/topics';
 import { locationsForQA } from '../../fixtures/dropdown_data/locations';
 import { Services, SetServices } from '../services/types';
 import { searchServices } from '../../api/search_services';
-import { useDisabledStatus } from '../hooks/use_disabled_status';
 
 export type SelectedOption = string;
 
@@ -59,10 +58,10 @@ export interface SendButtonProps {
 }
 
 const SendButton = (props: SendButtonProps): JSX.Element => {
-    const disabledStatus = useDisabledStatus(props.topic, props.location);
+    const enabled = props.topic && props.location;
     return (
         <button
-            disabled={disabledStatus}
+            disabled={!enabled}
             onClick={(): Promise<void> => updateServices(props.topic, props.location, props.setServices)}>
             Send
         </button>

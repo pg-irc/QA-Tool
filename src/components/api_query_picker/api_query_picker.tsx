@@ -22,7 +22,7 @@ export interface ApiQueryPickerActions {
 type Props = ApiQueryPickerProps & ApiQueryPickerActions;
 
 export const ApiQueryPicker = (props: Props): JSX.Element => {
-    const [selectedTopic, setTopic]: [SelectedOption, SetOption] = useState('');
+    const [topic, setTopic]: [SelectedOption, SetOption] = useState('');
     const [location, setLocation]: [SelectedOption, SetOption] = useState('');
     const onSetTopic = (event: React.ChangeEvent<HTMLSelectElement>): void => setTopic(event.target.value);
     const onSetLocation = (event: React.ChangeEvent<HTMLSelectElement>): void => setLocation(event.target.value);
@@ -33,11 +33,11 @@ export const ApiQueryPicker = (props: Props): JSX.Element => {
     };
     return (
         <div>
-            <Dropdown title={'Topic'} selectedOption={selectedTopic} onSetOption={onSetTopic} dropdownItemCollection={topicsForQA} />
+            <Dropdown title={'Topic'} selectedOption={topic} onSetOption={onSetTopic} dropdownItemCollection={topicsForQA} />
             <Dropdown title={'Location'} selectedOption={location} onSetOption={onSetLocation}
                 dropdownItemCollection={locationsForQA} />
             <ClearButton clearSelectionOptions={clearSelectedOptions}/>
-            <SendButton selectedTopic={selectedTopic} location={location}
+            <SendButton topic={topic} location={location}
                 services={props.services} setServices={props.setServices} />
         </div>
     );
@@ -52,18 +52,18 @@ const ClearButton = (props: ClearButtonProps): JSX.Element => (
 );
 
 export interface SendButtonProps {
-    readonly selectedTopic: SelectedOption;
+    readonly topic: SelectedOption;
     readonly location: SelectedOption;
     readonly services: Services;
     readonly setServices: SetServices;
 }
 
 const SendButton = (props: SendButtonProps): JSX.Element => {
-    const disabledStatus = useDisabledStatus(props.selectedTopic, props.location);
+    const disabledStatus = useDisabledStatus(props.topic, props.location);
     return (
         <button
             disabled={disabledStatus}
-            onClick={(): Promise<void> => updateServices(props.selectedTopic, props.location, props.setServices)}>
+            onClick={(): Promise<void> => updateServices(props.topic, props.location, props.setServices)}>
             Send
         </button>
     );

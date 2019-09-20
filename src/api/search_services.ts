@@ -18,7 +18,7 @@ export const searchServices = async (topic: SelectedOption, location: SelectedOp
     if (isValidationError(validator)) {
         return { type: 'Services:Error', errorMessage: 'Error: response data failed schema validation' };
     }
-    if (isEmptyServicesList(response.data)) {
+    if (R.isEmpty(response.data)) {
         return { type: 'Services:Empty' };
     }
     return {
@@ -80,7 +80,3 @@ const chooseServerUrlAtRandom = (urlList: UrlList ): string => {
     const randomIndex = Math.floor(Math.random() * urlList.length);
     return urlList[randomIndex];
 };
-
-const isEmptyServicesList = (data: ReadonlyArray<[]>): boolean  => (
-    data.length <= 0
-);

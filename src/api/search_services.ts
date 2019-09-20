@@ -27,24 +27,22 @@ export const searchServices = async (topic: SelectedOption, location: SelectedOp
 };
 
 const servicesAtLocationApiRequest = async (url: string): Promise<AxiosResponse> => {
-    const data = await axios.get(url)
+    return await axios.get(url)
       .then((response: AxiosResponse): AxiosResponse => {
         return response;
     });
-    return data;
 };
 
 const buildUrlFromSelectedTopicAndLocation = (topic: SelectedOption, location: SelectedOption): string => {
     const path = 'v1/services_at_location';
     const baseUrl = chooseServerUrlAtRandom(availableServerUrls);
-    const url = buildUrl(baseUrl, {
+    return buildUrl(baseUrl, {
         path: path,
         queryParams: {
             user_location: location,
             related_to_topic: topic,
         },
     });
-    return url;
 };
 
 const serviceFromValidatedJSON = (data: ServiceTypes.ValidatedServiceAtLocationJSON): ServiceTypes.Service => {

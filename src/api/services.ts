@@ -7,6 +7,7 @@ import { servicesAtLocationValidator, isValidationError } from '../components/se
 import * as R from 'ramda';
 import { availableServerUrls, UrlList } from './available_servers';
 import buildUrl from 'build-url';
+import { ValidationError } from './exceptions';
 
 export const requestServices = async (topic: SelectedOption, location: SelectedOption): Promise<AxiosResponse> => {
     const url = buildUrlFromSelectedTopicAndLocation(topic, location);
@@ -30,11 +31,12 @@ const buildUrlFromSelectedTopicAndLocation = (topic: SelectedOption, location: S
 
 export const validateServicesResponse = (response: AxiosResponse): ServiceTypes.Services => {
     if (isResponseError(response)) {
-        return { type: 'Services:Error', errorMessage: response.statusText };
+        throw new ValidationError(response.statusText);
     }
     const validator = servicesAtLocationValidator(response.data);
     if (isValidationError(validator)) {
-        return { type: 'Services:Error', errorMessage: 'Error: response data failed schema validation' };
+        const errorMessage = 'Error: response data failed schema validation';
+        throw new ValidationError(errorMessage);
     }
     if (R.isEmpty(response.data)) {
         return { type: 'Services:Empty' };

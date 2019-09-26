@@ -69,10 +69,14 @@ const SendButton = (props: SendButtonProps): JSX.Element => {
 };
 
 const updateServices = async (topic: SelectedOption, location: SelectedOption, setServices: SetServices): Promise<void> => {
-    const servicesResponse = await requestServices(topic, location);
-    setServices(buildServicesLoadingType());
-    const errorOrSuccessServices = validateServicesResponse(servicesResponse);
-    setServices(errorOrSuccessServices);
+    try {
+        const servicesResponse = await requestServices(topic, location);
+        setServices(buildServicesLoadingType());
+        const successServices = validateServicesResponse(servicesResponse);
+        setServices(successServices);
+    } catch (error) {
+        setServices(error.buildErrorServiceType());
+    }
 };
 
 const buildServicesLoadingType = (): LoadingServices  => (

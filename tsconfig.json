@@ -1,38 +1,52 @@
 {
   "compilerOptions": {
-      "target": "es2015",
-      "module": "es2015",
-      "moduleResolution": "node",
-      "jsx": "react",
-      "outDir": "lib",
-      "rootDir": "src",
-      "allowSyntheticDefaultImports": true,
-      "noImplicitAny": true,
-      "preserveConstEnums": true,
-      "allowJs": false,
-      "sourceMap": true,
-      "noImplicitReturns": true,
-      "noUnusedParameters": true,
-      "noUnusedLocals": true,
-      "skipLibCheck": true,
-      "typeRoots": [
-          "./src/@types",
-          "./node_modules/@types",
-      ],
+    "target": "es2015",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "outDir": "lib",
+    "rootDir": "src",
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "allowJs": false,
+    "sourceMap": true,
+    "noImplicitReturns": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "typeRoots": [
+      "./src/@types",
+      "./node_modules/@types"
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "esModuleInterop": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
   },
   "filesGlob": [
-      "typings/index.d.ts",
-      "src/**/*.ts",
-      "src/**/*.tsx"
+    "typings/index.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx"
   ],
   "types": [
-      "react",
-      "jest",
-      "node"
+    "react",
+    "jest",
+    "node"
   ],
   "exclude": [
-      "build",
-      "node_modules"
+    "build",
+    "node_modules"
   ],
-  "compileOnSave": false
+  "compileOnSave": false,
+  "include": [
+    "src"
+  ]
 }

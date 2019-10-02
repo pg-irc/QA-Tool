@@ -1,0 +1,3 @@
+[submodule "src/pathways-frontend"]
+	path = src/pathways-frontend
+	url = https://github.com/pg-irc/pathways-frontend

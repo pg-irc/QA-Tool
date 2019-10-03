@@ -57,7 +57,8 @@
     "testPathIgnorePatterns": [
         "/node_modules/",
         "/lib/",
-        "/helpers/"
+        "/helpers/",
+        "src/pathways-frontend/"
     ]
   }
 }

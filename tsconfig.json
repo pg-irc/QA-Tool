@@ -43,7 +43,8 @@
   ],
   "exclude": [
     "build",
-    "node_modules"
+    "node_modules",
+    "src/pathways-frontend/"
   ],
   "compileOnSave": false,
   "include": [

@@ -2,13 +2,12 @@
 import axios, { AxiosResponse } from 'axios';
 import { SelectedOption } from '../components/api_query_picker/api_query_picker';
 import * as ServiceTypes from '../components/services/types';
-import { isResponseError } from './is_response_error';
-import { servicesAtLocationValidator, isValidationError } from '../components/services/schemas/validator';
+import { isResponseError, isValidationError } from './errors';
 import * as R from 'ramda';
 import { availableServerUrls, UrlList } from './available_servers';
 import buildUrl from 'build-url';
 import { ValidationException } from './exceptions';
-import { serviceFromValidatedJSON } from '../pathways-frontend/src/stores/services/validation';
+import { serviceFromValidatedJSON, validateServicesAtLocationArray } from '../pathways-frontend/src/stores/services/validation';
 
 export const requestServices = async (topic: SelectedOption, location: SelectedOption): Promise<AxiosResponse> => {
     const url = buildUrlFromSelectedTopicAndLocation(topic, location);
@@ -34,7 +33,7 @@ export const validateServicesResponse = (response: AxiosResponse): ServiceTypes.
     if (isResponseError(response)) {
         throw new ValidationException(response.statusText);
     }
-    const validator = servicesAtLocationValidator(response.data);
+    const validator = validateServicesAtLocationArray(response.data);
     if (isValidationError(validator)) {
         const errorMessage = 'Error: response data failed schema validation';
         throw new ValidationException(errorMessage);

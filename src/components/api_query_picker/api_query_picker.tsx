@@ -1,24 +1,11 @@
 // tslint:disable:no-expression-statement no-let
-import React, { useState, Dispatch, SetStateAction } from 'react';
+import React, { useState } from 'react';
 import { Dropdown } from '../dropdown/dropdown';
 import { topicsForQA } from '../../fixtures/dropdown_data/topics';
 import { locationsForQA } from '../../fixtures/dropdown_data/locations';
 import { Services, SetServices, LoadingServices } from '../services/types';
 import { requestServices, validateServicesResponse } from '../../api/services';
-
-export interface SelectedTopic {
-    readonly type: 'Topic';
-    readonly value: string;
-}
-
-export interface SelectedLocation {
-    readonly type: 'Location';
-    readonly value: string;
-}
-
-export type SetTopic = Dispatch<SetStateAction<SelectedTopic>>;
-
-export type SetLocation = Dispatch<SetStateAction<SelectedLocation>>;
+import { SelectedLocation, SelectedTopic, SetTopic, SetLocation} from './types';
 
 export interface ApiQueryPickerProps {
     readonly services: Services;

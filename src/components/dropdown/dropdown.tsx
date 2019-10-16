@@ -1,6 +1,6 @@
 import React from 'react';
 import { DropdownItemCollection, DropdownItem } from '../../fixtures/dropdown_data/types';
-import { SelectedLocation, SelectedTopic } from '../api_query_picker/api_query_picker';
+import { SelectedLocation, SelectedTopic } from '../api_query_picker/types';
 
 export interface DropdownProps {
   readonly selectedOption: SelectedTopic | SelectedLocation;

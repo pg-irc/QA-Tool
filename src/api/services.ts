@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import axios, { AxiosResponse } from 'axios';
-import { SelectedTopic, SelectedLocation } from '../components/api_query_picker/api_query_picker';
+import { SelectedTopic, SelectedLocation } from '../components/api_query_picker/types';
 import * as ServiceTypes from '../components/services/types';
 import { isResponseError, isValidationError } from './errors';
 import * as R from 'ramda';

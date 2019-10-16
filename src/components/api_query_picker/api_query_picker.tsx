@@ -1,66 +1,65 @@
 // tslint:disable:no-expression-statement no-let
-import React, { useState } from 'react';
+import React from 'react';
 import { Dropdown } from '../dropdown/dropdown';
 import { topicsForQA } from '../../fixtures/dropdown_data/topics';
 import { locationsForQA } from '../../fixtures/dropdown_data/locations';
-import { Services, SetServices, LoadingServices } from '../services/types';
+import { Services, SetServices, LoadingServices, EmptyServices } from '../services/types';
 import { requestServices, validateServicesResponse } from '../../api/services';
 import { SelectedLocation, SelectedTopic, SetTopic, SetLocation} from './types';
 
 export interface ApiQueryPickerProps {
     readonly services: Services;
+    readonly selectedTopic: SelectedTopic;
+    readonly selectedLocation: SelectedLocation;
 }
 
 export interface ApiQueryPickerActions {
     readonly setServices: SetServices;
+    readonly setTopic: SetTopic;
+    readonly setLocation: SetLocation;
 }
 
 type Props = ApiQueryPickerProps & ApiQueryPickerActions;
 
 export const ApiQueryPicker = (props: Props): JSX.Element => {
-
-    let selectedTopic: SelectedTopic = {
-        type: 'Topic',
-        value: '',
-    };
-
-    let selectedLocation: SelectedLocation = {
-        type: 'Location',
-        value: '',
-    };
-
-    const [topic, setTopic]: [SelectedTopic, SetTopic] = useState(selectedTopic);
-    const [location, setLocation]: [SelectedLocation, SetLocation] = useState(selectedLocation);
     const onSetTopic = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-        selectedTopic = {
-            type: 'Topic',
-            value: event.target.value,
-        };
-        setTopic(selectedTopic);
+        props.setTopic(buildSelectedTopicType(event.target.value));
     };
     const onSetLocation = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-        selectedLocation = {
-            type: 'Location',
-            value: event.target.value,
-        };
-        setLocation(selectedLocation);
+        props.setLocation(buildSelectedLocationType(event.target.value));
     };
         const clearSelectedOptions = (): void => {
-       setTopic(selectedTopic);
-       setLocation(selectedLocation);
-       props.setServices({type: 'Services:Empty'});
+        props.setTopic(buildEmptyTopicType());
+        props.setLocation(buildEmptyLocationType());
+        props.setServices(buildEmptyServicesType());
     };
     return (
         <div>
-            <Dropdown title={'Topic'} selectedOption={topic} onSetOption={onSetTopic} dropdownItemCollection={topicsForQA} />
-            <Dropdown title={'Location'} selectedOption={location} onSetOption={onSetLocation}
+            <Dropdown title={'Topic'} selectedOption={props.selectedTopic} onSetOption={onSetTopic} dropdownItemCollection={topicsForQA} />
+            <Dropdown title={'Location'} selectedOption={props.selectedLocation} onSetOption={onSetLocation}
                 dropdownItemCollection={locationsForQA} />
             <ClearButton clearSelectionOptions={clearSelectedOptions}/>
-            <SendButton topic={topic} location={location}
+            <SendButton topic={props.selectedTopic} location={props.selectedLocation}
                 services={props.services} setServices={props.setServices} />
         </div>
     );
 };
+
+const buildSelectedTopicType = (topicName: string): SelectedTopic => (
+    { type: 'Topic', value: topicName}
+);
+
+const buildEmptyTopicType = (): SelectedTopic  => (
+    { type: 'Topic', value: '' }
+);
+
+const buildSelectedLocationType = (locationName: string): SelectedLocation => (
+    { type: 'Location', value: locationName}
+);
+
+const buildEmptyLocationType = (): SelectedLocation => (
+    { type: 'Location', value: ''}
+);
 
 export interface ClearButtonProps {
     readonly clearSelectionOptions: () => void;
@@ -101,4 +100,8 @@ const updateServices = async (topic: SelectedTopic, location: SelectedLocation, 
 
 const buildServicesLoadingType = (): LoadingServices  => (
     { type: 'Services:Loading' }
+);
+
+const buildEmptyServicesType = (): EmptyServices => (
+    { type: 'Services:Empty'}
 );

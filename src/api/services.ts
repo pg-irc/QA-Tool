@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import axios, { AxiosResponse } from 'axios';
-import { SelectedOption } from '../components/api_query_picker/api_query_picker';
+import { SelectedTopic, SelectedLocation } from '../components/api_query_picker/api_query_picker';
 import * as ServiceTypes from '../components/services/types';
 import { isResponseError, isValidationError } from './errors';
 import * as R from 'ramda';
@@ -9,7 +9,7 @@ import buildUrl from 'build-url';
 import { ValidationException } from './exceptions';
 import { serviceFromValidatedJSON, validateServicesAtLocationArray } from '../pathways-frontend/src/stores/services/validation';
 
-export const requestServices = async (topic: SelectedOption, location: SelectedOption): Promise<AxiosResponse> => {
+export const requestServices = async (topic: SelectedTopic, location: SelectedLocation): Promise<AxiosResponse> => {
     const url = buildUrlFromSelectedTopicAndLocation(topic, location);
     return await axios.get(url)
     .then((response: AxiosResponse): AxiosResponse => {
@@ -17,14 +17,14 @@ export const requestServices = async (topic: SelectedOption, location: SelectedO
   });
 };
 
-const buildUrlFromSelectedTopicAndLocation = (topic: SelectedOption, location: SelectedOption): string => {
+const buildUrlFromSelectedTopicAndLocation = (topic: SelectedTopic, location: SelectedLocation): string => {
     const path = 'v1/services_at_location';
     const baseUrl = chooseServerUrlAtRandom(availableServerUrls);
     return buildUrl(baseUrl, {
         path: path,
         queryParams: {
-            user_location: location,
-            related_to_topic: topic,
+            user_location: location.value,
+            related_to_topic: topic.value,
         },
     });
 };

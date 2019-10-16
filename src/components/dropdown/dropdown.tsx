@@ -1,9 +1,9 @@
 import React from 'react';
 import { DropdownItemCollection, DropdownItem } from '../../fixtures/dropdown_data/types';
-import { SelectedOption } from '../api_query_picker/api_query_picker';
+import { SelectedLocation, SelectedTopic } from '../api_query_picker/api_query_picker';
 
 export interface DropdownProps {
-  readonly selectedOption: SelectedOption;
+  readonly selectedOption: SelectedTopic | SelectedLocation;
   readonly dropdownItemCollection: DropdownItemCollection;
   readonly title: string;
 }
@@ -17,7 +17,7 @@ type Props = DropdownProps & DropdownActions;
 export const Dropdown = (props: Props): JSX.Element => (
   <React.Fragment>
       <label>{props.title}</label>
-      <select value={props.selectedOption} onChange={props.onSetOption}>
+      <select value={props.selectedOption.value} onChange={props.onSetOption}>
         {renderAllDropdownOptions(props.dropdownItemCollection)}
       </select>
   </React.Fragment>

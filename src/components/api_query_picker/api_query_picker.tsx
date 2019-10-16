@@ -3,63 +3,39 @@ import React from 'react';
 import { Dropdown } from '../dropdown/dropdown';
 import { topicsForQA } from '../../fixtures/dropdown_data/topics';
 import { locationsForQA } from '../../fixtures/dropdown_data/locations';
-import { Services, SetServices, LoadingServices, EmptyServices } from '../services/types';
+import { Services, SetServices } from '../services/types';
 import { requestServices, validateServicesResponse } from '../../api/services';
-import { SelectedLocation, SelectedTopic, SetTopic, SetLocation} from './types';
+import { SelectedLocation, SelectedTopic } from './types';
+import { buildEmptyLocationType, buildEmptyTopicType, buildEmptyServicesType, buildSelectedLocationType,
+    buildSelectedTopicType, buildServicesLoadingType} from './build_types';
+import { SharedStateAndCallbacks } from '../Application';
 
-export interface ApiQueryPickerProps {
-    readonly services: Services;
-    readonly selectedTopic: SelectedTopic;
-    readonly selectedLocation: SelectedLocation;
-}
+export type ApiQueryPickerProps = SharedStateAndCallbacks;
 
-export interface ApiQueryPickerActions {
-    readonly setServices: SetServices;
-    readonly setTopic: SetTopic;
-    readonly setLocation: SetLocation;
-}
-
-type Props = ApiQueryPickerProps & ApiQueryPickerActions;
-
-export const ApiQueryPicker = (props: Props): JSX.Element => {
+export const ApiQueryPicker = (props: ApiQueryPickerProps): JSX.Element => {
     const onSetTopic = (event: React.ChangeEvent<HTMLSelectElement>): void => {
         props.setTopic(buildSelectedTopicType(event.target.value));
     };
     const onSetLocation = (event: React.ChangeEvent<HTMLSelectElement>): void => {
         props.setLocation(buildSelectedLocationType(event.target.value));
     };
-        const clearSelectedOptions = (): void => {
+    const clearSelectedOptions = (): void => {
         props.setTopic(buildEmptyTopicType());
         props.setLocation(buildEmptyLocationType());
         props.setServices(buildEmptyServicesType());
     };
     return (
         <div>
-            <Dropdown title={'Topic'} selectedOption={props.selectedTopic} onSetOption={onSetTopic} dropdownItemCollection={topicsForQA} />
-            <Dropdown title={'Location'} selectedOption={props.selectedLocation} onSetOption={onSetLocation}
+            <Dropdown title={'Topic'} selectedOption={props.topic}
+            onSetOption={onSetTopic} dropdownItemCollection={topicsForQA} />
+            <Dropdown title={'Location'} selectedOption={props.location} onSetOption={onSetLocation}
                 dropdownItemCollection={locationsForQA} />
             <ClearButton clearSelectionOptions={clearSelectedOptions}/>
-            <SendButton topic={props.selectedTopic} location={props.selectedLocation}
+            <SendButton topic={props.topic} location={props.location}
                 services={props.services} setServices={props.setServices} />
         </div>
     );
 };
-
-const buildSelectedTopicType = (topicName: string): SelectedTopic => (
-    { type: 'Topic', value: topicName}
-);
-
-const buildEmptyTopicType = (): SelectedTopic  => (
-    { type: 'Topic', value: '' }
-);
-
-const buildSelectedLocationType = (locationName: string): SelectedLocation => (
-    { type: 'Location', value: locationName}
-);
-
-const buildEmptyLocationType = (): SelectedLocation => (
-    { type: 'Location', value: ''}
-);
 
 export interface ClearButtonProps {
     readonly clearSelectionOptions: () => void;
@@ -97,11 +73,3 @@ const updateServices = async (topic: SelectedTopic, location: SelectedLocation, 
         setServices(error.buildErrorServiceType());
     }
 };
-
-const buildServicesLoadingType = (): LoadingServices  => (
-    { type: 'Services:Loading' }
-);
-
-const buildEmptyServicesType = (): EmptyServices => (
-    { type: 'Services:Empty'}
-);

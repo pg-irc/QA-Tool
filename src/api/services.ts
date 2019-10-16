@@ -20,11 +20,13 @@ export const requestServices = async (topic: SelectedTopic, location: SelectedLo
 const buildUrlFromSelectedTopicAndLocation = (topic: SelectedTopic, location: SelectedLocation): string => {
     const path = 'v1/services_at_location';
     const baseUrl = chooseServerUrlAtRandom(availableServerUrls);
+    const numberOfRecordsToGet = '5';
     return buildUrl(baseUrl, {
         path: path,
         queryParams: {
             user_location: location.value,
             related_to_topic: topic.value,
+            per_page: numberOfRecordsToGet,
         },
     });
 };

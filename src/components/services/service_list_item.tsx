@@ -1,6 +1,7 @@
 import React from 'react';
 import { Service, Address } from '../services/types';
 import * as R from 'ramda';
+import { ScoreButtons } from '../feedback_buttons/score_buttons';
 
 export interface Props {
     readonly service: Service;
@@ -11,6 +12,7 @@ export const ServiceListItem = (props: Props): JSX.Element => (
         { renderName(props.service.name) }
         { renderDescription(props.service.description) }
         { renderAddresses(filterPhysicalAddresses(props.service.addresses))}
+        <ScoreButtons />
     </li>
 );
 

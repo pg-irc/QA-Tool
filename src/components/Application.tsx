@@ -38,7 +38,7 @@ export const Application = (): JSX.Element => {
   return (
     <div>
       <ApiQueryPicker {...sharedStateAndCallbacks} />
-      <ServicesList services={services} />
+      <ServicesList {...sharedStateAndCallbacks} />
     </div>
   );
 };

@@ -1,12 +1,11 @@
 import React from 'react';
 import { ValidServices, InvalidServices, Service, Services } from './types';
 import { ServiceListItem } from './service_list_item';
+import { SharedStateAndCallbacks } from '../Application';
 
-export interface ServicesListProps {
-    readonly services: Services;
-}
+type Props = SharedStateAndCallbacks;
 
-export const ServicesList = (props: ServicesListProps): JSX.Element => (
+export const ServicesList = (props: Props): JSX.Element => (
     <div>
         <h3>Services</h3>
         {renderServicesBasedOnType(props.services)}

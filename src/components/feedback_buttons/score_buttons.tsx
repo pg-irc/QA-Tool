@@ -1,17 +1,27 @@
 import React from 'react';
+import { Service } from '../../pathways-frontend/src/stores/services/types';
+import { SendServiceRecommendationScore } from '../services/services_list';
 
-export const ScoreButtons = (): JSX.Element => (
+export type Score = string;
+
+export interface ScoreButtonsProps {
+    readonly service: Service;
+    readonly sendServiceRecommendationScore: SendServiceRecommendationScore;
+}
+
+export const ScoreButtons = (props: ScoreButtonsProps): JSX.Element => (
     <div>
-        {renderButton('1')}
-        {renderButton('2')}
-        {renderButton('3')}
+        {renderButton(props, '1')}
+        {renderButton(props, '2')}
+        {renderButton(props, '3')}
     </div>
 );
 
-const renderButton = (scoreValue: string): JSX.Element => (
-    <Button scoreValue = {scoreValue}/>
+const renderButton = (props: ScoreButtonsProps, scoreValue: string): JSX.Element => (
+    <Button scoreButtonsProps={props} scoreValue={scoreValue}/>
 );
 
-const Button = (props: { readonly scoreValue: string}): JSX.Element => (
-    <button>{props.scoreValue}</button>
+const Button = (props: {readonly scoreButtonsProps: ScoreButtonsProps, readonly scoreValue: Score}): JSX.Element => (
+    <button onClick={(): void =>
+            props.scoreButtonsProps.sendServiceRecommendationScore(props.scoreButtonsProps.service, props.scoreValue)}>{props.scoreValue}</button>
 );

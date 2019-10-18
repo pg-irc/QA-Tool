@@ -53,7 +53,7 @@ export interface SendButtonProps {
 }
 
 const SendButton = (props: SendButtonProps): JSX.Element => {
-    const enabled = props.topic && props.location;
+    const enabled = props.topic.value && props.location.value;
     return (
         <button
             disabled={!enabled}

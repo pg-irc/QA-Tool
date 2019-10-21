@@ -4,7 +4,7 @@ import { SelectedTopic, SelectedLocation } from '../components/api_query_picker/
 import * as ServiceTypes from '../components/services/types';
 import { isResponseError, isValidationError } from './errors';
 import * as R from 'ramda';
-import { availableServerUrls, UrlList } from './available_servers';
+import { availableServerUrls, UrlList } from './available_algorithms';
 import buildUrl from 'build-url';
 import { ValidationException } from './exceptions';
 import { serviceFromValidatedJSON, validateServicesAtLocationArray } from '../pathways-frontend/src/stores/services/validation';

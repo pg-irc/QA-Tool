@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Application } from '../Application';
+import { Application } from '../../application';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');

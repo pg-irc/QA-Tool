@@ -1,8 +1,9 @@
-import { SelectedTopic, SelectedLocation } from './types';
-import { LoadingServices, EmptyServices } from '../services/types';
+import { SelectedTopic, SelectedLocation } from '../../components/api_query_picker/types';
+import { LoadingServices, EmptyServices } from '../../components/services/types';
+import { LoadingAlgorithms } from '../../api/types';
 
 export const buildSelectedTopicType = (topicName: string): SelectedTopic => (
-    { type: 'Topic', value: topicName}
+    { type: 'Topic', value: topicName }
 );
 
 export const buildEmptyTopicType = (): SelectedTopic  => (
@@ -10,11 +11,11 @@ export const buildEmptyTopicType = (): SelectedTopic  => (
 );
 
 export const buildSelectedLocationType = (locationName: string): SelectedLocation => (
-    { type: 'Location', value: locationName}
+    { type: 'Location', value: locationName }
 );
 
 export const buildEmptyLocationType = (): SelectedLocation => (
-    { type: 'Location', value: ''}
+    { type: 'Location', value: '' }
 );
 
 export const buildServicesLoadingType = (): LoadingServices  => (
@@ -22,5 +23,9 @@ export const buildServicesLoadingType = (): LoadingServices  => (
 );
 
 export const buildEmptyServicesType = (): EmptyServices => (
-    { type: 'Services:Empty'}
+    { type: 'Services:Empty' }
+);
+
+export const buildEmptyAlgorithmsType = (): LoadingAlgorithms => (
+    { type: 'Algorithms:Loading' }
 );

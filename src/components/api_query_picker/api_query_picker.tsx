@@ -7,8 +7,8 @@ import { Services, SetServices } from '../services/types';
 import { requestServices, validateServicesResponse } from '../../api/services';
 import { SelectedLocation, SelectedTopic } from './types';
 import { buildEmptyLocationType, buildEmptyTopicType, buildEmptyServicesType, buildSelectedLocationType,
-    buildSelectedTopicType, buildServicesLoadingType} from './build_types';
-import { SharedStateAndCallbacks } from '../Application';
+    buildSelectedTopicType, buildServicesLoadingType} from '../../application/helpers/build_types';
+import { SharedStateAndCallbacks } from '../../application';
 import { AlgorithmId, SetAlgorithmId, Algorithms, ValidAlgorithms, Algorithm } from '../../api/types';
 
 export type ApiQueryPickerProps = SharedStateAndCallbacks;

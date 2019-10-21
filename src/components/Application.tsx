@@ -5,7 +5,7 @@ import { Services, SetServices } from './services/types';
 import { ServicesList } from './services/services_list';
 import { SetTopic, SelectedTopic, SetLocation, SelectedLocation } from './api_query_picker/types';
 import { requestAlgorithms, validateAlgorithmsResponse } from '../api/available_algorithms';
-import { Algorithms, SetAlgorithms, SetAlgorithm, Algorithm } from '../api/types';
+import { Algorithms, SetAlgorithms, SetAlgorithmId, AlgorithmId } from '../api/types';
 
 export interface SharedStateAndCallbacks {
   readonly services: Services;
@@ -16,8 +16,8 @@ export interface SharedStateAndCallbacks {
   readonly setLocation: SetLocation;
   readonly algorithms: Algorithms;
   readonly setAlgorithms: SetAlgorithms;
-  readonly algorithm: Algorithm;
-  readonly setAlgorithm: SetAlgorithm;
+  readonly algorithmId: AlgorithmId;
+  readonly setAlgorithmId: SetAlgorithmId;
 }
 
 export const buildAlgorithms = async (): Promise<Algorithms> => {
@@ -43,14 +43,14 @@ export const Application = (): JSX.Element => {
   const [topic, setTopic]: [SelectedTopic, SetTopic] = useState(selectedTopic);
   const [location, setLocation]: [SelectedLocation, SetLocation] = useState(selectedLocation);
   const [algorithms, setAlgorithms]: [Algorithms, SetAlgorithms] = useState<Algorithms>({type: 'Algorithms:Empty'});
-  const [algorithm, setAlgorithm]: [Algorithm, SetAlgorithm] = useState<Algorithm>({id: '', url: ''});
+  const [algorithmId, setAlgorithmId]: [AlgorithmId, SetAlgorithmId] = useState<AlgorithmId>('');
   useEffect(() => {
     const buildAlgorithmsFromApi = async (): Promise<void> => {
       const algorithmsFromApi = await buildAlgorithms();
       setAlgorithms(algorithmsFromApi);
     };
     buildAlgorithmsFromApi();
-  });
+  }, []);
   const sharedStateAndCallbacks: SharedStateAndCallbacks = {
     services,
     topic,
@@ -59,11 +59,10 @@ export const Application = (): JSX.Element => {
     setTopic,
     setLocation,
     algorithms,
-    algorithm,
+    algorithmId,
     setAlgorithms,
-    setAlgorithm,
+    setAlgorithmId,
   };
-
   return (
     <div>
       <ApiQueryPicker {...sharedStateAndCallbacks} />

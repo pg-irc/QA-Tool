@@ -4,22 +4,21 @@ import { SelectedTopic, SelectedLocation } from '../components/api_query_picker/
 import * as ServiceTypes from '../components/services/types';
 import { isResponseError, isValidationError } from './errors';
 import * as R from 'ramda';
-import { availableServerUrls, UrlList } from './available_algorithms';
 import buildUrl from 'build-url';
 import { ValidationException } from './exceptions';
 import { serviceFromValidatedJSON, validateServicesAtLocationArray } from '../pathways-frontend/src/stores/services/validation';
 
-export const requestServices = async (topic: SelectedTopic, location: SelectedLocation): Promise<AxiosResponse> => {
-    const url = buildUrlFromSelectedTopicAndLocation(topic, location);
+export const requestServices = async (topic: SelectedTopic, location: SelectedLocation, algorithmUrl: string): Promise<AxiosResponse> => {
+    const url = buildUrlFromSelectedTopicAndLocation(topic, location, algorithmUrl);
     return await axios.get(url)
     .then((response: AxiosResponse): AxiosResponse => {
       return response;
   });
 };
 
-const buildUrlFromSelectedTopicAndLocation = (topic: SelectedTopic, location: SelectedLocation): string => {
+const buildUrlFromSelectedTopicAndLocation = (topic: SelectedTopic, location: SelectedLocation, algorithmUrl: string): string => {
     const path = 'v1/services_at_location';
-    const baseUrl = chooseServerUrlAtRandom(availableServerUrls);
+    const baseUrl = algorithmUrl;
     const numberOfRecordsToGet = '5';
     return buildUrl(baseUrl, {
         path: path,
@@ -46,9 +45,4 @@ export const validateServicesResponse = (response: AxiosResponse): ServiceTypes.
     return {
         type: 'Services:Success', services: response.data.map((val: ServiceTypes.ValidatedServiceAtLocationJSON) => serviceFromValidatedJSON(val)),
     };
-};
-
-const chooseServerUrlAtRandom = (urlList: UrlList ): string => {
-    const randomIndex = Math.floor(Math.random() * urlList.length);
-    return urlList[randomIndex];
 };

@@ -6,13 +6,6 @@ import { isResponseError } from './errors';
 import * as R from 'ramda';
 import { ValidationException } from './exceptions';
 
-export type UrlList = ReadonlyArray<string>;
-
-export const availableServerUrls: UrlList = [
-    'https://pathways-production.herokuapp.com',
-    'https://fierce-ravine-89308.herokuapp.com',
-];
-
 export const requestAlgorithms = async (): Promise<AxiosResponse>  => {
     const url = buildUrlForAlgorithms();
     return await axios.get(url)

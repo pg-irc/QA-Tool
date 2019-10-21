@@ -1,7 +1,7 @@
 import React from 'react';
 import { ValidServices, InvalidServices, Service, Services } from './types';
 import { ServiceListItem } from './service_list_item';
-import { SharedStateAndCallbacks } from '../Application';
+import { SharedStateAndCallbacks } from '../../application';
 import { requestSendServiceScore } from '../../api/service_recommendation_score';
 import { Score } from '../feedback_buttons/score_buttons';
 import { SelectedTopic, SelectedLocation } from '../api_query_picker/types';

@@ -9,6 +9,7 @@ import { SelectedLocation, SelectedTopic } from './types';
 import { buildEmptyLocationType, buildEmptyTopicType, buildEmptyServicesType, buildSelectedLocationType,
     buildSelectedTopicType, buildServicesLoadingType} from './build_types';
 import { SharedStateAndCallbacks } from '../Application';
+import { AlgorithmId, SetAlgorithmId, Algorithms, ValidAlgorithms, Algorithm } from '../../api/types';
 
 export type ApiQueryPickerProps = SharedStateAndCallbacks;
 
@@ -31,8 +32,7 @@ export const ApiQueryPicker = (props: ApiQueryPickerProps): JSX.Element => {
             <Dropdown title={'Location'} selectedOption={props.location} onSetOption={onSetLocation}
                 dropdownItemCollection={locationsForQA} />
             <ClearButton clearSelectionOptions={clearSelectedOptions}/>
-            <SendButton topic={props.topic} location={props.location}
-                services={props.services} setServices={props.setServices} />
+            <SendButton {...props} />
         </div>
     );
 };
@@ -50,6 +50,9 @@ export interface SendButtonProps {
     readonly location: SelectedLocation;
     readonly services: Services;
     readonly setServices: SetServices;
+    readonly algorithms: Algorithms;
+    readonly algorithmId: AlgorithmId;
+    readonly setAlgorithmId: SetAlgorithmId;
 }
 
 const SendButton = (props: SendButtonProps): JSX.Element => {
@@ -57,19 +60,38 @@ const SendButton = (props: SendButtonProps): JSX.Element => {
     return (
         <button
             disabled={!enabled}
-            onClick={(): Promise<void> => updateServices(props.topic, props.location, props.setServices)}>
+            onClick={(): void => updateServicesAndAlgorithm(props)}>
             Send
         </button>
     );
 };
 
-const updateServices = async (topic: SelectedTopic, location: SelectedLocation, setServices: SetServices): Promise<void> => {
+const updateServicesAndAlgorithm = (props: SendButtonProps): void => {
+    if (props.algorithms.type !== 'Algorithms:Success') {
+        return;
+    }
+    const algorithmUrl = updateAlgorithm(props.algorithms, props.setAlgorithmId);
+    updateServices(props.topic, props.location, props.setServices, algorithmUrl);
+};
+
+const updateAlgorithm = (algorithms: ValidAlgorithms, setAlgorithm: SetAlgorithmId): string => {
+    const algorithm = chooseAlgorithmAtRandom(algorithms);
+    setAlgorithm(algorithm.id);
+    return algorithm.url;
+};
+
+const updateServices = async (topic: SelectedTopic, location: SelectedLocation, setServices: SetServices, algorithmUrl: string): Promise<void> => {
     try {
-        const servicesResponse = await requestServices(topic, location);
+        const servicesResponse = await requestServices(topic, location, algorithmUrl);
         setServices(buildServicesLoadingType());
         const successServices = validateServicesResponse(servicesResponse);
         setServices(successServices);
     } catch (error) {
         setServices(error.buildErrorServiceType());
     }
+};
+
+const chooseAlgorithmAtRandom = (algorithms: ValidAlgorithms ): Algorithm => {
+    const randomIndex = Math.floor(Math.random() * algorithms.algorithms.length);
+    return algorithms.algorithms[randomIndex];
 };

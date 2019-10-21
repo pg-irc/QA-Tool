@@ -1,14 +1,16 @@
 import { Dispatch, SetStateAction } from 'react';
 
+export type AlgorithmId = string;
+
 export interface Algorithm {
-    readonly id: string;
+    readonly id: AlgorithmId;
     readonly url: string;
     readonly name?: string;
     readonly notes?: string;
 }
 
 export type SetAlgorithms = Dispatch<SetStateAction<Algorithms>>;
-export type SetAlgorithm = Dispatch<SetStateAction<Algorithm>>;
+export type SetAlgorithmId = Dispatch<SetStateAction<AlgorithmId>>;
 
 export interface EmptyAlgorithms {
     readonly type: 'Algorithms:Empty';

@@ -5,6 +5,7 @@ import { SharedStateAndCallbacks } from '../Application';
 import { requestSendServiceScore } from '../../api/service_recommendation_score';
 import { Score } from '../feedback_buttons/score_buttons';
 import { SelectedTopic, SelectedLocation } from '../api_query_picker/types';
+import { AlgorithmId } from '../../api/types';
 
 type Props = SharedStateAndCallbacks;
 
@@ -13,6 +14,7 @@ export interface ScoreForService {
     readonly location: SelectedLocation;
     readonly service: Service;
     readonly score: Score;
+    readonly algorithmId: AlgorithmId;
 }
 
 export type SendServiceRecommendationScore = (service: Service, score: Score) => void;
@@ -21,15 +23,17 @@ export const ServicesList = (props: Props): JSX.Element => {
     const sendServiceRecommendationScore = (service: Service, score: Score): void => {
         const topic: SelectedTopic = props.topic;
         const location: SelectedLocation = props.location;
+        const algorithmId: AlgorithmId = props.algorithmId;
 
         const scoreForService: ScoreForService = {
             topic,
             location,
             service,
             score,
+            algorithmId,
         };
 // tslint:disable-next-line: no-expression-statement
-        console.log('Topic:',topic, 'Location:',location, 'Service:', service, 'Score:', score);
+        console.log('Topic: ', topic, 'Location: ', location, 'Service: ', service, 'Score: ', score, 'AlgorithmId: ', algorithmId);
 // tslint:disable-next-line: no-expression-statement
         requestSendServiceScore(scoreForService);
     };

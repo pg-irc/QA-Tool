@@ -1,6 +1,4 @@
-import { DropdownItemCollection } from './types';
-
-export const topicsForQA: DropdownItemCollection = [
+export const topicsForQA = [
     {
         name: 'Get your BC Services Card', topic_id: 'get-your-bc-services-card',
     },

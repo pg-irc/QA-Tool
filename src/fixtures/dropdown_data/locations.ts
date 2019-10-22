@@ -1,6 +1,4 @@
-import { DropdownItemCollection } from './types';
-
-export const locationsForQA: DropdownItemCollection = [
+export const locationsForQA = [
     {
         name: 'Burnaby', lat_long: '-122.9805, +49.2488',
     },

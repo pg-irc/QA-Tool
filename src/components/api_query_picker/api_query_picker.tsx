@@ -2,7 +2,6 @@
 import React from 'react';
 import { Dropdown } from '../dropdown/dropdown';
 import { topicsForQA } from '../../fixtures/dropdown_data/topics';
-import { locationsForQA } from '../../fixtures/dropdown_data/locations';
 import { Services, SetServices } from '../services/types';
 import { requestServices, validateServicesResponse } from '../../api/services';
 import { SelectedLocation, SelectedTopic } from './types';
@@ -10,10 +9,14 @@ import { buildEmptyLocationType, buildEmptyTopicType, buildEmptyServicesType, bu
     buildSelectedTopicType, buildServicesLoadingType} from '../../application/helpers/build_types';
 import { SharedStateAndCallbacks } from '../../application';
 import { AlgorithmId, SetAlgorithmId, Algorithms, ValidAlgorithms, Algorithm } from '../../api/types';
+import { Locations, Location } from '../../application/types';
 
-export type ApiQueryPickerProps = SharedStateAndCallbacks;
+export interface ApiQueryPickerProps {
+    readonly locations: Locations;
+}
+type Props = ApiQueryPickerProps & SharedStateAndCallbacks;
 
-export const ApiQueryPicker = (props: ApiQueryPickerProps): JSX.Element => {
+export const ApiQueryPicker = (props: Props): JSX.Element => {
     const onSetTopic = (event: React.ChangeEvent<HTMLSelectElement>): void => {
         props.setTopic(buildSelectedTopicType(event.target.value));
     };
@@ -30,7 +33,7 @@ export const ApiQueryPicker = (props: ApiQueryPickerProps): JSX.Element => {
             <Dropdown title={'Topic'} selectedOption={props.topic}
             onSetOption={onSetTopic} dropdownItemCollection={topicsForQA} />
             <Dropdown title={'Location'} selectedOption={props.location} onSetOption={onSetLocation}
-                dropdownItemCollection={locationsForQA} />
+                dropdownItemCollection={passLocationsList(props.locations)} />
             <ClearButton clearSelectionOptions={clearSelectedOptions}/>
             <SendButton {...props} />
         </div>
@@ -94,4 +97,11 @@ const updateServices = async (topic: SelectedTopic, location: SelectedLocation, 
 const chooseAlgorithmAtRandom = (algorithms: ValidAlgorithms ): Algorithm => {
     const randomIndex = Math.floor(Math.random() * algorithms.algorithms.length);
     return algorithms.algorithms[randomIndex];
+};
+
+const passLocationsList = (locations: Locations): ReadonlyArray<Location> => {
+   if (locations.type !== 'Locations:Success') {
+       return [];
+   }
+   return locations.locations;
 };

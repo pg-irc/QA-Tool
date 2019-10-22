@@ -7,6 +7,8 @@ import { SetTopic, SelectedTopic, SetLocation, SelectedLocation } from '../compo
 import { Algorithms, SetAlgorithms, SetAlgorithmId, AlgorithmId } from '../api/types';
 import { buildAlgorithms } from './helpers/build_algorithms';
 import { buildEmptyServicesType, buildEmptyAlgorithmsType } from './helpers/build_types';
+import { Locations, SetLocations } from './types';
+import { buildLocations } from './helpers/build_services';
 
 export interface SharedStateAndCallbacks {
   readonly services: Services;
@@ -35,12 +37,15 @@ export const Application = (): JSX.Element => {
   const [location, setLocation]: [SelectedLocation, SetLocation] = useState(selectedLocation);
   const [algorithms, setAlgorithms]: [Algorithms, SetAlgorithms] = useState<Algorithms>(buildEmptyAlgorithmsType());
   const [algorithmId, setAlgorithmId]: [AlgorithmId, SetAlgorithmId] = useState<AlgorithmId>('');
+  const [locations, setLocations]: [Locations, SetLocations] = useState<Locations>({type: 'Locations:Empty'});
   useEffect(() => {
-    const buildAlgorithmsFromApi = async (): Promise<void> => {
+    const buildRelevancyScoreItemsFromApi = async (): Promise<void> => {
       const algorithmsFromApi = await buildAlgorithms();
+      const locationsFromApi = await buildLocations();
       setAlgorithms(algorithmsFromApi);
+      setLocations(locationsFromApi);
     };
-    buildAlgorithmsFromApi();
+    buildRelevancyScoreItemsFromApi();
   }, []);
   const sharedStateAndCallbacks: SharedStateAndCallbacks = {
     services,
@@ -56,7 +61,7 @@ export const Application = (): JSX.Element => {
   };
   return (
     <div>
-      <ApiQueryPicker {...sharedStateAndCallbacks} />
+      <ApiQueryPicker {...sharedStateAndCallbacks} locations={locations}/>
       <ServicesList {...sharedStateAndCallbacks} />
     </div>
   );

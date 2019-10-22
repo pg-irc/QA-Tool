@@ -4,8 +4,8 @@ import { requestAlgorithms, validateAlgorithmsResponse } from '../../api/availab
 export const buildAlgorithms = async (): Promise<Algorithms> => {
     try {
       const algorithmsResponse = await requestAlgorithms();
-      const foo = validateAlgorithmsResponse(algorithmsResponse);
-      return foo;
+      const validatedAlgorithms = validateAlgorithmsResponse(algorithmsResponse);
+      return validatedAlgorithms;
     } catch (error) {
       return error;
     }

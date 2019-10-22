@@ -2,8 +2,8 @@ import React from 'react';
 import { ValidServices, InvalidServices, Service, Services } from './types';
 import { ServiceListItem } from './service_list_item';
 import { SharedStateAndCallbacks } from '../../application';
-import { requestSendServiceScore } from '../../api/service_recommendation_score';
-import { Score } from '../feedback_buttons/score_buttons';
+import { requestSendRelevancyScore } from '../../api/relevancy_score';
+import { Score } from '../relevancy_score_buttons/score_buttons';
 import { SelectedTopic, SelectedLocation } from '../api_query_picker/types';
 import { AlgorithmId } from '../../api/types';
 
@@ -17,10 +17,10 @@ export interface ScoreForService {
     readonly algorithmId: AlgorithmId;
 }
 
-export type SendServiceRecommendationScore = (service: Service, score: Score) => void;
+export type SendRelevancyScore = (service: Service, score: Score) => void;
 
 export const ServicesList = (props: Props): JSX.Element => {
-    const sendServiceRecommendationScore = (service: Service, score: Score): void => {
+    const sendRelevancyScore = (service: Service, score: Score): void => {
         const topic: SelectedTopic = props.topic;
         const location: SelectedLocation = props.location;
         const algorithmId: AlgorithmId = props.algorithmId;
@@ -35,21 +35,21 @@ export const ServicesList = (props: Props): JSX.Element => {
 // tslint:disable-next-line: no-expression-statement
         console.log('Topic: ', topic, 'Location: ', location, 'Service: ', service, 'Score: ', score, 'AlgorithmId: ', algorithmId);
 // tslint:disable-next-line: no-expression-statement
-        requestSendServiceScore(scoreForService);
+        requestSendRelevancyScore(scoreForService);
     };
     return (
         <div>
             <h3>Services</h3>
-            {renderServicesBasedOnType(props.services, sendServiceRecommendationScore)}
+            {renderServicesBasedOnType(props.services, sendRelevancyScore)}
          </div>
     );
 };
-const renderServicesBasedOnType = (services: Services, sendServiceRecommendationScore: SendServiceRecommendationScore): JSX.Element => {
+const renderServicesBasedOnType = (services: Services, sendRelevancyScore: SendRelevancyScore): JSX.Element => {
     switch (services.type) {
         case 'Services:Loading':
             return renderLoadingMessage();
         case 'Services:Success':
-            return renderList(services, sendServiceRecommendationScore);
+            return renderList(services, sendRelevancyScore);
         case 'Services:Error':
             return renderErrorMessage(services);
         default:
@@ -57,10 +57,10 @@ const renderServicesBasedOnType = (services: Services, sendServiceRecommendation
     }
 };
 
-const renderList = (validServices: ValidServices, sendServiceRecommendationScore: SendServiceRecommendationScore): JSX.Element => (
+const renderList = (validServices: ValidServices, sendRelevancyScore: SendRelevancyScore): JSX.Element => (
         <ol>
             {validServices.services.map((service: Service ) => <ServiceListItem key={service.id} service={service}
-            sendServiceRecommendationScore={sendServiceRecommendationScore} />)}
+            sendRelevancyScore={sendRelevancyScore} />)}
         </ol>
 );
 

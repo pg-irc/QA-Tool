@@ -1,23 +1,23 @@
 import axios, { AxiosResponse } from 'axios';
 import { SelectedTopic, SelectedLocation } from '../components/api_query_picker/types';
 import { Service } from '../components/services/types';
-import { Score } from '../components/feedback_buttons/score_buttons';
+import { Score } from '../components/relevancy_score_buttons/score_buttons';
 import buildUrl from 'build-url';
 
-export interface ServiceScore {
+export interface RelevancyScore {
     readonly topic: SelectedTopic;
     readonly location: SelectedLocation;
     readonly service: Service;
     readonly score: Score;
 }
 
-export const requestSendServiceScore = async (serviceScore: ServiceScore): Promise<AxiosResponse> => {
+export const requestSendRelevancyScore = async (relevancyScore: RelevancyScore): Promise<AxiosResponse> => {
     const url = buildUrlFromServiceScore();
     return await axios.post(url, {
-        topic: serviceScore.topic,
-        location: serviceScore.location,
-        service: serviceScore.service,
-        score: serviceScore.score,
+        topic: relevancyScore.topic,
+        location: relevancyScore.location,
+        service: relevancyScore.service,
+        score: relevancyScore.score,
     })
     .then((response: AxiosResponse): AxiosResponse => {
       return response;

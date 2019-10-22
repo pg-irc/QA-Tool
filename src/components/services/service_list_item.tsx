@@ -1,12 +1,12 @@
 import React from 'react';
 import { Service, Address } from '../services/types';
 import * as R from 'ramda';
-import { ScoreButtons } from '../feedback_buttons/score_buttons';
-import { SendServiceRecommendationScore } from './services_list';
+import { ScoreButtons } from '../relevancy_score_buttons/score_buttons';
+import { SendRelevancyScore } from './services_list';
 
 export interface ServiceListItemProps {
     readonly service: Service;
-    readonly sendServiceRecommendationScore: SendServiceRecommendationScore;
+    readonly sendRelevancyScore: SendRelevancyScore;
 }
 
 export const ServiceListItem = (props: ServiceListItemProps): JSX.Element => (
@@ -14,7 +14,7 @@ export const ServiceListItem = (props: ServiceListItemProps): JSX.Element => (
         { renderName(props.service.name) }
         { renderDescription(props.service.description) }
         { renderAddresses(filterPhysicalAddresses(props.service.addresses))}
-        <ScoreButtons service={props.service} sendServiceRecommendationScore={props.sendServiceRecommendationScore}/>
+        <ScoreButtons service={props.service} sendRelevancyScore={props.sendRelevancyScore}/>
     </li>
 );
 

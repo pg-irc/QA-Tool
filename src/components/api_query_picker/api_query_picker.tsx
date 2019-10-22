@@ -1,7 +1,6 @@
 // tslint:disable:no-expression-statement no-let
 import React from 'react';
 import { Dropdown } from '../dropdown/dropdown';
-import { topicsForQA } from '../../fixtures/dropdown_data/topics';
 import { Services, SetServices } from '../services/types';
 import { requestServices, validateServicesResponse } from '../../api/services';
 import { SelectedLocation, SelectedTopic } from './types';
@@ -9,10 +8,11 @@ import { buildEmptyLocationType, buildEmptyTopicType, buildEmptyServicesType, bu
     buildSelectedTopicType, buildServicesLoadingType} from '../../application/helpers/build_types';
 import { SharedStateAndCallbacks } from '../../application';
 import { AlgorithmId, SetAlgorithmId, Algorithms, ValidAlgorithms, Algorithm } from '../../api/types';
-import { Locations, Location } from '../../application/types';
+import { Locations, Location, Topics, Topic } from '../../application/types';
 
 export interface ApiQueryPickerProps {
     readonly locations: Locations;
+    readonly topics: Topics;
 }
 type Props = ApiQueryPickerProps & SharedStateAndCallbacks;
 
@@ -31,7 +31,7 @@ export const ApiQueryPicker = (props: Props): JSX.Element => {
     return (
         <div>
             <Dropdown title={'Topic'} selectedOption={props.topic}
-            onSetOption={onSetTopic} dropdownItemCollection={topicsForQA} />
+            onSetOption={onSetTopic} dropdownItemCollection={passTopicsList(props.topics)} />
             <Dropdown title={'Location'} selectedOption={props.location} onSetOption={onSetLocation}
                 dropdownItemCollection={passLocationsList(props.locations)} />
             <ClearButton clearSelectionOptions={clearSelectedOptions}/>
@@ -105,3 +105,10 @@ const passLocationsList = (locations: Locations): ReadonlyArray<Location> => {
    }
    return locations.locations;
 };
+
+const passTopicsList = (topics: Topics): ReadonlyArray<Topic> => {
+    if (topics.type !== 'Topics:Success') {
+        return [];
+    }
+    return topics.topics;
+ };

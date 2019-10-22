@@ -37,6 +37,6 @@ const renderOneDropdownOption = (option: DropdownItem): JSX.Element => {
     );
   }
   return (
-    <option key={option.name} value={option.topic_id}>{option.name}</option>
+    <option key={option.id} value={option.id}>{option.id}</option>
   );
 };

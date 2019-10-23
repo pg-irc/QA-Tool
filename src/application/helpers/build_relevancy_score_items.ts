@@ -10,7 +10,7 @@ export const buildAlgorithms = async (): Promise<Algorithms> => {
       const validatedAlgorithms = validateAlgorithmsResponse(algorithmsResponse);
       return validatedAlgorithms;
     } catch (error) {
-      return error;
+      return error.buildErrorAlgorithmsType();
     }
   };
 
@@ -20,7 +20,7 @@ export const buildLocations = async (): Promise<Locations> => {
         const validatedLocations = validateLocationsResponse(locationsResponse);
         return validatedLocations;
     } catch (error) {
-        return error;
+        return error.buildErrorLocationsType();
     }
 };
 
@@ -30,6 +30,6 @@ export const buildTopics = async (): Promise<Topics> => {
       const validatedTopics = validateTopicsResponse(topicsResponse);
       return validatedTopics;
     } catch (error) {
-      return error;
+      return error.buildErrorTopicsType();
     }
 };

@@ -1,4 +1,4 @@
-// tslint:disable:no-expression-statement
+// tslint:disable:no-expression-statement no-any
 import { Location, Locations } from '../application/types';
 import axios, { AxiosResponse } from 'axios';
 import buildUrl from 'build-url';
@@ -27,10 +27,11 @@ export const validateLocationsResponse = (response: AxiosResponse): Locations =>
 };
 
 export const buildValidatedLocation = (data: Location): Location => {
+    const long_lat = buildLatLong(data);
     return {
         id: data.id,
         name: data.name,
-        lat_long: data.lat_long,
+        long_lat: long_lat,
     };
 };
 
@@ -40,4 +41,10 @@ const buildUrlForLocations = (): string => {
     return buildUrl(baseUrl, {
         path,
     });
+};
+
+const buildLatLong = (data: any): string => {
+    const latitude = data.latitude;
+    const longitude = data.longitude;
+    return `${longitude}, ${latitude}`;
 };

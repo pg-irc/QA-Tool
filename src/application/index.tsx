@@ -64,7 +64,14 @@ export const Application = (): JSX.Element => {
   return (
     <div>
       <ApiQueryPicker {...sharedStateAndCallbacks} locations={locations} topics={topics}/>
+      {renderErrorIfAlgorithmsErrorType(algorithms)}
       <ServicesList {...sharedStateAndCallbacks} />
     </div>
   );
+};
+
+const renderErrorIfAlgorithmsErrorType = (algorithms: Algorithms): JSX.Element|void => {
+  if (algorithms.type === 'Algorithms:Error') {
+    return <div>Failed to load algorithms for use.</div>;
+  }
 };

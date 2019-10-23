@@ -31,7 +31,7 @@ const renderAllDropdownOptions = (options: DropdownItemCollection): JSX.Element 
 );
 
 const renderOneDropdownOption = (option: DropdownItem): JSX.Element => {
-  if ('long_lat' in option) {
+  if (option.type === 'Location') {
     return (
       <option key={option.name} value={option.long_lat}>{option.name}</option>
     );

@@ -28,6 +28,7 @@ export const validateTopicsResponse = (response: AxiosResponse): Topics => {
 
 export const buildValidatedTopic = (data: Topic): Topic => {
     return {
+        type: 'Topic',
         id: data.id,
     };
 };

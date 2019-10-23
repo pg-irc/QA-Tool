@@ -33,9 +33,13 @@ export const buildValidatedTopic = (data: Topic): Topic => {
 };
 
 const buildUrlForTopics = (): string => {
-    const path = 'v1/searchtopics';
+    const path = 'v1/topics';
     const baseUrl = 'http://127.0.0.1:8000/';
+    const numberOfRecordsToGet = '124';
     return buildUrl(baseUrl, {
         path,
+        queryParams: {
+            per_page: numberOfRecordsToGet,
+        },
     });
 };

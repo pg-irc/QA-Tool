@@ -4,7 +4,6 @@ import axios, { AxiosResponse } from 'axios';
 import buildUrl from 'build-url';
 import { isResponseError } from './errors';
 import * as R from 'ramda';
-import { ValidationException } from './exceptions';
 
 export const requestAlgorithms = async (): Promise<AxiosResponse>  => {
     const url = buildUrlForAlgorithms();
@@ -16,7 +15,7 @@ export const requestAlgorithms = async (): Promise<AxiosResponse>  => {
 
 export const validateAlgorithmsResponse = (response: AxiosResponse): Algorithms => {
     if (isResponseError(response)) {
-        throw new ValidationException(response.statusText);
+        throw new Error(response.statusText);
     }
     if (R.isEmpty(response.data)) {
         return { type: 'Algorithms:Empty' };

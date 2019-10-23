@@ -4,19 +4,22 @@ import axios, { AxiosResponse } from 'axios';
 import buildUrl from 'build-url';
 import { isResponseError } from './errors';
 import * as R from 'ramda';
-import { ValidationException } from './exceptions';
 
 export const requestTopics = async (): Promise<AxiosResponse>  => {
-    const url = buildUrlForTopics();
-    return await axios.get(url)
-    .then((response: AxiosResponse): AxiosResponse  => {
-        return response;
-    });
+    try {
+        const url = buildUrlForTopics();
+        return await axios.get(url)
+        .then((response: AxiosResponse): AxiosResponse  => {
+            return response;
+        });
+    } catch (error) {
+        throw error;
+    }
 };
 
 export const validateTopicsResponse = (response: AxiosResponse): Topics => {
     if (isResponseError(response)) {
-        throw new ValidationException(response.statusText);
+        throw new Error(response.statusText);
     }
     if (R.isEmpty(response.data)) {
         return { type: 'Topics:Empty' };

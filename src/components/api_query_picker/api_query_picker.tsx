@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement no-let
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { Dropdown } from '../dropdown/dropdown';
 import { Services, SetServices } from '../services/types';
 import { requestServices, validateServicesResponse } from '../../api/services';
@@ -15,6 +15,8 @@ export interface ApiQueryPickerProps {
     readonly topics: Topics;
 }
 type Props = ApiQueryPickerProps & SharedStateAndCallbacks;
+export type OnSetLocation = (event: ChangeEvent<HTMLSelectElement>) => void;
+export type OnSetTopic = (event: ChangeEvent<HTMLSelectElement>) => void;
 
 export const ApiQueryPicker = (props: Props): JSX.Element => {
     const onSetTopic = (event: React.ChangeEvent<HTMLSelectElement>): void => {
@@ -30,10 +32,8 @@ export const ApiQueryPicker = (props: Props): JSX.Element => {
     };
     return (
         <div>
-            <Dropdown title={'Topic'} selectedOption={props.topic}
-            onSetOption={onSetTopic} dropdownItemCollection={passTopicsList(props.topics)} />
-            <Dropdown title={'Location'} selectedOption={props.location} onSetOption={onSetLocation}
-                dropdownItemCollection={passLocationsList(props.locations)} />
+            {renderTopicsDropdownOrError(props.topic, props.topics, onSetTopic)}
+            {renderLocationsDropdownOrError(props.location, props.locations, onSetLocation)}
             <ClearButton clearSelectionOptions={clearSelectedOptions}/>
             <SendButton {...props} />
         </div>
@@ -112,3 +112,21 @@ const passTopicsList = (topics: Topics): ReadonlyArray<Topic> => {
     }
     return topics.topics;
  };
+
+ const renderTopicsDropdownOrError = (topic: SelectedTopic, topics: Topics, onSetTopic: OnSetTopic): JSX.Element => {
+    if (topics.type === 'Topics:Error') {
+        return <div>Topics: {topics.errorMessage}. Refresh the page or contact the QA Tool administrator.</div>;
+    }
+    return (<Dropdown title={'Topic'} selectedOption={topic}
+        onSetOption={onSetTopic} dropdownItemCollection={passTopicsList(topics)} />
+    );
+};
+
+const renderLocationsDropdownOrError = (location: SelectedLocation, locations: Locations, onSetLocation: OnSetLocation): JSX.Element => {
+    if (locations.type === 'Locations:Error') {
+        return <div>Locations: {locations.errorMessage}. Refresh the page or contact the QA Tool administrator.</div>;
+    }
+    return (<Dropdown title={'Locations'} selectedOption={location}
+        onSetOption={onSetLocation} dropdownItemCollection={passLocationsList(locations)} />
+    );
+};

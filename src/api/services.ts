@@ -5,7 +5,6 @@ import * as ServiceTypes from '../components/services/types';
 import { isResponseError, isValidationError } from './errors';
 import * as R from 'ramda';
 import buildUrl from 'build-url';
-import { ValidationException } from './exceptions';
 import { serviceFromValidatedJSON, validateServicesAtLocationArray } from '../pathways-frontend/src/stores/services/validation';
 
 export const requestServices = async (topic: SelectedTopic, location: SelectedLocation, algorithmUrl: string): Promise<AxiosResponse> => {
@@ -32,12 +31,12 @@ const buildUrlFromSelectedTopicAndLocation = (topic: SelectedTopic, location: Se
 
 export const validateServicesResponse = (response: AxiosResponse): ServiceTypes.Services => {
     if (isResponseError(response)) {
-        throw new ValidationException(response.statusText);
+        throw new Error(response.statusText);
     }
     const validator = validateServicesAtLocationArray(response.data);
     if (isValidationError(validator)) {
         const errorMessage = 'Error: response data failed schema validation';
-        throw new ValidationException(errorMessage);
+        throw new Error(errorMessage);
     }
     if (R.isEmpty(response.data)) {
         return { type: 'Services:Empty' };

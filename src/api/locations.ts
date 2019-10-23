@@ -29,6 +29,7 @@ export const validateLocationsResponse = (response: AxiosResponse): Locations =>
 export const buildValidatedLocation = (data: Location): Location => {
     const long_lat = buildLatLong(data);
     return {
+        type: 'Location',
         id: data.id,
         name: data.name,
         long_lat: long_lat,

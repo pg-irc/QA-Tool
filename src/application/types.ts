@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 
 export interface Location {
+    readonly type: 'Location';
     readonly id: string;
     readonly name: string;
     readonly long_lat: string;
@@ -29,6 +30,7 @@ export type Locations = ValidLocations | InvalidLocations | LoadingLocations | E
 export type SetLocations = Dispatch<SetStateAction<Locations>>;
 
 export interface Topic {
+    readonly type: 'Topic';
     readonly id: string;
 }
 

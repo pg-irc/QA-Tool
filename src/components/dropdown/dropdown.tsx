@@ -17,7 +17,7 @@ type Props = DropdownProps & DropdownActions;
 export const Dropdown = (props: Props): JSX.Element => (
   <React.Fragment>
       <label>{props.title}</label>
-      <select value={props.selectedOption.value} onChange={props.onSetOption}>
+      <select value={''} onChange={props.onSetOption}>
         {renderAllDropdownOptions(props.dropdownItemCollection)}
       </select>
   </React.Fragment>

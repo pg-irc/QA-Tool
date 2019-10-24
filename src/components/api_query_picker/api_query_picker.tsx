@@ -22,7 +22,7 @@ export const ApiQueryPicker = (props: Props): JSX.Element => {
         props.setTopic(buildSelectedTopicType(event.target.value));
     };
     const onSetLocation = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-        props.setLocation(buildSelectedLocationType((event.target.value)));
+        props.setLocation(buildSelectedLocationType(Number(event.target.value)));
     };
     const clearSelectedOptions = (): void => {
         props.setTopic(buildEmptyTopicType());
@@ -87,7 +87,7 @@ const updateServices = async (props: Props, algorithmUrl: string): Promise<void>
 const buildLongLatFromId = (selectedLocation: SelectedLocation, locations: Locations): Location => {
     const locationsList = provideLocationsList(locations);
     const listOfIds = locationsList.map((location: Location) => location.id);
-    const indexOfSelectedLocation = listOfIds.indexOf(Number(selectedLocation.value));
+    const indexOfSelectedLocation = listOfIds.indexOf(selectedLocation.value);
     return locationsList[indexOfSelectedLocation];
 };
 

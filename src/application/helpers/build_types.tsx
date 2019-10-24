@@ -11,12 +11,12 @@ export const buildEmptyTopicType = (): SelectedTopic  => (
     { type: 'Topic', value: '' }
 );
 
-export const buildSelectedLocationType = (id: string): SelectedLocation => (
+export const buildSelectedLocationType = (id: number): SelectedLocation => (
     { type: 'Location', value: id }
 );
 
 export const buildEmptyLocationType = (): SelectedLocation => (
-    { type: 'Location', value: '' }
+    { type: 'Location', value: 0 }
 );
 
 export const buildServicesLoadingType = (): LoadingServices  => (

@@ -29,7 +29,7 @@ export const Application = (): JSX.Element => {
   };
   let selectedLocation: SelectedLocation = {
     type: 'Location',
-    value: '',
+    value: 0,
   };
   const [services, setServices]: [Services, SetServices] = useState<Services>(buildEmptyServicesType());
   const [topic, setTopic]: [SelectedTopic, SetTopic] = useState(selectedTopic);

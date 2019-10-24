@@ -7,7 +7,7 @@ export interface SelectedTopic {
 
 export interface SelectedLocation {
     readonly type: 'Location';
-    readonly value: string;
+    readonly value: number;
 }
 
 export type SetTopic = Dispatch<SetStateAction<SelectedTopic>>;

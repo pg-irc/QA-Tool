@@ -1,13 +1,12 @@
 // tslint:disable:no-expression-statement no-let
 import React, { ChangeEvent } from 'react';
 import { Dropdown } from '../dropdown/dropdown';
-import { Services, SetServices } from '../services/types';
 import { requestServices, validateServicesResponse } from '../../api/services';
 import { SelectedLocation, SelectedTopic } from './types';
 import { buildEmptyLocationType, buildEmptyTopicType, buildEmptyServicesType, buildSelectedLocationType,
     buildSelectedTopicType, buildServicesLoadingType} from '../../application/helpers/build_types';
 import { SharedStateAndCallbacks } from '../../application';
-import { AlgorithmId, SetAlgorithmId, Algorithms, ValidAlgorithms, Algorithm } from '../../api/types';
+import { SetAlgorithmId, ValidAlgorithms, Algorithm } from '../../api/types';
 import { Locations, Location, Topics, Topic } from '../../application/types';
 
 export interface ApiQueryPickerProps {
@@ -23,7 +22,7 @@ export const ApiQueryPicker = (props: Props): JSX.Element => {
         props.setTopic(buildSelectedTopicType(event.target.value));
     };
     const onSetLocation = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-        props.setLocation(buildSelectedLocationType(event.target.value));
+        props.setLocation(buildSelectedLocationType((event.target.value)));
     };
     const clearSelectedOptions = (): void => {
         props.setTopic(buildEmptyTopicType());
@@ -48,18 +47,8 @@ const ClearButton = (props: ClearButtonProps): JSX.Element => (
     <button onClick={(): void => props.clearSelectionOptions()}>Clear</button>
 );
 
-export interface SendButtonProps {
-    readonly topic: SelectedTopic;
-    readonly location: SelectedLocation;
-    readonly services: Services;
-    readonly setServices: SetServices;
-    readonly algorithms: Algorithms;
-    readonly algorithmId: AlgorithmId;
-    readonly setAlgorithmId: SetAlgorithmId;
-}
-
-const SendButton = (props: SendButtonProps): JSX.Element => {
-    const enabled = props.topic.value && props.location.value;
+const SendButton = (props: Props): JSX.Element => {
+    const enabled = props.topic.value;
     return (
         <button
             disabled={!enabled}
@@ -69,12 +58,12 @@ const SendButton = (props: SendButtonProps): JSX.Element => {
     );
 };
 
-const updateServicesAndAlgorithm = (props: SendButtonProps): void => {
+const updateServicesAndAlgorithm = (props: Props): void => {
     if (props.algorithms.type !== 'Algorithms:Success') {
         return;
     }
     const algorithmUrl = updateAlgorithm(props.algorithms, props.setAlgorithmId);
-    updateServices(props.topic, props.location, props.setServices, algorithmUrl);
+    updateServices(props, algorithmUrl);
 };
 
 const updateAlgorithm = (algorithms: ValidAlgorithms, setAlgorithm: SetAlgorithmId): string => {
@@ -83,15 +72,23 @@ const updateAlgorithm = (algorithms: ValidAlgorithms, setAlgorithm: SetAlgorithm
     return algorithm.url;
 };
 
-const updateServices = async (topic: SelectedTopic, location: SelectedLocation, setServices: SetServices, algorithmUrl: string): Promise<void> => {
+const updateServices = async (props: Props, algorithmUrl: string): Promise<void> => {
     try {
-        const servicesResponse = await requestServices(topic, location, algorithmUrl);
-        setServices(buildServicesLoadingType());
+        const selectedLocationLongLat = buildLongLatFromId(props.location, props.locations);
+        const servicesResponse = await requestServices(props.topic, selectedLocationLongLat, algorithmUrl);
+        props.setServices(buildServicesLoadingType());
         const successServices = validateServicesResponse(servicesResponse);
-        setServices(successServices);
+        props.setServices(successServices);
     } catch (error) {
-        setServices(error.buildErrorServiceType());
+        props.setServices(error.buildErrorServiceType());
     }
+};
+
+const buildLongLatFromId = (selectedLocation: SelectedLocation, locations: Locations): Location => {
+    const locationsList = passLocationsList(locations);
+    const listOfIds = locationsList.map((location: Location) => location.id);
+    const indexOfSelectedLocation = listOfIds.indexOf(Number(selectedLocation.value));
+    return locationsList[indexOfSelectedLocation];
 };
 
 const chooseAlgorithmAtRandom = (algorithms: ValidAlgorithms ): Algorithm => {

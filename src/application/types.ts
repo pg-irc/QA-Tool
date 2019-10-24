@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 export interface Location {
     readonly type: 'Location';
-    readonly id: string;
+    readonly id: number;
     readonly name: string;
     readonly long_lat: string;
 }

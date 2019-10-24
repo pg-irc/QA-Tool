@@ -1,13 +1,14 @@
 // tslint:disable:no-expression-statement
 import axios, { AxiosResponse } from 'axios';
-import { SelectedTopic, SelectedLocation } from '../components/api_query_picker/types';
+import { SelectedTopic } from '../components/api_query_picker/types';
 import * as ServiceTypes from '../components/services/types';
 import { isResponseError, isValidationError } from './errors';
 import * as R from 'ramda';
 import buildUrl from 'build-url';
 import { serviceFromValidatedJSON, validateServicesAtLocationArray } from '../pathways-frontend/src/stores/services/validation';
+import { Location } from '../application/types';
 
-export const requestServices = async (topic: SelectedTopic, location: SelectedLocation, algorithmUrl: string): Promise<AxiosResponse> => {
+export const requestServices = async (topic: SelectedTopic, location: Location, algorithmUrl: string): Promise<AxiosResponse> => {
     const url = buildUrlFromSelectedTopicAndLocation(topic, location, algorithmUrl);
     return await axios.get(url)
     .then((response: AxiosResponse): AxiosResponse => {
@@ -15,14 +16,14 @@ export const requestServices = async (topic: SelectedTopic, location: SelectedLo
   });
 };
 
-const buildUrlFromSelectedTopicAndLocation = (topic: SelectedTopic, location: SelectedLocation, algorithmUrl: string): string => {
+const buildUrlFromSelectedTopicAndLocation = (topic: SelectedTopic, location: Location, algorithmUrl: string): string => {
     const path = 'v1/services_at_location';
     const baseUrl = algorithmUrl;
     const numberOfRecordsToGet = '5';
     return buildUrl(baseUrl, {
         path: path,
         queryParams: {
-            user_location: location.value,
+            user_location: location.long_lat,
             related_to_topic: topic.value,
             per_page: numberOfRecordsToGet,
         },

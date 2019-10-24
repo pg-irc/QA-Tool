@@ -4,6 +4,7 @@ import axios, { AxiosResponse } from 'axios';
 import buildUrl from 'build-url';
 import { isResponseError } from './errors';
 import * as R from 'ramda';
+import { buildEmptyTopicsType } from '../application/helpers/build_types';
 
 export const requestTopics = async (): Promise<AxiosResponse>  => {
     try {
@@ -22,7 +23,7 @@ export const validateTopicsResponse = (response: AxiosResponse): Topics => {
         throw new Error(response.statusText);
     }
     if (R.isEmpty(response.data)) {
-        return { type: 'Topics:Empty' };
+        return buildEmptyTopicsType();
     }
     return {
         type: 'Topics:Success', topics: response.data.map((val: Topic) => buildValidatedTopic(val)),

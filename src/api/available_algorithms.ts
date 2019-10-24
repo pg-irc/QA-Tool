@@ -4,6 +4,7 @@ import axios, { AxiosResponse } from 'axios';
 import buildUrl from 'build-url';
 import { isResponseError } from './errors';
 import * as R from 'ramda';
+import { buildEmptyAlgorithmsType } from '../application/helpers/build_types';
 
 export const requestAlgorithms = async (): Promise<AxiosResponse>  => {
     const url = buildUrlForAlgorithms();
@@ -18,7 +19,7 @@ export const validateAlgorithmsResponse = (response: AxiosResponse): Algorithms 
         throw new Error(response.statusText);
     }
     if (R.isEmpty(response.data)) {
-        return { type: 'Algorithms:Empty' };
+        return buildEmptyAlgorithmsType();
     }
     return {
         type: 'Algorithms:Success', algorithms: response.data.map((val: Algorithm) => buildValidatedAlgorithm(val)),

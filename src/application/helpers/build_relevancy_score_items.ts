@@ -1,6 +1,6 @@
 import { Locations, Topics } from '../types';
 import { Algorithms } from '../../api/types';
-import { requestAlgorithms, validateAlgorithmsResponse } from '../../api/available_algorithms';
+import { requestAlgorithms, validateAlgorithmsResponse } from '../../api/algorithms';
 import { requestLocations, validateLocationsResponse } from '../../api/locations';
 import { requestTopics, validateTopicsResponse } from '../../api/topics';
 

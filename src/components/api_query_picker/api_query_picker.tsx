@@ -48,7 +48,7 @@ const ClearButton = (props: ClearButtonProps): JSX.Element => (
 );
 
 const SendButton = (props: Props): JSX.Element => {
-    const enabled = props.topic.value;
+    const enabled = props.topic.value && props.location.value;
     return (
         <button
             disabled={!enabled}

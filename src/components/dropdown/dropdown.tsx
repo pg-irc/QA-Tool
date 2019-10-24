@@ -17,15 +17,15 @@ type Props = DropdownProps & DropdownActions;
 export const Dropdown = (props: Props): JSX.Element => (
   <React.Fragment>
       <label>{props.title}</label>
-      <select value={''} onChange={props.onSetOption}>
-        {renderAllDropdownOptions(props.dropdownItemCollection)}
+      <select value={props.selectedOption.value} onChange={props.onSetOption}>
+        {renderAllDropdownOptions(props.dropdownItemCollection, props.selectedOption)}
       </select>
   </React.Fragment>
 );
 
-const renderAllDropdownOptions = (options: DropdownItemCollection): JSX.Element => (
+const renderAllDropdownOptions = (options: DropdownItemCollection, selectedOption: SelectedTopic | SelectedLocation): JSX.Element => (
   <React.Fragment>
-    <option value='' disabled>Select an option</option>
+    {renderFirstDropdownOption(selectedOption)}
     {options.map((option: DropdownItem) => renderOneDropdownOption(option))}
   </React.Fragment>
 );
@@ -37,6 +37,17 @@ const renderOneDropdownOption = (option: DropdownItem): JSX.Element => {
     );
   }
   return (
-    <option key={option.id} value={option.id}>{option.id}</option>
+    <option key={option.id} value={option.id}>{option.id}</option> 
+  );
+};
+
+const renderFirstDropdownOption = (foo: SelectedTopic | SelectedLocation): JSX.Element => {
+  if (foo.type === 'Location') {
+    return (
+      <option value={0} disabled>Select a location</option>
+    );
+  }
+  return (
+    <option value={''} disabled>Select a topic</option>
   );
 };

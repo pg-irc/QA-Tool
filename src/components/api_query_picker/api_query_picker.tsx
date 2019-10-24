@@ -85,7 +85,7 @@ const updateServices = async (props: Props, algorithmUrl: string): Promise<void>
 };
 
 const buildLongLatFromId = (selectedLocation: SelectedLocation, locations: Locations): Location => {
-    const locationsList = passLocationsList(locations);
+    const locationsList = provideLocationsList(locations);
     const listOfIds = locationsList.map((location: Location) => location.id);
     const indexOfSelectedLocation = listOfIds.indexOf(Number(selectedLocation.value));
     return locationsList[indexOfSelectedLocation];
@@ -96,14 +96,14 @@ const chooseAlgorithmAtRandom = (algorithms: ValidAlgorithms ): Algorithm => {
     return algorithms.algorithms[randomIndex];
 };
 
-const passLocationsList = (locations: Locations): ReadonlyArray<Location> => {
+const provideLocationsList = (locations: Locations): ReadonlyArray<Location> => {
    if (locations.type !== 'Locations:Success') {
        return [];
    }
    return locations.locations;
 };
 
-const passTopicsList = (topics: Topics): ReadonlyArray<Topic> => {
+const provideTopicsList = (topics: Topics): ReadonlyArray<Topic> => {
     if (topics.type !== 'Topics:Success') {
         return [];
     }
@@ -115,7 +115,7 @@ const passTopicsList = (topics: Topics): ReadonlyArray<Topic> => {
         return <div>Topics: {topics.errorMessage}. Refresh the page or contact the QA Tool administrator.</div>;
     }
     return (<Dropdown title={'Topic'} selectedOption={topic}
-        onSetOption={onSetTopic} dropdownItemCollection={passTopicsList(topics)} />
+        onSetOption={onSetTopic} dropdownItemCollection={provideTopicsList(topics)} />
     );
 };
 
@@ -124,6 +124,6 @@ const renderLocationsDropdownOrError = (location: SelectedLocation, locations: L
         return <div>Locations: {locations.errorMessage}. Refresh the page or contact the QA Tool administrator.</div>;
     }
     return (<Dropdown title={'Locations'} selectedOption={location}
-        onSetOption={onSetLocation} dropdownItemCollection={passLocationsList(locations)} />
+        onSetOption={onSetLocation} dropdownItemCollection={provideLocationsList(locations)} />
     );
 };

@@ -1,7 +1,6 @@
 import { SelectedTopic, SelectedLocation  } from '../../components/api_query_picker/types';
 import { LoadingServices, EmptyServices } from '../../components/services/types';
-import { EmptyAlgorithms } from '../../api/types';
-import { EmptyLocations, EmptyTopics } from '../types';
+import { EmptyLocations, EmptyTopics, EmptyAlgorithms } from '../types';
 
 export const buildSelectedTopicType = (topicName: string): SelectedTopic => (
     { type: 'Topic', value: topicName }

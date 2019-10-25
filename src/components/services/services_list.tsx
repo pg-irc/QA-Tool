@@ -5,7 +5,7 @@ import { SharedStateAndCallbacks } from '../../application';
 import { requestSendRelevancyScore } from '../../api/relevancy_score';
 import { Score } from '../relevancy_score_buttons/score_buttons';
 import { SelectedTopic, SelectedLocation } from '../api_query_picker/types';
-import { AlgorithmId } from '../../api/types';
+import { AlgorithmId } from '../../application/types';
 
 type Props = SharedStateAndCallbacks;
 

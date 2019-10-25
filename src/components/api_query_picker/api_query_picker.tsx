@@ -6,13 +6,13 @@ import { SelectedLocation, SelectedTopic } from './types';
 import { buildEmptyLocationType, buildEmptyTopicType, buildEmptyServicesType, buildSelectedLocationType,
     buildSelectedTopicType, buildServicesLoadingType} from '../../application/helpers/build_types';
 import { SharedStateAndCallbacks } from '../../application';
-import { SetAlgorithmId, ValidAlgorithms, Algorithm } from '../../api/types';
-import { Locations, Location, Topics, Topic } from '../../application/types';
+import { Locations, Location, Topics, Topic, SetAlgorithmId, ValidAlgorithms, Algorithm } from '../../application/types';
 
 export interface ApiQueryPickerProps {
     readonly locations: Locations;
     readonly topics: Topics;
 }
+
 type Props = ApiQueryPickerProps & SharedStateAndCallbacks;
 export type OnSetLocation = (event: ChangeEvent<HTMLSelectElement>) => void;
 export type OnSetTopic = (event: ChangeEvent<HTMLSelectElement>) => void;

@@ -1,10 +1,11 @@
 // tslint:disable:no-expression-statement
-import { Algorithms, Algorithm } from '../application/types';
+import { Algorithms, Algorithm } from '../../application/types';
 import axios, { AxiosResponse } from 'axios';
 import buildUrl from 'build-url';
-import { isResponseError } from './errors';
+import { isResponseError, isValidationError } from '../errors';
 import * as R from 'ramda';
-import { buildEmptyAlgorithmsType } from '../application/helpers/build_types';
+import { buildEmptyAlgorithmsType, buildInvalidAlgorithmsType } from '../../application/helpers/build_types';
+import { validateAlgorithmsArray } from './validate';
 
 export const requestAlgorithms = async (): Promise<AxiosResponse>  => {
     const url = buildUrlForAlgorithms();
@@ -17,6 +18,11 @@ export const requestAlgorithms = async (): Promise<AxiosResponse>  => {
 export const validateAlgorithmsResponse = (response: AxiosResponse): Algorithms => {
     if (isResponseError(response)) {
         throw new Error(response.statusText);
+    }
+    const validator = validateAlgorithmsArray(response.data);
+    if (isValidationError(validator)) {
+        const errorMessage = 'Error: algorithms response data failed schema validation';
+        return buildInvalidAlgorithmsType(errorMessage);
     }
     if (R.isEmpty(response.data)) {
         return buildEmptyAlgorithmsType();

@@ -5,7 +5,7 @@ import { Services, SetServices } from '../components/services/types';
 import { ServicesList } from '../components/services/services_list';
 import { SetTopic, SelectedTopic, SetLocation, SelectedLocation } from '../components/api_query_picker/types';
 import { buildAlgorithms, buildLocations, buildTopics } from './helpers/build_relevancy_score_items';
-import { buildEmptyServicesType, buildEmptyAlgorithmsType, buildEmptyLocationsType, buildEmptyTopicsType } from './helpers/build_types';
+import { buildEmptyServicesType, buildEmptyAlgorithmsType, buildEmptyLocationsType, buildEmptyTopicsType, buildEmptyAlgorithmIdType } from './helpers/build_types';
 import { Locations, SetLocations, Topics, SetTopics, Algorithms, SetAlgorithms, SetAlgorithmId, AlgorithmId } from './types';
 
 export interface SharedStateAndCallbacks {
@@ -34,7 +34,7 @@ export const Application = (): JSX.Element => {
   const [topic, setTopic]: [SelectedTopic, SetTopic] = useState(selectedTopic);
   const [location, setLocation]: [SelectedLocation, SetLocation] = useState(selectedLocation);
   const [algorithms, setAlgorithms]: [Algorithms, SetAlgorithms] = useState<Algorithms>(buildEmptyAlgorithmsType());
-  const [algorithmId, setAlgorithmId]: [AlgorithmId, SetAlgorithmId] = useState<AlgorithmId>('');
+  const [algorithmId, setAlgorithmId]: [AlgorithmId, SetAlgorithmId] = useState<AlgorithmId>(buildEmptyAlgorithmIdType());
   const [locations, setLocations]: [Locations, SetLocations] = useState<Locations>(buildEmptyLocationsType());
   const [topics, setTopics]: [Topics, SetTopics] = useState<Topics>(buildEmptyTopicsType());
   useEffect(() => {

@@ -56,7 +56,16 @@ export type Topics = ValidTopics | InvalidTopics | LoadingTopics | EmptyTopics;
 
 export type SetTopics = Dispatch<SetStateAction<Topics>>;
 
-export type AlgorithmId = string;
+export interface EmptyAlgorithmId {
+    readonly type: 'Algorithm:Empty';
+}
+
+export interface ValidAlgorithmId {
+    readonly type: 'Algorithm:Success';
+    readonly id: number;
+}
+
+export type AlgorithmId = EmptyAlgorithmId | ValidAlgorithmId;
 
 export interface Algorithm {
     readonly id: AlgorithmId;

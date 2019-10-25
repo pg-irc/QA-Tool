@@ -1,3 +1,4 @@
+// tslint:disable: no-expression-statement
 import React from 'react';
 import { ValidServices, InvalidServices, Service, Services } from './types';
 import { ServiceListItem } from './service_list_item';
@@ -32,9 +33,6 @@ export const ServicesList = (props: Props): JSX.Element => {
             score,
             algorithmId,
         };
-// tslint:disable-next-line: no-expression-statement
-        console.log('Topic: ', topic, 'Location: ', location, 'Service: ', service, 'Score: ', score, 'AlgorithmId: ', algorithmId);
-// tslint:disable-next-line: no-expression-statement
         requestSendRelevancyScore(scoreForService);
     };
     return (

@@ -1,4 +1,4 @@
-// tslint:disable:no-expression-statement no-let
+// tslint:disable:no-expression-statement
 import React, { ChangeEvent } from 'react';
 import { Dropdown } from '../dropdown/dropdown';
 import { requestServices, validateServicesResponse } from '../../api/services';

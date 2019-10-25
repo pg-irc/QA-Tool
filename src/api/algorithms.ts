@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { Algorithms, Algorithm } from './types';
+import { Algorithms, Algorithm } from '../application/types';
 import axios, { AxiosResponse } from 'axios';
 import buildUrl from 'build-url';
 import { isResponseError } from './errors';

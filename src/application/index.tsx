@@ -4,10 +4,9 @@ import { ApiQueryPicker } from '../components/api_query_picker/api_query_picker'
 import { Services, SetServices } from '../components/services/types';
 import { ServicesList } from '../components/services/services_list';
 import { SetTopic, SelectedTopic, SetLocation, SelectedLocation } from '../components/api_query_picker/types';
-import { Algorithms, SetAlgorithms, SetAlgorithmId, AlgorithmId } from '../api/types';
 import { buildAlgorithms, buildLocations, buildTopics } from './helpers/build_relevancy_score_items';
 import { buildEmptyServicesType, buildEmptyAlgorithmsType, buildEmptyLocationsType, buildEmptyTopicsType } from './helpers/build_types';
-import { Locations, SetLocations, Topics, SetTopics } from './types';
+import { Locations, SetLocations, Topics, SetTopics, Algorithms, SetAlgorithms, SetAlgorithmId, AlgorithmId } from './types';
 
 export interface SharedStateAndCallbacks {
   readonly services: Services;

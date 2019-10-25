@@ -1,6 +1,6 @@
 import React from 'react';
-import { Service } from '../../pathways-frontend/src/stores/services/types';
 import { SendRelevancyScore } from '../services/services_list';
+import { Service } from '../services/types';
 
 export type Score = string;
 

@@ -5,7 +5,7 @@ import * as ServiceTypes from '../components/services/types';
 import { isResponseError, isValidationError } from './errors';
 import * as R from 'ramda';
 import buildUrl from 'build-url';
-import { serviceFromValidatedJSON, validateServicesAtLocationArray } from '../pathways-frontend/src/stores/services/validation';
+import { serviceFromValidatedJSON, validateServicesAtLocationArray } from '../pathways-frontend/src/validation/services';
 import { Location } from '../application/types';
 import { buildEmptyServicesType } from '../application/helpers/build_types';
 

@@ -1,23 +1,23 @@
 // tslint:disable:no-expression-statement
 import React, { ChangeEvent } from 'react';
 import { Dropdown } from '../dropdown/dropdown';
-import { requestServices, validateServicesResponse } from '../../api/services';
 import { SelectedLocation, SelectedTopic } from './types';
-import { buildEmptyLocationType, buildEmptyTopicType, buildEmptyServicesType, buildSelectedLocationType,
-    buildSelectedTopicType, buildServicesLoadingType} from '../../application/helpers/build_types';
+import { buildEmptyLocationType, buildEmptyTopicType, buildEmptyServicesType, buildSelectedLocationType, buildSelectedTopicType} from '../../application/helpers/build_types';
 import { SharedStateAndCallbacks } from '../../application';
-import { Locations, Location, Topics, Topic, SetAlgorithmId, ValidAlgorithms, Algorithm } from '../../application/types';
+import { Locations, Topics } from '../../application/types';
+import { updateServicesAndAlgorithm, provideLocationsList, provideTopicsList } from './update_services_and_algorithm';
 
-export interface ApiQueryPickerProps {
+export interface LocationsAndTopicsProps {
     readonly locations: Locations;
     readonly topics: Topics;
 }
 
-type Props = ApiQueryPickerProps & SharedStateAndCallbacks;
+export type ApiQueryPickerProps = LocationsAndTopicsProps & SharedStateAndCallbacks;
+
 export type OnSetLocation = (event: ChangeEvent<HTMLSelectElement>) => void;
 export type OnSetTopic = (event: ChangeEvent<HTMLSelectElement>) => void;
 
-export const ApiQueryPicker = (props: Props): JSX.Element => {
+export const ApiQueryPicker = (props: ApiQueryPickerProps): JSX.Element => {
     const onSetTopic = (event: React.ChangeEvent<HTMLSelectElement>): void => {
         props.setTopic(buildSelectedTopicType(event.target.value));
     };
@@ -47,7 +47,7 @@ const ClearButton = (props: ClearButtonProps): JSX.Element => (
     <button onClick={(): void => props.clearSelectionOptions()}>Clear</button>
 );
 
-const SendButton = (props: Props): JSX.Element => {
+const SendButton = (props: ApiQueryPickerProps): JSX.Element => {
     const enabled = props.topic.value && props.location.value;
     return (
         <button
@@ -58,59 +58,7 @@ const SendButton = (props: Props): JSX.Element => {
     );
 };
 
-const updateServicesAndAlgorithm = (props: Props): void => {
-    if (props.algorithms.type !== 'Algorithms:Success') {
-        return;
-    }
-    const algorithmUrl = updateAlgorithm(props.algorithms, props.setAlgorithmId);
-    updateServices(props, algorithmUrl);
-};
-
-const updateAlgorithm = (algorithms: ValidAlgorithms, setAlgorithm: SetAlgorithmId): string => {
-    const algorithm = chooseAlgorithmAtRandom(algorithms);
-    setAlgorithm(algorithm.id);
-    return algorithm.url;
-};
-
-const updateServices = async (props: Props, algorithmUrl: string): Promise<void> => {
-    try {
-        const selectedLocationLongLat = buildLongLatFromId(props.location, props.locations);
-        const servicesResponse = await requestServices(props.topic, selectedLocationLongLat, algorithmUrl);
-        props.setServices(buildServicesLoadingType());
-        const successServices = validateServicesResponse(servicesResponse);
-        props.setServices(successServices);
-    } catch (error) {
-        props.setServices(error.buildErrorServiceType());
-    }
-};
-
-const buildLongLatFromId = (selectedLocation: SelectedLocation, locations: Locations): Location => {
-    const locationsList = provideLocationsList(locations);
-    const listOfIds = locationsList.map((location: Location) => location.id);
-    const indexOfSelectedLocation = listOfIds.indexOf(selectedLocation.value);
-    return locationsList[indexOfSelectedLocation];
-};
-
-const chooseAlgorithmAtRandom = (algorithms: ValidAlgorithms ): Algorithm => {
-    const randomIndex = Math.floor(Math.random() * algorithms.algorithms.length);
-    return algorithms.algorithms[randomIndex];
-};
-
-const provideLocationsList = (locations: Locations): ReadonlyArray<Location> => {
-   if (locations.type !== 'Locations:Success') {
-       return [];
-   }
-   return locations.locations;
-};
-
-const provideTopicsList = (topics: Topics): ReadonlyArray<Topic> => {
-    if (topics.type !== 'Topics:Success') {
-        return [];
-    }
-    return topics.topics;
- };
-
- const renderTopicsDropdownOrError = (topic: SelectedTopic, topics: Topics, onSetTopic: OnSetTopic): JSX.Element => {
+const renderTopicsDropdownOrError = (topic: SelectedTopic, topics: Topics, onSetTopic: OnSetTopic): JSX.Element => {
     if (topics.type === 'Topics:Error') {
         return <div>Topics: {topics.errorMessage}. Refresh the page or contact the QA Tool administrator.</div>;
     }

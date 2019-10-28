@@ -97,3 +97,5 @@ export interface LoadingAlgorithms {
 }
 
 export type Algorithms = ValidAlgorithms | InvalidAlgorithms | LoadingAlgorithms | EmptyAlgorithms;
+
+export type ScoreValue = string;

@@ -21,10 +21,11 @@ const buildUrlFromSelectedTopicAndLocation = (topic: SelectedTopic, location: Lo
     const path = 'v1/services_at_location';
     const baseUrl = algorithmUrl;
     const numberOfRecordsToGet = '5';
+    const longLat =  buildLatLong(location);
     return buildUrl(baseUrl, {
         path: path,
         queryParams: {
-            user_location: location.long_lat,
+            user_location: longLat,
             related_to_topic: topic.value,
             per_page: numberOfRecordsToGet,
         },
@@ -47,3 +48,9 @@ export const validateServicesResponse = (response: AxiosResponse): ServiceTypes.
         type: 'Services:Success', services: response.data.map((val: ServiceTypes.ValidatedServiceAtLocationJSON) => serviceFromValidatedJSON(val)),
     };
 };
+
+const buildLatLong = (data: any): string => {
+    const latitude = data.latitude;
+    const longitude = data.longitude;
+    return `${longitude}, ${latitude}`;
+ };

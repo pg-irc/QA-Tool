@@ -4,7 +4,8 @@ export interface Location {
     readonly type: 'Location';
     readonly id: number;
     readonly name: string;
-    readonly long_lat: string;
+    readonly latitude: number;
+    readonly longitude: number;
 }
 
 export interface EmptyLocations {

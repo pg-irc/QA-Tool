@@ -33,7 +33,7 @@ const updateServices = async (props: ApiQueryPickerProps, algorithmUrl: string):
 };
 
 const buildLongLatFromId = (selectedLocation: LocationId, locations: Locations): Location => {
-    const locationsList = provideLocationsList(locations);
+    const locationsList = getValidLocations(locations);
     const listOfIds = locationsList.map((location: Location) => location.id);
     const indexOfSelectedLocation = listOfIds.indexOf(selectedLocation.id);
     return locationsList[indexOfSelectedLocation];
@@ -44,14 +44,14 @@ const chooseAlgorithmAtRandom = (algorithms: ValidAlgorithms ): Algorithm => {
     return algorithms.algorithms[randomIndex];
 };
 
-export const provideLocationsList = (locations: Locations): ReadonlyArray<Location> => {
+export const getValidLocations = (locations: Locations): ReadonlyArray<Location> => {
    if (locations.type !== constants.LOCATIONS_SUCCESS) {
        return [];
    }
    return locations.locations;
 };
 
-export const provideTopicsList = (topics: Topics): ReadonlyArray<Topic> => {
+export const getValidTopics = (topics: Topics): ReadonlyArray<Topic> => {
     if (topics.type !== constants.TOPICS_SUCCESS) {
         return [];
     }

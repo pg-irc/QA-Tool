@@ -1,10 +1,11 @@
 // tslint:disable:no-expression-statement
-import { Topic, Topics } from '../application/types';
+import { Topic, Topics } from '../../application/types';
 import axios, { AxiosResponse } from 'axios';
 import buildUrl from 'build-url';
-import { isResponseError } from './errors';
+import { isResponseError, isValidationError } from '../errors';
 import * as R from 'ramda';
-import { buildEmptyTopicsType } from '../application/helpers/build_types';
+import { buildEmptyTopicsType, buildInvalidTopicssType } from '../../application/helpers/build_types';
+import { validateTopicsArray } from './validate';
 
 export const requestTopics = async (): Promise<AxiosResponse>  => {
     try {
@@ -21,6 +22,12 @@ export const requestTopics = async (): Promise<AxiosResponse>  => {
 export const validateTopicsResponse = (response: AxiosResponse): Topics => {
     if (isResponseError(response)) {
         throw new Error(response.statusText);
+    }
+    const validator = validateTopicsArray(response.data);
+    if (isValidationError(validator)) {
+
+        const errorMessage = 'Error: locations response data failed schema validation';
+        return buildInvalidTopicssType(errorMessage);
     }
     if (R.isEmpty(response.data)) {
         return buildEmptyTopicsType();

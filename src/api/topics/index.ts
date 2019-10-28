@@ -6,6 +6,7 @@ import { isResponseError, isValidationError } from '../errors';
 import * as R from 'ramda';
 import { buildEmptyTopicsType, buildInvalidTopicsType, buildTopicType } from '../../application/helpers/build_types';
 import { validateTopicsArray } from './validate';
+import * as constants from '../../application/constants';
 
 export const requestTopics = async (): Promise<AxiosResponse>  => {
     const url = buildUrlForTopics();
@@ -28,7 +29,7 @@ export const validateTopicsResponse = (response: AxiosResponse): Topics => {
         return buildEmptyTopicsType();
     }
     return {
-        type: 'Topics:Success', topics: response.data.map((topic: Topic): Topic => buildTopicType(topic)),
+        type: constants.TOPICS_SUCCESS, topics: response.data.map((topic: Topic): Topic => buildTopicType(topic)),
     };
 };
 

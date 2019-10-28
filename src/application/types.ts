@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 
 export interface Location {
-    readonly type: 'Location';
+    readonly type: 'LOCATION';
     readonly id: number;
     readonly name: string;
     readonly latitude: number;
@@ -9,21 +9,21 @@ export interface Location {
 }
 
 export interface EmptyLocations {
-    readonly type: 'Locations:Empty';
+    readonly type: 'LOCATIONS:EMPTY';
 }
 
 export interface ValidLocations {
-    readonly type: 'Locations:Success';
+    readonly type: 'LOCATIONS:SUCCESS';
     readonly locations: ReadonlyArray<Location>;
 }
 
 export interface InvalidLocations {
-    readonly type: 'Locations:Error';
+    readonly type: 'LOCATIONS:ERROR';
     readonly errorMessage: string;
 }
 
 export interface LoadingLocations {
-    readonly type: 'Locations:Loading';
+    readonly type: 'LOCATIONS:LOADING';
 }
 
 export type Locations = ValidLocations | InvalidLocations | LoadingLocations | EmptyLocations;
@@ -31,26 +31,26 @@ export type Locations = ValidLocations | InvalidLocations | LoadingLocations | E
 export type SetLocations = Dispatch<SetStateAction<Locations>>;
 
 export interface Topic {
-    readonly type: 'Topic';
+    readonly type: 'TOPIC';
     readonly id: string;
 }
 
 export interface EmptyTopics {
-    readonly type: 'Topics:Empty';
+    readonly type: 'TOPICS:EMPTY';
 }
 
 export interface ValidTopics {
-    readonly type: 'Topics:Success';
+    readonly type: 'TOPICS:SUCCESS';
     readonly topics: ReadonlyArray<Topic>;
 }
 
 export interface InvalidTopics {
-    readonly type: 'Topics:Error';
+    readonly type: 'TOPICS:ERROR';
     readonly errorMessage: string;
 }
 
 export interface LoadingTopics {
-    readonly type: 'Topics:Loading';
+    readonly type: 'TOPICS:LOADING';
 }
 
 export type Topics = ValidTopics | InvalidTopics | LoadingTopics | EmptyTopics;
@@ -58,11 +58,11 @@ export type Topics = ValidTopics | InvalidTopics | LoadingTopics | EmptyTopics;
 export type SetTopics = Dispatch<SetStateAction<Topics>>;
 
 export interface EmptyAlgorithmId {
-    readonly type: 'Algorithm:Empty';
+    readonly type: 'ALGORITHM:EMPTY';
 }
 
 export interface ValidAlgorithmId {
-    readonly type: 'Algorithm:Success';
+    readonly type: 'ALGORITHM:SUCCESS';
     readonly id: number;
 }
 
@@ -79,21 +79,21 @@ export type SetAlgorithms = Dispatch<SetStateAction<Algorithms>>;
 export type SetAlgorithmId = Dispatch<SetStateAction<AlgorithmId>>;
 
 export interface EmptyAlgorithms {
-    readonly type: 'Algorithms:Empty';
+    readonly type: 'ALGORITHMS:EMPTY';
 }
 
 export interface ValidAlgorithms {
-    readonly type: 'Algorithms:Success';
+    readonly type: 'ALGORITHMS:SUCCESS';
     readonly algorithms: ReadonlyArray<Algorithm>;
 }
 
 export interface InvalidAlgorithms {
-    readonly type: 'Algorithms:Error';
+    readonly type: 'ALGORITHMS:ERROR';
     readonly errorMessage: string;
 }
 
 export interface LoadingAlgorithms {
-    readonly type: 'Algorithms:Loading';
+    readonly type: 'ALGORITHMS:LOADING';
 }
 
 export type Algorithms = ValidAlgorithms | InvalidAlgorithms | LoadingAlgorithms | EmptyAlgorithms;

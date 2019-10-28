@@ -8,6 +8,7 @@ import { buildAlgorithms, buildLocations, buildTopics } from './helpers/build_re
 import { buildEmptyServicesType, buildEmptyAlgorithmsType, buildEmptyLocationsType, buildEmptyTopicsType,
     buildEmptyAlgorithmIdType, buildEmptyTopicIdType, buildEmptyLocationIdType } from './helpers/build_types';
 import { Locations, SetLocations, Topics, SetTopics, Algorithms, SetAlgorithms, SetAlgorithmId, AlgorithmId } from './types';
+import * as constants from './constants';
 
 export interface SharedStateAndCallbacks {
   readonly services: Services;
@@ -24,8 +25,8 @@ export interface SharedStateAndCallbacks {
 
 export const Application = (): JSX.Element => {
   const [services, setServices]: [Services, SetServices] = useState<Services>(buildEmptyServicesType());
-  const [topic, setTopic]: [TopicId, SetTopic] = useState(buildEmptyTopicIdType());
-  const [location, setLocation]: [LocationId, SetLocation] = useState(buildEmptyLocationIdType());
+  const [topic, setTopic]: [TopicId, SetTopic] = useState<TopicId>(buildEmptyTopicIdType());
+  const [location, setLocation]: [LocationId, SetLocation] = useState<LocationId>(buildEmptyLocationIdType());
   const [algorithms, setAlgorithms]: [Algorithms, SetAlgorithms] = useState<Algorithms>(buildEmptyAlgorithmsType());
   const [algorithmId, setAlgorithmId]: [AlgorithmId, SetAlgorithmId] = useState<AlgorithmId>(buildEmptyAlgorithmIdType());
   const [locations, setLocations]: [Locations, SetLocations] = useState<Locations>(buildEmptyLocationsType());
@@ -63,7 +64,7 @@ export const Application = (): JSX.Element => {
 };
 
 const renderErrorIfAlgorithmsErrorType = (algorithms: Algorithms): JSX.Element|void => {
-  if (algorithms.type === 'Algorithms:Error') {
+  if (algorithms.type === constants.ALGORITHMS_EMPTY) {
     return <div>Failed to load algorithms for use.</div>;
   }
 };

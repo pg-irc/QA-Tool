@@ -6,7 +6,7 @@ import { buildEmptyLocationIdType, buildEmptyTopicIdType, buildEmptyServicesType
 import { SharedStateAndCallbacks } from '../../application';
 import { Locations, Topics } from '../../application/types';
 import { updateServicesAndAlgorithm, provideLocationsList, provideTopicsList } from './update_services_and_algorithm';
-
+import * as constants from '../../application/constants';
 export interface LocationsAndTopicsProps {
     readonly locations: Locations;
     readonly topics: Topics;
@@ -59,7 +59,7 @@ const SendButton = (props: ApiQueryPickerProps): JSX.Element => {
 };
 
 const renderTopicsDropdownOrError = (topic: TopicId, topics: Topics, onSetTopic: OnSetTopic): JSX.Element => {
-    if (topics.type === 'Topics:Error') {
+    if (topics.type === constants.TOPICS_ERROR) {
         return <div>Topics: {topics.errorMessage}. Refresh the page or contact the QA Tool administrator.</div>;
     }
     return (<Dropdown title={'Topic'} selectedOption={topic}
@@ -68,7 +68,7 @@ const renderTopicsDropdownOrError = (topic: TopicId, topics: Topics, onSetTopic:
 };
 
 const renderLocationsDropdownOrError = (location: LocationId, locations: Locations, onSetLocation: OnSetLocation): JSX.Element => {
-    if (locations.type === 'Locations:Error') {
+    if (locations.type === constants.LOCATIONS_ERROR) {
         return <div>Locations: {locations.errorMessage}. Refresh the page or contact the QA Tool administrator.</div>;
     }
     return (<Dropdown title={'Locations'} selectedOption={location}

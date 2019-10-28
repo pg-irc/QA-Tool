@@ -4,9 +4,10 @@ import { ApiQueryPickerProps } from './api_query_picker';
 import { ValidAlgorithms, SetAlgorithmId, Locations, Location, Topics, Topic, Algorithm } from '../../application/types';
 import { LocationId } from './types';
 import { buildServicesLoadingType } from '../../application/helpers/build_types';
+import * as constants from '../../application/constants';
 
 export const updateServicesAndAlgorithm = (props: ApiQueryPickerProps): void => {
-    if (props.algorithms.type !== 'Algorithms:Success') {
+    if (props.algorithms.type !== constants.ALGORITHMS_SUCCESS) {
         return;
     }
     const algorithmUrl = updateAlgorithm(props.algorithms, props.setAlgorithmId);
@@ -44,14 +45,14 @@ const chooseAlgorithmAtRandom = (algorithms: ValidAlgorithms ): Algorithm => {
 };
 
 export const provideLocationsList = (locations: Locations): ReadonlyArray<Location> => {
-   if (locations.type !== 'Locations:Success') {
+   if (locations.type !== constants.LOCATIONS_SUCCESS) {
        return [];
    }
    return locations.locations;
 };
 
 export const provideTopicsList = (topics: Topics): ReadonlyArray<Topic> => {
-    if (topics.type !== 'Topics:Success') {
+    if (topics.type !== constants.TOPICS_SUCCESS) {
         return [];
     }
     return topics.topics;

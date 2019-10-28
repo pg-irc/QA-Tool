@@ -6,6 +6,7 @@ import { SharedStateAndCallbacks } from '../../application';
 import { requestSendRelevancyScore } from '../../api/relevancy_score';
 import { TopicId, LocationId } from '../api_query_picker/types';
 import { AlgorithmId, ScoreValue } from '../../application/types';
+import * as constants from '../../application/constants';
 
 type Props = SharedStateAndCallbacks;
 
@@ -43,11 +44,11 @@ export const ServicesList = (props: Props): JSX.Element => {
 };
 const renderServicesBasedOnType = (services: Services, sendRelevancyScore: SendRelevancyScore): JSX.Element => {
     switch (services.type) {
-        case 'Services:Loading':
+        case constants.SERVICES_LOADING:
             return renderLoadingMessage();
-        case 'Services:Success':
+        case constants.SERVICES_SUCCESS:
             return renderList(services, sendRelevancyScore);
-        case 'Services:Error':
+        case constants.SERVICES_ERROR:
             return renderErrorMessage(services);
         default:
             return <p>No services</p>;

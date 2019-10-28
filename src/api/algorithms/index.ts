@@ -6,6 +6,7 @@ import { isResponseError, isValidationError } from '../errors';
 import * as R from 'ramda';
 import { buildEmptyAlgorithmsType, buildInvalidAlgorithmsType } from '../../application/helpers/build_types';
 import { validateAlgorithmsArray } from './validate';
+import * as constants from '../../application/constants';
 
 export const requestAlgorithms = async (): Promise<AxiosResponse>  => {
     const url = buildUrlForAlgorithms();
@@ -28,7 +29,7 @@ export const validateAlgorithmsResponse = (response: AxiosResponse): Algorithms 
         return buildEmptyAlgorithmsType();
     }
     return {
-        type: 'Algorithms:Success', algorithms: response.data,
+        type: constants.ALGORITHMS_SUCCESS, algorithms: response.data,
     };
 };
 

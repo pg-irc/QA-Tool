@@ -1,6 +1,7 @@
 import React from 'react';
 import { DropdownItemCollection, DropdownItem } from './types';
 import { LocationId, TopicId } from '../api_query_picker/types';
+import * as constants from '../../application/constants';
 
 export type SelectedOption = TopicId | LocationId;
 export interface DropdownProps {
@@ -32,7 +33,7 @@ const renderAllDropdownOptions = (options: DropdownItemCollection, selectedOptio
 );
 
 const renderOneDropdownOption = (option: DropdownItem): JSX.Element => {
-  if (option.type === 'Location') {
+  if (option.type === constants.LOCATION) {
     return (
       <option key={option.id} value={option.id}>{option.name}</option>
     );
@@ -43,7 +44,7 @@ const renderOneDropdownOption = (option: DropdownItem): JSX.Element => {
 };
 
 const renderFirstDropdownOption = (option: SelectedOption): JSX.Element => {
-  if (option.type === 'Location:Success') {
+  if (option.type === 'LOCATION_ID:EMPTY') {
     return (
       <option value={0} disabled>Select a location</option>
     );

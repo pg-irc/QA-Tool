@@ -8,6 +8,7 @@ import buildUrl from 'build-url';
 import { serviceFromValidatedJSON, validateServicesAtLocationArray } from '../pathways-frontend/src/validation/services';
 import { Location } from '../application/types';
 import { buildEmptyServicesType, buildInvalidServicesType } from '../application/helpers/build_types';
+import * as constants from '../application/constants';
 
 export const requestServices = async (topic: TopicId, location: Location, algorithmUrl: string): Promise<AxiosResponse> => {
     const url = buildUrlFromTopicIdAndLocation(topic, location, algorithmUrl);
@@ -45,7 +46,8 @@ export const validateServicesResponse = (response: AxiosResponse): ServiceTypes.
         return buildEmptyServicesType();
     }
     return {
-        type: 'Services:Success', services: response.data.map((val: ServiceTypes.ValidatedServiceAtLocationJSON) => serviceFromValidatedJSON(val)),
+        type: constants.SERVICES_SUCCESS,
+        services: response.data.map((val: ServiceTypes.ValidatedServiceAtLocationJSON) => serviceFromValidatedJSON(val)),
     };
 };
 

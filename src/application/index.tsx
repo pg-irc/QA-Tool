@@ -4,9 +4,9 @@ import { ApiQueryPicker } from '../components/api_query_picker/api_query_picker'
 import { Services, SetServices } from '../components/services/types';
 import { ServicesList } from '../components/services/services_list';
 import { SetTopic, TopicId, SetLocation, LocationId } from '../components/api_query_picker/types';
-import { buildAlgorithms, buildLocations, buildTopics } from './helpers/build_relevancy_score_items';
+import { buildAlgorithms, buildLocations, buildTopics } from './build_relevancy_score_items';
 import { buildEmptyServicesType, buildEmptyAlgorithmsType, buildEmptyLocationsType, buildEmptyTopicsType,
-    buildEmptyAlgorithmIdType, buildEmptyTopicIdType, buildEmptyLocationIdType } from './helpers/build_types';
+    buildEmptyAlgorithmIdType, buildEmptyTopicIdType, buildEmptyLocationIdType } from './build_types';
 import { Locations, SetLocations, Topics, SetTopics, Algorithms, SetAlgorithms, SetAlgorithmId, AlgorithmId } from './types';
 import * as constants from './constants';
 

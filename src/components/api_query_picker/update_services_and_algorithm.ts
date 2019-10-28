@@ -3,7 +3,7 @@ import { requestServices, validateServicesResponse } from '../../api/services';
 import { ApiQueryPickerProps } from './api_query_picker';
 import { ValidAlgorithms, SetAlgorithmId, Locations, Location, Topics, Topic, Algorithm } from '../../application/types';
 import { LocationId } from './types';
-import { buildServicesLoadingType } from '../../application/helpers/build_types';
+import { buildServicesLoadingType } from '../../application/build_types';
 import * as constants from '../../application/constants';
 
 export const updateServicesAndAlgorithm = (props: ApiQueryPickerProps): void => {

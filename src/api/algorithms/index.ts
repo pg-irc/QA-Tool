@@ -4,7 +4,7 @@ import axios, { AxiosResponse } from 'axios';
 import buildUrl from 'build-url';
 import { isResponseError, isValidationError } from '../errors';
 import * as R from 'ramda';
-import { buildEmptyAlgorithmsType, buildInvalidAlgorithmsType } from '../../application/helpers/build_types';
+import { buildEmptyAlgorithmsType, buildInvalidAlgorithmsType } from '../../application/build_types';
 import { validateAlgorithmsArray } from './validate';
 import * as constants from '../../application/constants';
 

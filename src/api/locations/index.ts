@@ -4,7 +4,7 @@ import axios, { AxiosResponse } from 'axios';
 import buildUrl from 'build-url';
 import { isResponseError, isValidationError } from '../errors';
 import * as R from 'ramda';
-import { buildEmptyLocationsType, buildInvalidLocationsType, buildLocationType } from '../../application/helpers/build_types';
+import { buildEmptyLocationsType, buildInvalidLocationsType, buildLocationType } from '../../application/build_types';
 import { validateLocationsArray } from './validate';
 import * as constants from '../../application/constants';
 

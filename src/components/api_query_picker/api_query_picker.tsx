@@ -1,8 +1,8 @@
 // tslint:disable:no-expression-statement
 import React, { ChangeEvent } from 'react';
 import { Dropdown } from '../dropdown/dropdown';
-import { SelectedLocation, SelectedTopic } from './types';
-import { buildEmptyLocationType, buildEmptyTopicType, buildEmptyServicesType, buildSelectedLocationType, buildSelectedTopicType} from '../../application/helpers/build_types';
+import { LocationId, TopicId } from './types';
+import { buildEmptyLocationIdType, buildEmptyTopicIdType, buildEmptyServicesType, buildLocationIdType, buildTopicIdType} from '../../application/helpers/build_types';
 import { SharedStateAndCallbacks } from '../../application';
 import { Locations, Topics } from '../../application/types';
 import { updateServicesAndAlgorithm, provideLocationsList, provideTopicsList } from './update_services_and_algorithm';
@@ -19,14 +19,14 @@ export type OnSetTopic = (event: ChangeEvent<HTMLSelectElement>) => void;
 
 export const ApiQueryPicker = (props: ApiQueryPickerProps): JSX.Element => {
     const onSetTopic = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-        props.setTopic(buildSelectedTopicType(event.target.value));
+        props.setTopic(buildTopicIdType(event.target.value));
     };
     const onSetLocation = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-        props.setLocation(buildSelectedLocationType(Number(event.target.value)));
+        props.setLocation(buildLocationIdType(Number(event.target.value)));
     };
     const clearSelectedOptions = (): void => {
-        props.setTopic(buildEmptyTopicType());
-        props.setLocation(buildEmptyLocationType());
+        props.setTopic(buildEmptyTopicIdType());
+        props.setLocation(buildEmptyLocationIdType());
         props.setServices(buildEmptyServicesType());
     };
     return (
@@ -48,7 +48,7 @@ const ClearButton = (props: ClearButtonProps): JSX.Element => (
 );
 
 const SendButton = (props: ApiQueryPickerProps): JSX.Element => {
-    const enabled = props.topic.value && props.location.value;
+    const enabled = props.topic.id && props.location.id;
     return (
         <button
             disabled={!enabled}
@@ -58,7 +58,7 @@ const SendButton = (props: ApiQueryPickerProps): JSX.Element => {
     );
 };
 
-const renderTopicsDropdownOrError = (topic: SelectedTopic, topics: Topics, onSetTopic: OnSetTopic): JSX.Element => {
+const renderTopicsDropdownOrError = (topic: TopicId, topics: Topics, onSetTopic: OnSetTopic): JSX.Element => {
     if (topics.type === 'Topics:Error') {
         return <div>Topics: {topics.errorMessage}. Refresh the page or contact the QA Tool administrator.</div>;
     }
@@ -67,7 +67,7 @@ const renderTopicsDropdownOrError = (topic: SelectedTopic, topics: Topics, onSet
     );
 };
 
-const renderLocationsDropdownOrError = (location: SelectedLocation, locations: Locations, onSetLocation: OnSetLocation): JSX.Element => {
+const renderLocationsDropdownOrError = (location: LocationId, locations: Locations, onSetLocation: OnSetLocation): JSX.Element => {
     if (locations.type === 'Locations:Error') {
         return <div>Locations: {locations.errorMessage}. Refresh the page or contact the QA Tool administrator.</div>;
     }

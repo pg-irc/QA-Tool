@@ -2,7 +2,7 @@
 import { requestServices, validateServicesResponse } from '../../api/services';
 import { ApiQueryPickerProps } from './api_query_picker';
 import { ValidAlgorithms, SetAlgorithmId, Locations, Location, Topics, Topic, Algorithm } from '../../application/types';
-import { SelectedLocation } from './types';
+import { LocationId } from './types';
 import { buildServicesLoadingType } from '../../application/helpers/build_types';
 
 export const updateServicesAndAlgorithm = (props: ApiQueryPickerProps): void => {
@@ -31,10 +31,10 @@ const updateServices = async (props: ApiQueryPickerProps, algorithmUrl: string):
     }
 };
 
-const buildLongLatFromId = (selectedLocation: SelectedLocation, locations: Locations): Location => {
+const buildLongLatFromId = (selectedLocation: LocationId, locations: Locations): Location => {
     const locationsList = provideLocationsList(locations);
     const listOfIds = locationsList.map((location: Location) => location.id);
-    const indexOfSelectedLocation = listOfIds.indexOf(selectedLocation.value);
+    const indexOfSelectedLocation = listOfIds.indexOf(selectedLocation.id);
     return locationsList[indexOfSelectedLocation];
 };
 

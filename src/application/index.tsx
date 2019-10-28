@@ -3,15 +3,16 @@ import React, { useState, useEffect } from 'react';
 import { ApiQueryPicker } from '../components/api_query_picker/api_query_picker';
 import { Services, SetServices } from '../components/services/types';
 import { ServicesList } from '../components/services/services_list';
-import { SetTopic, SelectedTopic, SetLocation, SelectedLocation } from '../components/api_query_picker/types';
+import { SetTopic, TopicId, SetLocation, LocationId } from '../components/api_query_picker/types';
 import { buildAlgorithms, buildLocations, buildTopics } from './helpers/build_relevancy_score_items';
-import { buildEmptyServicesType, buildEmptyAlgorithmsType, buildEmptyLocationsType, buildEmptyTopicsType, buildEmptyAlgorithmIdType } from './helpers/build_types';
+import { buildEmptyServicesType, buildEmptyAlgorithmsType, buildEmptyLocationsType, buildEmptyTopicsType,
+    buildEmptyAlgorithmIdType, buildEmptyTopicIdType, buildEmptyLocationIdType } from './helpers/build_types';
 import { Locations, SetLocations, Topics, SetTopics, Algorithms, SetAlgorithms, SetAlgorithmId, AlgorithmId } from './types';
 
 export interface SharedStateAndCallbacks {
   readonly services: Services;
-  readonly topic: SelectedTopic;
-  readonly location: SelectedLocation;
+  readonly topic: TopicId;
+  readonly location: LocationId;
   readonly setServices: SetServices;
   readonly setTopic: SetTopic;
   readonly setLocation: SetLocation;
@@ -22,17 +23,9 @@ export interface SharedStateAndCallbacks {
 }
 
 export const Application = (): JSX.Element => {
-  let selectedTopic: SelectedTopic = {
-    type: 'Topic',
-    value: '',
-  };
-  let selectedLocation: SelectedLocation = {
-    type: 'Location',
-    value: 0,
-  };
   const [services, setServices]: [Services, SetServices] = useState<Services>(buildEmptyServicesType());
-  const [topic, setTopic]: [SelectedTopic, SetTopic] = useState(selectedTopic);
-  const [location, setLocation]: [SelectedLocation, SetLocation] = useState(selectedLocation);
+  const [topic, setTopic]: [TopicId, SetTopic] = useState(buildEmptyTopicIdType());
+  const [location, setLocation]: [LocationId, SetLocation] = useState(buildEmptyLocationIdType());
   const [algorithms, setAlgorithms]: [Algorithms, SetAlgorithms] = useState<Algorithms>(buildEmptyAlgorithmsType());
   const [algorithmId, setAlgorithmId]: [AlgorithmId, SetAlgorithmId] = useState<AlgorithmId>(buildEmptyAlgorithmIdType());
   const [locations, setLocations]: [Locations, SetLocations] = useState<Locations>(buildEmptyLocationsType());

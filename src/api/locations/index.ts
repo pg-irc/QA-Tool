@@ -6,6 +6,7 @@ import { isResponseError, isValidationError } from '../errors';
 import * as R from 'ramda';
 import { buildEmptyLocationsType, buildInvalidLocationsType, buildLocationType } from '../../application/helpers/build_types';
 import { validateLocationsArray } from './validate';
+import * as constants from '../../application/constants';
 
 export const requestLocations = async (): Promise<AxiosResponse>  => {
     const url = buildUrlForLocations();
@@ -28,7 +29,7 @@ export const validateLocationsResponse = (response: AxiosResponse): Locations =>
         return buildEmptyLocationsType();
     }
     return {
-        type: 'Locations:Success', locations: response.data.map((location: Location ) => buildLocationType(location)),
+        type: constants.LOCATIONS_SUCCESS, locations: response.data.map((location: Location ) => buildLocationType(location)),
     };
 };
 

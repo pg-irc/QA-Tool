@@ -1,67 +1,68 @@
-import { TopicId, LocationId  } from '../../components/api_query_picker/types';
+import { ValidTopicId, EmptyTopicId, ValidLocationId, EmptyLocationId } from '../../components/api_query_picker/types';
 import { LoadingServices, EmptyServices, InvalidServices } from '../../components/services/types';
 import { EmptyLocations, EmptyTopics, EmptyAlgorithms, InvalidAlgorithms, EmptyAlgorithmId, InvalidLocations, InvalidTopics, Location, Topic } from '../types';
+import * as constants from '../constants';
 
-export const buildTopicIdType = (id: string): TopicId => (
-    { type: 'Topic:Success', id }
+export const buildTopicIdType = (id: string): ValidTopicId => (
+    { type: constants.TOPIC_ID_SUCCESS, id }
 );
 
-export const buildEmptyTopicIdType = (): TopicId  => (
-    { type: 'Topic:Empty', id: '' }
+export const buildEmptyTopicIdType = (): EmptyTopicId  => (
+    { type: constants.TOPIC_ID_EMPTY, id: '' }
 );
 
-export const buildLocationIdType = (id: number): LocationId => (
-    { type: 'Location:Success', id: id }
+export const buildLocationIdType = (id: number): ValidLocationId => (
+    { type: constants.LOCATION_ID_SUCCESS, id: id }
 );
 
-export const buildEmptyLocationIdType = (): LocationId => (
-    { type: 'Location:Empty', id: 0 }
+export const buildEmptyLocationIdType = (): EmptyLocationId => (
+    { type: constants.LOCATION_ID_EMPTY, id: 0 }
 );
 
 export const buildServicesLoadingType = (): LoadingServices  => (
-    { type: 'Services:Loading' }
+    { type: constants.SERVICES_LOADING }
 );
 
 export const buildEmptyServicesType = (): EmptyServices => (
-    { type: 'Services:Empty' }
+    { type: constants.SERVICES_EMPTY }
 );
 
 export const buildEmptyAlgorithmsType = (): EmptyAlgorithms => (
-    { type: 'Algorithms:Empty' }
+    { type: constants.ALGORITHMS_EMPTY }
 );
 
 export const buildEmptyLocationsType = (): EmptyLocations => (
-    { type: 'Locations:Empty' }
+    { type: constants.LOCATIONS_EMPTY }
 );
 
 export const buildEmptyTopicsType = (): EmptyTopics => (
-    { type: 'Topics:Empty' }
+    { type: constants.TOPICS_EMPTY }
 );
 
 export const buildEmptyAlgorithmIdType = (): EmptyAlgorithmId => (
-    { type: 'Algorithm:Empty' }
+    { type: constants.ALGORITHM_EMPTY }
 );
 
 export const buildInvalidAlgorithmsType = (errorMessage: string): InvalidAlgorithms => (
-    { type: 'Algorithms:Error', errorMessage }
+    { type: constants.ALGORITHMS_ERROR, errorMessage }
 );
 
 export const buildInvalidLocationsType = (errorMessage: string): InvalidLocations => (
-    { type: 'Locations:Error', errorMessage }
+    { type: constants.LOCATIONS_ERROR, errorMessage }
 );
 
 export const buildInvalidTopicsType = (errorMessage: string): InvalidTopics => (
-    { type: 'Topics:Error', errorMessage }
+    { type: constants.TOPICS_ERROR, errorMessage }
 );
 
 export const buildInvalidServicesType = (errorMessage: string): InvalidServices => (
-    { type: 'Services:Error', errorMessage }
+    { type: constants.SERVICES_ERROR, errorMessage }
 );
 
 export const buildLocationType = (location: Location): Location => (
-    { type: 'Location', ...location }
+    { type: constants.LOCATION, ...location }
 );
 
 export const buildTopicType = (topic: Topic): Topic => (
-    { type: 'Topic', ...topic }
+    { type: constants.TOPIC, ...topic }
 );

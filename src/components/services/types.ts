@@ -32,21 +32,21 @@ export interface Service {
 export type SetServices = Dispatch<SetStateAction<Services>>;
 
 export interface EmptyServices {
-    readonly type: 'Services:Empty';
+    readonly type: 'SERVICES:EMPTY';
 }
 
 export interface ValidServices {
-    readonly type: 'Services:Success';
+    readonly type: 'SERVICES:SUCCESS';
     readonly services: ReadonlyArray<Service>;
 }
 
 export interface InvalidServices {
-    readonly type: 'Services:Error';
+    readonly type: 'SERVICES:ERROR';
     readonly errorMessage: string;
 }
 
 export interface LoadingServices {
-    readonly type: 'Services:Loading';
+    readonly type: 'SERVICES:LOADING';
 }
 
 export type Services = ValidServices | InvalidServices | LoadingServices | EmptyServices;

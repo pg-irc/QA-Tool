@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import axios, { AxiosResponse } from 'axios';
-import { SelectedTopic } from '../components/api_query_picker/types';
+import { TopicId } from '../components/api_query_picker/types';
 import * as ServiceTypes from '../components/services/types';
 import { isResponseError, isValidationError } from './errors';
 import * as R from 'ramda';
@@ -9,15 +9,15 @@ import { serviceFromValidatedJSON, validateServicesAtLocationArray } from '../pa
 import { Location } from '../application/types';
 import { buildEmptyServicesType, buildInvalidServicesType } from '../application/helpers/build_types';
 
-export const requestServices = async (topic: SelectedTopic, location: Location, algorithmUrl: string): Promise<AxiosResponse> => {
-    const url = buildUrlFromSelectedTopicAndLocation(topic, location, algorithmUrl);
+export const requestServices = async (topic: TopicId, location: Location, algorithmUrl: string): Promise<AxiosResponse> => {
+    const url = buildUrlFromTopicIdAndLocation(topic, location, algorithmUrl);
     return await axios.get(url)
     .then((response: AxiosResponse): AxiosResponse => {
       return response;
   });
 };
 
-const buildUrlFromSelectedTopicAndLocation = (topic: SelectedTopic, location: Location, algorithmUrl: string): string => {
+const buildUrlFromTopicIdAndLocation = (topic: TopicId, location: Location, algorithmUrl: string): string => {
     const path = 'v1/services_at_location';
     const baseUrl = algorithmUrl;
     const numberOfRecordsToGet = '5';
@@ -26,7 +26,7 @@ const buildUrlFromSelectedTopicAndLocation = (topic: SelectedTopic, location: Lo
         path: path,
         queryParams: {
             user_location: longLat,
-            related_to_topic: topic.value,
+            related_to_topic: topic.id,
             per_page: numberOfRecordsToGet,
         },
     });

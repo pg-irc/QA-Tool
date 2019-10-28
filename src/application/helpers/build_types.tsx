@@ -1,21 +1,21 @@
-import { SelectedTopic, SelectedLocation  } from '../../components/api_query_picker/types';
+import { TopicId, LocationId  } from '../../components/api_query_picker/types';
 import { LoadingServices, EmptyServices, InvalidServices } from '../../components/services/types';
 import { EmptyLocations, EmptyTopics, EmptyAlgorithms, InvalidAlgorithms, EmptyAlgorithmId, InvalidLocations, InvalidTopics, Location, Topic } from '../types';
 
-export const buildSelectedTopicType = (topicName: string): SelectedTopic => (
-    { type: 'Topic', value: topicName }
+export const buildTopicIdType = (id: string): TopicId => (
+    { type: 'Topic:Success', id }
 );
 
-export const buildEmptyTopicType = (): SelectedTopic  => (
-    { type: 'Topic', value: '' }
+export const buildEmptyTopicIdType = (): TopicId  => (
+    { type: 'Topic:Empty', id: '' }
 );
 
-export const buildSelectedLocationType = (id: number): SelectedLocation => (
-    { type: 'Location', value: id }
+export const buildLocationIdType = (id: number): LocationId => (
+    { type: 'Location:Success', id: id }
 );
 
-export const buildEmptyLocationType = (): SelectedLocation => (
-    { type: 'Location', value: 0 }
+export const buildEmptyLocationIdType = (): LocationId => (
+    { type: 'Location:Empty', id: 0 }
 );
 
 export const buildServicesLoadingType = (): LoadingServices  => (

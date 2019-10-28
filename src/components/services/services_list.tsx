@@ -4,14 +4,14 @@ import { ValidServices, InvalidServices, Service, Services } from './types';
 import { ServiceListItem } from './service_list_item';
 import { SharedStateAndCallbacks } from '../../application';
 import { requestSendRelevancyScore } from '../../api/relevancy_score';
-import { SelectedTopic, SelectedLocation } from '../api_query_picker/types';
+import { TopicId, LocationId } from '../api_query_picker/types';
 import { AlgorithmId, ScoreValue } from '../../application/types';
 
 type Props = SharedStateAndCallbacks;
 
 export interface ScoreForService {
-    readonly topic: SelectedTopic;
-    readonly location: SelectedLocation;
+    readonly topic: TopicId;
+    readonly location: LocationId;
     readonly service: Service;
     readonly value: ScoreValue;
     readonly algorithmId: AlgorithmId;
@@ -21,8 +21,8 @@ export type SendRelevancyScore = (service: Service, score: ScoreValue) => void;
 
 export const ServicesList = (props: Props): JSX.Element => {
     const sendRelevancyScore = (service: Service, value: ScoreValue): void => {
-        const topic: SelectedTopic = props.topic;
-        const location: SelectedLocation = props.location;
+        const topic: TopicId = props.topic;
+        const location: LocationId = props.location;
         const algorithmId: AlgorithmId = props.algorithmId;
 
         const scoreForService: ScoreForService = {

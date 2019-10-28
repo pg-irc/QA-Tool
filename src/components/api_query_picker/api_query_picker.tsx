@@ -2,7 +2,7 @@
 import React, { ChangeEvent } from 'react';
 import { Dropdown } from '../dropdown/dropdown';
 import { LocationId, TopicId } from './types';
-import { buildEmptyLocationIdType, buildEmptyTopicIdType, buildEmptyServicesType, buildLocationIdType, buildTopicIdType} from '../../application/helpers/build_types';
+import { buildEmptyLocationIdType, buildEmptyTopicIdType, buildEmptyServicesType, buildLocationIdType, buildTopicIdType} from '../../application/build_types';
 import { SharedStateAndCallbacks } from '../../application';
 import { Locations, Topics } from '../../application/types';
 import { updateServicesAndAlgorithm, provideLocationsList, provideTopicsList } from './update_services_and_algorithm';

@@ -1,7 +1,7 @@
-import { ValidTopicId, EmptyTopicId, ValidLocationId, EmptyLocationId } from '../../components/api_query_picker/types';
-import { LoadingServices, EmptyServices, InvalidServices } from '../../components/services/types';
-import { EmptyLocations, EmptyTopics, EmptyAlgorithms, InvalidAlgorithms, EmptyAlgorithmId, InvalidLocations, InvalidTopics, Location, Topic } from '../types';
-import * as constants from '../constants';
+import { ValidTopicId, EmptyTopicId, ValidLocationId, EmptyLocationId } from '../components/api_query_picker/types';
+import { LoadingServices, EmptyServices, InvalidServices } from '../components/services/types';
+import { EmptyLocations, EmptyTopics, EmptyAlgorithms, InvalidAlgorithms, EmptyAlgorithmId, InvalidLocations, InvalidTopics, Location, Topic } from './types';
+import * as constants from './constants';
 
 export const buildTopicIdType = (id: string): ValidTopicId => (
     { type: constants.TOPIC_ID_SUCCESS, id }

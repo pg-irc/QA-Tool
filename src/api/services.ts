@@ -7,7 +7,7 @@ import * as R from 'ramda';
 import buildUrl from 'build-url';
 import { serviceFromValidatedJSON, validateServicesAtLocationArray } from '../pathways-frontend/src/validation/services';
 import { Location } from '../application/types';
-import { buildEmptyServicesType, buildInvalidServicesType } from '../application/helpers/build_types';
+import { buildEmptyServicesType, buildInvalidServicesType } from '../application/build_types';
 import * as constants from '../application/constants';
 
 export const requestServices = async (topic: TopicId, location: Location, algorithmUrl: string): Promise<AxiosResponse> => {

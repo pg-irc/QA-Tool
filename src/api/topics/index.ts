@@ -1,10 +1,10 @@
 // tslint:disable:no-expression-statement
-import { Topic, Topics } from '../../application/types';
+import { Topics, Topic } from '../../application/types';
 import axios, { AxiosResponse } from 'axios';
 import buildUrl from 'build-url';
 import { isResponseError, isValidationError } from '../errors';
 import * as R from 'ramda';
-import { buildEmptyTopicsType, buildInvalidTopicsType } from '../../application/helpers/build_types';
+import { buildEmptyTopicsType, buildInvalidTopicsType, buildTopicType } from '../../application/helpers/build_types';
 import { validateTopicsArray } from './validate';
 
 export const requestTopics = async (): Promise<AxiosResponse>  => {
@@ -28,14 +28,7 @@ export const validateTopicsResponse = (response: AxiosResponse): Topics => {
         return buildEmptyTopicsType();
     }
     return {
-        type: 'Topics:Success', topics: response.data.map((val: Topic) => buildValidatedTopic(val)),
-    };
-};
-
-export const buildValidatedTopic = (data: Topic): Topic => {
-    return {
-        type: 'Topic',
-        id: data.id,
+        type: 'Topics:Success', topics: response.data.map((topic: Topic): Topic => buildTopicType(topic)),
     };
 };
 

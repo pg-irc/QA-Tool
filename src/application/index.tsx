@@ -4,7 +4,7 @@ import { ApiQueryPicker } from '../components/api_query_picker/api_query_picker'
 import { Services, SetServices } from '../components/services/types';
 import { ServicesList } from '../components/services/services_list';
 import { SetTopic, TopicId, SetLocation, LocationId } from '../components/api_query_picker/types';
-import { buildAlgorithms, buildLocations, buildTopics } from './build_relevancy_score_items';
+import { getAlgorithms, getLocations, getTopics } from './get_relevancy_score_items';
 import { buildEmptyServicesType, buildEmptyAlgorithmsType, buildEmptyLocationsType, buildEmptyTopicsType,
     buildEmptyAlgorithmIdType, buildEmptyTopicIdType, buildEmptyLocationIdType } from './build_types';
 import { Locations, SetLocations, Topics, SetTopics, Algorithms, SetAlgorithms, SetAlgorithmId, AlgorithmId } from './types';
@@ -33,9 +33,9 @@ export const Application = (): JSX.Element => {
   const [topics, setTopics]: [Topics, SetTopics] = useState<Topics>(buildEmptyTopicsType());
   useEffect(() => {
     const buildRelevancyScoreItemsFromApi = async (): Promise<void> => {
-      const algorithmsFromApi = await buildAlgorithms();
-      const locationsFromApi = await buildLocations();
-      const topicsFromApi = await buildTopics();
+      const algorithmsFromApi = await getAlgorithms();
+      const locationsFromApi = await getLocations();
+      const topicsFromApi = await getTopics();
       setAlgorithms(algorithmsFromApi);
       setLocations(locationsFromApi);
       setTopics(topicsFromApi);

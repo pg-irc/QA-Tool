@@ -1,6 +1,6 @@
 import { SelectedTopic, SelectedLocation  } from '../../components/api_query_picker/types';
 import { LoadingServices, EmptyServices } from '../../components/services/types';
-import { EmptyLocations, EmptyTopics, EmptyAlgorithms, InvalidAlgorithms, EmptyAlgorithmId } from '../types';
+import { EmptyLocations, EmptyTopics, EmptyAlgorithms, InvalidAlgorithms, EmptyAlgorithmId, InvalidLocations, InvalidTopics } from '../types';
 
 export const buildSelectedTopicType = (topicName: string): SelectedTopic => (
     { type: 'Topic', value: topicName }
@@ -44,4 +44,12 @@ export const buildEmptyAlgorithmIdType = (): EmptyAlgorithmId => (
 
 export const buildInvalidAlgorithmsType = (errorMessage: string): InvalidAlgorithms => (
     { type: 'Algorithms:Error', errorMessage }
+);
+
+export const buildInvalidLocationsType = (errorMessage: string): InvalidLocations => (
+    { type: 'Locations:Error', errorMessage }
+);
+
+export const buildInvalidTopicssType = (errorMessage: string): InvalidTopics => (
+    { type: 'Topics:Error', errorMessage }
 );

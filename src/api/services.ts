@@ -7,7 +7,7 @@ import * as R from 'ramda';
 import buildUrl from 'build-url';
 import { serviceFromValidatedJSON, validateServicesAtLocationArray } from '../pathways-frontend/src/validation/services';
 import { Location } from '../application/types';
-import { buildEmptyServicesType } from '../application/helpers/build_types';
+import { buildEmptyServicesType, buildInvalidServicesType } from '../application/helpers/build_types';
 
 export const requestServices = async (topic: SelectedTopic, location: Location, algorithmUrl: string): Promise<AxiosResponse> => {
     const url = buildUrlFromSelectedTopicAndLocation(topic, location, algorithmUrl);
@@ -33,12 +33,12 @@ const buildUrlFromSelectedTopicAndLocation = (topic: SelectedTopic, location: Lo
 
 export const validateServicesResponse = (response: AxiosResponse): ServiceTypes.Services => {
     if (isResponseError(response)) {
-        throw new Error(response.statusText);
+        return buildInvalidServicesType(response.statusText);
     }
     const validator = validateServicesAtLocationArray(response.data);
     if (isValidationError(validator)) {
         const errorMessage = 'Error: response data failed schema validation';
-        throw new Error(errorMessage);
+        return buildInvalidServicesType(errorMessage);
     }
     if (R.isEmpty(response.data)) {
         return buildEmptyServicesType();

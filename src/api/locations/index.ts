@@ -17,7 +17,7 @@ export const requestLocations = async (): Promise<AxiosResponse>  => {
 
 export const validateLocationsResponse = (response: AxiosResponse): Locations => {
     if (isResponseError(response)) {
-        throw new Error(response.statusText);
+        return buildInvalidLocationsType(response.statusText);
     }
     const validator = validateLocationsArray(response.data);
     if (isValidationError(validator)) {

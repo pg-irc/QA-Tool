@@ -17,7 +17,7 @@ export const requestAlgorithms = async (): Promise<AxiosResponse>  => {
 
 export const validateAlgorithmsResponse = (response: AxiosResponse): Algorithms => {
     if (isResponseError(response)) {
-        throw new Error(response.statusText);
+        return buildInvalidAlgorithmsType(response.statusText);
     }
     const validator = validateAlgorithmsArray(response.data);
     if (isValidationError(validator)) {

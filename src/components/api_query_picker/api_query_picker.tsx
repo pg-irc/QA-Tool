@@ -5,7 +5,7 @@ import { LocationId, TopicId } from './types';
 import { buildEmptyLocationIdType, buildEmptyTopicIdType, buildEmptyServicesType, buildLocationIdType, buildTopicIdType} from '../../application/build_types';
 import { SharedStateAndCallbacks } from '../../application';
 import { Locations, Topics } from '../../application/types';
-import { updateServicesAndAlgorithm, getValidLocations, getValidTopics } from './update_services_and_algorithm';
+import { updateServices, getValidLocations, getValidTopics } from './update_services';
 import * as constants from '../../application/constants';
 export interface LocationsAndTopicsProps {
     readonly locations: Locations;
@@ -52,7 +52,7 @@ const SendButton = (props: ApiQueryPickerProps): JSX.Element => {
     return (
         <button
             disabled={!enabled}
-            onClick={(): void => updateServicesAndAlgorithm(props)}>
+            onClick={(): void => updateServices(props)}>
             Send
         </button>
     );

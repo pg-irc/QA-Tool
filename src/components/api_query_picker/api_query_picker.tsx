@@ -63,7 +63,7 @@ const renderTopicsDropdownOrError = (topic: TopicId, topics: Topics, onSetTopic:
         return <div>Topics: {topics.errorMessage}. Refresh the page or contact the QA Tool administrator.</div>;
     }
     return (<Dropdown title={'Topic'} selectedOption={topic}
-        onSetOption={onSetTopic} dropdownItemCollection={getValidTopics(topics)} />
+        onSetOption={onSetTopic} dropdownItemsCollection={getValidTopics(topics)} />
     );
 };
 
@@ -72,6 +72,6 @@ const renderLocationsDropdownOrError = (location: LocationId, locations: Locatio
         return <div>Locations: {locations.errorMessage}. Refresh the page or contact the QA Tool administrator.</div>;
     }
     return (<Dropdown title={'Locations'} selectedOption={location}
-        onSetOption={onSetLocation} dropdownItemCollection={getValidLocations(locations)} />
+        onSetOption={onSetLocation} dropdownItemsCollection={getValidLocations(locations)} />
     );
 };

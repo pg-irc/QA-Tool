@@ -1,10 +1,11 @@
 // tslint:disable:no-expression-statement
 import { requestServices, validateServicesResponse } from '../../api/services';
 import { ApiQueryPickerProps } from './api_query_picker';
-import { ValidAlgorithms, SetAlgorithmId, Locations, Location, Topics, Topic, Algorithm } from '../../application/types';
+import { ValidAlgorithms, SetAlgorithmId, Locations, Location, Topics, Algorithm } from '../../application/types';
 import { LocationId } from './types';
 import { buildServicesLoadingType } from '../../application/build_types';
 import * as constants from '../../application/constants';
+import { LocationsItemsCollection, TopicsItemsCollection } from '../dropdown/types';
 
 export const updateServices = (props: ApiQueryPickerProps): void => {
     if (props.algorithms.type === constants.ALGORITHMS_SUCCESS) {
@@ -33,7 +34,7 @@ const getServices = async (props: ApiQueryPickerProps, randomAlgorithmUrl: strin
 
 const buildLongLatFromId = (selectedLocation: LocationId, locations: Locations): Location => {
     const locationsList = getValidLocations(locations);
-    const listOfIds = locationsList.map((location: Location) => location.id);
+    const listOfIds = locationsList.items.map((location: Location) => location.id);
     const indexOfSelectedLocation = listOfIds.indexOf(selectedLocation.id);
     return locationsList[indexOfSelectedLocation];
 };
@@ -43,16 +44,16 @@ const chooseAlgorithmAtRandom = (algorithms: ValidAlgorithms ): Algorithm => {
     return algorithms.algorithms[randomIndex];
 };
 
-export const getValidLocations = (locations: Locations): ReadonlyArray<Location> => {
+export const getValidLocations = (locations: Locations): LocationsItemsCollection => {
    if (locations.type !== constants.LOCATIONS_SUCCESS) {
-       return [];
+       return {type: 'LOCATION', items: []};
    }
-   return locations.locations;
+   return {type: 'LOCATION', items: locations.locations};
 };
 
-export const getValidTopics = (topics: Topics): ReadonlyArray<Topic> => {
+export const getValidTopics = (topics: Topics): TopicsItemsCollection => {
     if (topics.type !== constants.TOPICS_SUCCESS) {
-        return [];
+        return {type: 'TOPIC', items: []};
     }
-    return topics.topics;
+    return {type: 'TOPIC', items: topics.topics};
  };

@@ -4,6 +4,7 @@ import { LocationId, TopicId } from '../api_query_picker/types';
 import * as constants from '../../application/constants';
 import { Location, Topic} from '../../application/types';
 import * as R from 'ramda';
+import { getDropdownValue } from './get_dropdown_value';
 
 export type SelectedOption = TopicId | LocationId;
 export interface DropdownProps {
@@ -67,10 +68,3 @@ const TopicOption = (topic: Topic): JSX.Element => (
 const EmptyOption = (): JSX.Element => (
   <option disabled>Nothing to select</option>
 );
-
-const getDropdownValue = (selectedOption: SelectedOption): string | number => {
-  if (selectedOption.type !== constants.TOPIC_ID_SUCCESS && selectedOption.type !== constants.LOCATION_ID_SUCCESS) {
-    return '';
-  }
-  return selectedOption.id;
-};

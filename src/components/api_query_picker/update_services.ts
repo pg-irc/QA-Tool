@@ -3,8 +3,7 @@ import { requestServices, validateServicesResponse } from '../../api/services';
 import { ApiQueryPickerProps } from './api_query_picker';
 import { ValidAlgorithms, SetAlgorithmId, Locations, Location, Topics, Algorithm } from '../../application/types';
 import { ValidLocationId } from './types';
-import { buildServicesLoadingType, buildSuccessLocationsCollectionType, buildEmptyLocationsCollectionType,
-        buildEmptyTopicsCollectionType, buildSuccessTopicsCollectionsType } from '../../application/build_types';
+import * as Builders from '../../application/build_types';
 import * as constants from '../../application/constants';
 import { LocationsCollection, TopicsCollection } from '../dropdown/types';
 
@@ -25,7 +24,7 @@ const getServices = async (props: ApiQueryPickerProps, randomAlgorithmUrl: strin
     if (props.location.type === constants.LOCATION_ID_SUCCESS && props.topic.type === constants.TOPIC_ID_SUCCESS) {
         const selectedLocationLongLat = buildLongLatFromId(props.location, props.locations);
         const servicesResponse = await requestServices(props.topic, selectedLocationLongLat, randomAlgorithmUrl);
-        props.setServices(buildServicesLoadingType());
+        props.setServices(Builders.buildServicesLoadingType());
         const services = validateServicesResponse(servicesResponse);
         props.setServices(services);
     }
@@ -44,7 +43,7 @@ const chooseAlgorithmAtRandom = (algorithms: ValidAlgorithms ): Algorithm => {
 };
 
 export const getValidLocations = (locations: Locations): ReadonlyArray<Location> => {
-    if (locations.type !== 'LOCATIONS:SUCCESS') {
+    if (locations.type !== constants.LOCATIONS_SUCCESS) {
         return [];
     }
     return locations.locations;
@@ -52,14 +51,14 @@ export const getValidLocations = (locations: Locations): ReadonlyArray<Location>
 
 export const getLocationsForDropdown = (locations: Locations): LocationsCollection => {
    if (locations.type !== constants.LOCATIONS_SUCCESS) {
-       return buildEmptyLocationsCollectionType();
+       return Builders.buildEmptyLocationsCollectionType();
    }
-   return buildSuccessLocationsCollectionType(locations.locations);
+   return Builders.buildSuccessLocationsCollectionType(locations.locations);
 };
 
 export const getTopicsForDropdown = (topics: Topics): TopicsCollection => {
     if (topics.type !== constants.TOPICS_SUCCESS) {
-        return buildEmptyTopicsCollectionType();
+        return Builders.buildEmptyTopicsCollectionType();
     }
-    return buildSuccessTopicsCollectionsType(topics.topics);
+    return Builders.buildSuccessTopicsCollectionsType(topics.topics);
  };

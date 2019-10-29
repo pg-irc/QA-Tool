@@ -49,7 +49,7 @@ const ClearButton = (props: ClearButtonProps): JSX.Element => (
 );
 
 const SendButton = (props: ApiQueryPickerProps): JSX.Element => {
-    const enabled = props.topic.type === 'TOPIC_ID:SUCCESS' && props.location.type === 'LOCATION_ID:SUCCESS';
+    const enabled = props.topic.type === constants.TOPIC_ID_SUCCESS && props.location.type === constants.LOCATION_ID_SUCCESS;
     return (
         <button
             disabled={!enabled}

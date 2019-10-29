@@ -46,10 +46,10 @@ const renderOneDropdownOption = (option: DropdownItem): JSX.Element => {
 const renderFirstDropdownOption = (option: SelectedOption): JSX.Element => {
   if (option.type === 'LOCATION_ID:EMPTY') {
     return (
-      <option disabled>Select a location</option>
+      <option value={0} disabled>Select a location</option>
     );
   }
   return (
-    <option disabled>Select a topic</option>
+    <option value={''} disabled>Select a topic</option>
   );
 };

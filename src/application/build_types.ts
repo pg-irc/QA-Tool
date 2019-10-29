@@ -2,6 +2,7 @@ import { ValidTopicId, EmptyTopicId, ValidLocationId, EmptyLocationId } from '..
 import { LoadingServices, EmptyServices, InvalidServices } from '../components/services/types';
 import { EmptyLocations, EmptyTopics, EmptyAlgorithms, InvalidAlgorithms, EmptyAlgorithmId, InvalidLocations, InvalidTopics, Location, Topic } from './types';
 import * as constants from './constants';
+import { ValidLocationsCollection, EmptyLocationsCollection, ValidTopicsCollection, EmptyTopicsCollection } from '../components/dropdown/types';
 
 export const buildTopicIdType = (id: string): ValidTopicId => (
     { type: constants.TOPIC_ID_SUCCESS, id }
@@ -65,4 +66,20 @@ export const buildLocationType = (location: Location): Location => (
 
 export const buildTopicType = (topic: Topic): Topic => (
     { type: constants.TOPIC, ...topic }
+);
+
+export const buildSuccessLocationsCollectionType = (locations: ReadonlyArray<Location>): ValidLocationsCollection => (
+    { type: constants.LOCATIONS_COLLECTION_SUCCESS, items: locations }
+);
+
+export const buildEmptyLocationsCollectionType = (): EmptyLocationsCollection => (
+    { type: constants.LOCATIONS_COLLECTION_EMPTY }
+);
+
+export const buildSuccessTopicsCollectionsType = (topics: ReadonlyArray<Topic>): ValidTopicsCollection => (
+    { type: constants.TOPICS_COLLECTION_SUCCESS, items: topics}
+);
+
+export const buildEmptyTopicsCollectionType = (): EmptyTopicsCollection => (
+    { type: constants.TOPICS_COLLECTION_EMPTY }
 );

@@ -1,13 +1,23 @@
 import { Location, Topic } from '../../application/types';
-export type DropdownItemsCollection = LocationsItemsCollection | TopicsItemsCollection;
+export type DropdownItemsCollection = LocationsCollection | TopicsCollection;
 
-export interface LocationsItemsCollection {
-    readonly type: 'LOCATION';
-    readonly items: ReadonlyArray<Location>;
-// tslint:disable-next-line: no-mixed-interface
-    readonly [index: number]: Location;
+export type LocationsCollection = ValidLocationsCollection | EmptyLocationsCollection;
+export type TopicsCollection = ValidTopicsCollection | EmptyTopicsCollection;
+
+export interface EmptyLocationsCollection {
+    readonly type: 'LOCATIONS_COLLECTION:EMPTY';
 }
-export interface TopicsItemsCollection {
-    readonly type: 'TOPIC';
+
+export interface ValidLocationsCollection {
+    readonly type: 'LOCATIONS_COLLECTION:SUCCESS';
+    readonly items: ReadonlyArray<Location>;
+}
+
+export interface EmptyTopicsCollection {
+    readonly type: 'TOPICS_COLLECTION:EMPTY';
+}
+
+export interface ValidTopicsCollection {
+    readonly type: 'TOPICS_COLLECTION:SUCCESS';
     readonly items: ReadonlyArray<Topic>;
 }

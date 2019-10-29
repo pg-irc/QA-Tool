@@ -1,5 +1,5 @@
 import React from 'react';
-import { DropdownItemsCollection, LocationsItemsCollection, TopicsItemsCollection } from './types';
+import { DropdownItemsCollection, ValidLocationsCollection, ValidTopicsCollection } from './types';
 import { LocationId, TopicId } from '../api_query_picker/types';
 import * as constants from '../../application/constants';
 import { Location, Topic} from '../../application/types';
@@ -28,13 +28,17 @@ export const Dropdown = (props: Props): JSX.Element => (
 );
 
 const renderAllDropdownOptions = (options: DropdownItemsCollection): JSX.Element => {
-  if (options.type === constants.LOCATION) {
-    return renderLocationsOptions(options);
+  switch (options.type) {
+    case constants.LOCATIONS_COLLECTION_SUCCESS:
+      return renderLocationsOptions(options);
+    case constants.TOPICS_COLLECTION_SUCCESS:
+      return renderTopicsOptions(options);
+    default:
+      return <EmptyOption />;
   }
-  return renderTopicsOptions(options);
 };
 
-const renderLocationsOptions = (locations: LocationsItemsCollection): JSX.Element => {
+const renderLocationsOptions = (locations: ValidLocationsCollection): JSX.Element => {
   return (
     <React.Fragment>
       <option value={0}>Select a location</option>
@@ -43,13 +47,13 @@ const renderLocationsOptions = (locations: LocationsItemsCollection): JSX.Elemen
   );
 };
 
-const renderTopicsOptions = (topics: TopicsItemsCollection): JSX.Element => {
+const renderTopicsOptions = (topics: ValidTopicsCollection): JSX.Element => {
   return (
     <React.Fragment>
       <option value={0}>Select a topic</option>
       { R.map(TopicOption, topics.items) }
     </React.Fragment>
-  )
+  );
 };
 
 const LocationOption = (location: Location): JSX.Element => (
@@ -58,4 +62,8 @@ const LocationOption = (location: Location): JSX.Element => (
 
 const TopicOption = (topic: Topic): JSX.Element => (
   <option key={topic.id} value={topic.id}>{topic.id}</option>
+);
+
+const EmptyOption = (): JSX.Element => (
+  <option disabled>Nothing to select</option>
 );

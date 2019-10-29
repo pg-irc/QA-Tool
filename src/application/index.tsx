@@ -12,10 +12,10 @@ import * as constants from './constants';
 
 export interface SharedStateAndCallbacks {
   readonly services: Services;
-  readonly topic: TopicId;
-  readonly location: LocationId;
   readonly setServices: SetServices;
+  readonly topic: TopicId;
   readonly setTopic: SetTopic;
+  readonly location: LocationId;
   readonly setLocation: SetLocation;
   readonly algorithms: Algorithms;
   readonly setAlgorithms: SetAlgorithms;
@@ -44,10 +44,10 @@ export const Application = (): JSX.Element => {
   }, []);
   const sharedStateAndCallbacks: SharedStateAndCallbacks = {
     services,
-    topic,
-    location,
     setServices,
+    topic,
     setTopic,
+    location,
     setLocation,
     algorithms,
     algorithmId,

@@ -21,7 +21,7 @@ type Props = DropdownProps & DropdownActions;
 export const Dropdown = (props: Props): JSX.Element => (
   <React.Fragment>
       <label>{props.title}</label>
-      <select value={props.selectedOption.id} onChange={props.onSetOption}>
+      <select value={getDropdownValue(props.selectedOption)} onChange={props.onSetOption}>
         {renderAllDropdownOptions(props.dropdownItemsCollection)}
       </select>
   </React.Fragment>
@@ -67,3 +67,10 @@ const TopicOption = (topic: Topic): JSX.Element => (
 const EmptyOption = (): JSX.Element => (
   <option disabled>Nothing to select</option>
 );
+
+const getDropdownValue = (selectedOption: SelectedOption): string | number => {
+  if (selectedOption.type !== constants.TOPIC_ID_SUCCESS && selectedOption.type !== constants.LOCATION_ID_SUCCESS) {
+    return '';
+  }
+  return selectedOption.id;
+};

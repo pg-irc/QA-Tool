@@ -9,7 +9,7 @@ export const buildTopicIdType = (id: string): ValidTopicId => (
 );
 
 export const buildEmptyTopicIdType = (): EmptyTopicId  => (
-    { type: constants.TOPIC_ID_EMPTY, id: '' }
+    { type: constants.TOPIC_ID_EMPTY }
 );
 
 export const buildLocationIdType = (id: number): ValidLocationId => (
@@ -17,7 +17,7 @@ export const buildLocationIdType = (id: number): ValidLocationId => (
 );
 
 export const buildEmptyLocationIdType = (): EmptyLocationId => (
-    { type: constants.LOCATION_ID_EMPTY, id: 0 }
+    { type: constants.LOCATION_ID_EMPTY }
 );
 
 export const buildServicesLoadingType = (): LoadingServices  => (

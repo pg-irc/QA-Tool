@@ -7,6 +7,7 @@ import { SharedStateAndCallbacks } from '../../application';
 import { Locations, Topics } from '../../application/types';
 import { updateServices, getLocationsForDropdown, getTopicsForDropdown } from './update_services';
 import * as constants from '../../application/constants';
+
 export interface LocationsAndTopicsProps {
     readonly locations: Locations;
     readonly topics: Topics;
@@ -48,7 +49,7 @@ const ClearButton = (props: ClearButtonProps): JSX.Element => (
 );
 
 const SendButton = (props: ApiQueryPickerProps): JSX.Element => {
-    const enabled = props.topic.id && props.location.id;
+    const enabled = props.topic.type === 'TOPIC_ID:SUCCESS' && props.location.type === 'LOCATION_ID:SUCCESS';
     return (
         <button
             disabled={!enabled}

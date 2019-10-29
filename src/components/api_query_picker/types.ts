@@ -7,7 +7,6 @@ export interface ValidTopicId {
 
 export interface EmptyTopicId {
     readonly type: 'TOPIC_ID:EMPTY';
-    readonly id: '';
 }
 
 export type TopicId = ValidTopicId | EmptyTopicId;
@@ -18,7 +17,6 @@ export interface ValidLocationId {
 }
 export interface EmptyLocationId {
     readonly type: 'LOCATION_ID:EMPTY';
-    readonly id: 0;
 }
 
 export type LocationId = ValidLocationId | EmptyLocationId;

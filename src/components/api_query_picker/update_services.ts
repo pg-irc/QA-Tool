@@ -3,9 +3,9 @@ import { requestServices, validateServicesResponse } from '../../api/services';
 import { ApiQueryPickerProps } from './api_query_picker';
 import { ValidAlgorithms, SetAlgorithmId, Locations, Location, Topics, Algorithm } from '../../application/types';
 import { LocationId } from './types';
-import { buildServicesLoadingType } from '../../application/build_types';
+import { buildServicesLoadingType, buildSuccessLocationsCollectionType, buildEmptyLocationsCollectionType, buildEmptyTopicsCollectionType, buildSuccessTopicsCollectionsType } from '../../application/build_types';
 import * as constants from '../../application/constants';
-import { LocationsItemsCollection, TopicsItemsCollection } from '../dropdown/types';
+import { LocationsCollection, TopicsCollection } from '../dropdown/types';
 
 export const updateServices = (props: ApiQueryPickerProps): void => {
     if (props.algorithms.type === constants.ALGORITHMS_SUCCESS) {
@@ -34,7 +34,7 @@ const getServices = async (props: ApiQueryPickerProps, randomAlgorithmUrl: strin
 
 const buildLongLatFromId = (selectedLocation: LocationId, locations: Locations): Location => {
     const locationsList = getValidLocations(locations);
-    const listOfIds = locationsList.items.map((location: Location) => location.id);
+    const listOfIds = locationsList.map((location: Location) => location.id);
     const indexOfSelectedLocation = listOfIds.indexOf(selectedLocation.id);
     return locationsList[indexOfSelectedLocation];
 };
@@ -44,16 +44,23 @@ const chooseAlgorithmAtRandom = (algorithms: ValidAlgorithms ): Algorithm => {
     return algorithms.algorithms[randomIndex];
 };
 
-export const getValidLocations = (locations: Locations): LocationsItemsCollection => {
-   if (locations.type !== constants.LOCATIONS_SUCCESS) {
-       return {type: 'LOCATION', items: []};
-   }
-   return {type: 'LOCATION', items: locations.locations};
+export const getValidLocations = (locations: Locations): ReadonlyArray<Location> => {
+    if (locations.type !== 'LOCATIONS:SUCCESS') {
+        return [];
+    }
+    return locations.locations;
 };
 
-export const getValidTopics = (topics: Topics): TopicsItemsCollection => {
+export const getLocationsForDropdown = (locations: Locations): LocationsCollection => {
+   if (locations.type !== constants.LOCATIONS_SUCCESS) {
+       return buildEmptyLocationsCollectionType();
+   }
+   return buildSuccessLocationsCollectionType(locations.locations);
+};
+
+export const getTopicsForDropdown = (topics: Topics): TopicsCollection => {
     if (topics.type !== constants.TOPICS_SUCCESS) {
-        return {type: 'TOPIC', items: []};
+        return buildEmptyTopicsCollectionType();
     }
-    return {type: 'TOPIC', items: topics.topics};
+    return buildSuccessTopicsCollectionsType(topics.topics);
  };

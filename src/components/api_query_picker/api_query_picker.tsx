@@ -5,7 +5,7 @@ import { LocationId, TopicId } from './types';
 import { buildEmptyLocationIdType, buildEmptyTopicIdType, buildEmptyServicesType, buildLocationIdType, buildTopicIdType} from '../../application/build_types';
 import { SharedStateAndCallbacks } from '../../application';
 import { Locations, Topics } from '../../application/types';
-import { updateServices, getValidLocations, getValidTopics } from './update_services';
+import { updateServices, getLocationsForDropdown, getTopicsForDropdown } from './update_services';
 import * as constants from '../../application/constants';
 export interface LocationsAndTopicsProps {
     readonly locations: Locations;
@@ -33,7 +33,7 @@ export const ApiQueryPicker = (props: ApiQueryPickerProps): JSX.Element => {
         <div>
             {renderTopicsDropdownOrError(props.topic, props.topics, onSetTopic)}
             {renderLocationsDropdownOrError(props.location, props.locations, onSetLocation)}
-            <ClearButton clearSelectionOptions={clearSelectedOptions}/>
+            <ClearButton clearSelectionOptions={clearSelectedOptions} />
             <SendButton {...props} />
         </div>
     );
@@ -63,7 +63,7 @@ const renderTopicsDropdownOrError = (topic: TopicId, topics: Topics, onSetTopic:
         return <div>Topics: {topics.errorMessage}. Refresh the page or contact the QA Tool administrator.</div>;
     }
     return (<Dropdown title={'Topic'} selectedOption={topic}
-        onSetOption={onSetTopic} dropdownItemsCollection={getValidTopics(topics)} />
+        onSetOption={onSetTopic} dropdownItemsCollection={getTopicsForDropdown(topics)} />
     );
 };
 
@@ -72,6 +72,6 @@ const renderLocationsDropdownOrError = (location: LocationId, locations: Locatio
         return <div>Locations: {locations.errorMessage}. Refresh the page or contact the QA Tool administrator.</div>;
     }
     return (<Dropdown title={'Locations'} selectedOption={location}
-        onSetOption={onSetLocation} dropdownItemsCollection={getValidLocations(locations)} />
+        onSetOption={onSetLocation} dropdownItemsCollection={getLocationsForDropdown(locations)} />
     );
 };

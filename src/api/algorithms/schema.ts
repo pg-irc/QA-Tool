@@ -4,7 +4,7 @@ export const algorithm = {
     "type": "object",
     "properties": {
         "id": {
-            "type": "number"
+            "type": "integer"
         },
         "url": {
             "type": "string"

@@ -35,7 +35,7 @@ export const validateLocationsResponse = (response: AxiosResponse): Locations =>
 
 const buildUrlForLocations = (): string => {
     const path = 'v1/searchlocations';
-    const baseUrl = 'http://127.0.0.1:8000/';
+    const baseUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000/';
     return buildUrl(baseUrl, {
         path,
     });

@@ -22,7 +22,7 @@ const getRandomAlgorithmUrl = (algorithms: ValidAlgorithms, setAlgorithm: SetAlg
 
 const getServices = async (props: ApiQueryPickerProps, randomAlgorithmUrl: string): Promise<void> => {
     if (props.location.type === constants.LOCATION_ID_SUCCESS && props.topic.type === constants.TOPIC_ID_SUCCESS) {
-        const selectedLocationLongLat = buildLongLatFromId(props.location, props.locations);
+        const selectedLocationLongLat = getLocationFromId(props.location, props.locations);
         const servicesResponse = await requestServices(props.topic, selectedLocationLongLat, randomAlgorithmUrl);
         props.setServices(Builders.buildServicesLoadingType());
         const services = validateServicesResponse(servicesResponse);
@@ -30,7 +30,7 @@ const getServices = async (props: ApiQueryPickerProps, randomAlgorithmUrl: strin
     }
 };
 
-const buildLongLatFromId = (selectedLocation: ValidLocationId, locations: Locations): Location => {
+const getLocationFromId = (selectedLocation: ValidLocationId, locations: Locations): Location => {
     const locationsList = getValidLocations(locations);
     const listOfIds = locationsList.map((location: Location) => location.id);
     const indexOfSelectedLocation = listOfIds.indexOf(selectedLocation.id);

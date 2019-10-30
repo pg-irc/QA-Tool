@@ -22,7 +22,7 @@ const buildUrlFromTopicIdAndLocation = (topic: ValidTopicId, location: Location,
     const path = 'v1/services_at_location';
     const baseUrl = algorithmUrl;
     const numberOfRecordsToGet = '5';
-    const longLat =  buildLatLong(location);
+    const longLat =  buildLongLat(location);
     return buildUrl(baseUrl, {
         path: path,
         queryParams: {
@@ -51,8 +51,8 @@ export const validateServicesResponse = (response: AxiosResponse): ServiceTypes.
     };
 };
 
-const buildLatLong = (data: any): string => {
-    const latitude = data.latitude;
-    const longitude = data.longitude;
+const buildLongLat = (location: Location): string => {
+    const latitude = location.latitude;
+    const longitude = location.longitude;
     return `${longitude}, ${latitude}`;
  };

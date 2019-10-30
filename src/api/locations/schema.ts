@@ -4,7 +4,7 @@ export const location = {
     "type": "object",
     "properties": {
         "id": {
-            "type": "number"
+            "type": "integer"
         },
         "name": {
             "type": "string"

@@ -1,12 +1,12 @@
 // tslint:disable:no-expression-statement
-import { aNumber, aString } from '../../../pathways-frontend/src/helpers/random_test_values';
+import { anInteger, aString } from '../../../pathways-frontend/src/helpers/random_test_values';
 import { validateAlgorithmsArray } from '../validate';
 
 describe('Algorithms response validation', () => {
     describe('with valid data', () => {
         it('passes schema validation', () => {
             const validator = validateAlgorithmsArray([{
-                id: aNumber(),
+                id: anInteger(),
                 url: aString(),
                 name: aString(),
             }]);
@@ -16,6 +16,7 @@ describe('Algorithms response validation', () => {
     describe('with invalid data', () => {
         it('fails schema validation', () => {
             const validator = validateAlgorithmsArray([{
+                id: aString(),
                 url: aString(),
                 name: aString(),
             }]);

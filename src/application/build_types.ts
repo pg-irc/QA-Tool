@@ -1,85 +1,84 @@
-import { ValidTopicId, EmptyTopicId, ValidLocationId, EmptyLocationId } from '../components/api_query_picker/types';
-import { LoadingServices, EmptyServices, InvalidServices } from '../components/services/types';
-import { EmptyLocations, EmptyTopics, EmptyAlgorithms, InvalidAlgorithms, EmptyAlgorithmId, InvalidLocations, InvalidTopics, Location, Topic } from './types';
+// tslint:disable typedef
+import { Location, Topic } from './types';
 import * as constants from './constants';
-import { ValidLocationsCollection, EmptyLocationsCollection, ValidTopicsCollection, EmptyTopicsCollection } from '../components/dropdown/types';
+import * as helpers from '../application/helpers/make_types';
 
-export const buildTopicIdType = (id: string): ValidTopicId => (
-    { type: constants.TOPIC_ID_SUCCESS, id }
+export const buildTopicIdType = (id: string) => (
+    helpers.makeTypeWithId(constants.TOPIC_ID_SUCCESS, id)
 );
 
-export const buildEmptyTopicIdType = (): EmptyTopicId  => (
-    { type: constants.TOPIC_ID_EMPTY }
+export const buildEmptyTopicIdType = () => (
+    helpers.makeEmptyType(constants.TOPIC_ID_EMPTY)
 );
 
-export const buildLocationIdType = (id: number): ValidLocationId => (
-    { type: constants.LOCATION_ID_SUCCESS, id: id }
+export const buildLocationIdType = (id: number) => (
+    helpers.makeTypeWithId(constants.LOCATION_ID_SUCCESS, id)
 );
 
-export const buildEmptyLocationIdType = (): EmptyLocationId => (
-    { type: constants.LOCATION_ID_EMPTY }
+export const buildEmptyLocationIdType = () => (
+    helpers.makeEmptyType(constants.LOCATION_ID_EMPTY)
 );
 
-export const buildServicesLoadingType = (): LoadingServices  => (
-    { type: constants.SERVICES_LOADING }
+export const buildServicesLoadingType = () => (
+    helpers.makeEmptyType(constants.SERVICES_LOADING)
 );
 
-export const buildEmptyServicesType = (): EmptyServices => (
-    { type: constants.SERVICES_EMPTY }
+export const buildEmptyServicesType = () => (
+    helpers.makeEmptyType(constants.SERVICES_EMPTY)
 );
 
-export const buildEmptyAlgorithmsType = (): EmptyAlgorithms => (
-    { type: constants.ALGORITHMS_EMPTY }
+export const buildEmptyAlgorithmsType = () => (
+    helpers.makeEmptyType(constants.ALGORITHMS_EMPTY)
 );
 
-export const buildEmptyLocationsType = (): EmptyLocations => (
-    { type: constants.LOCATIONS_EMPTY }
+export const buildEmptyLocationsType = () => (
+    helpers.makeEmptyType(constants.LOCATIONS_EMPTY)
 );
 
-export const buildEmptyTopicsType = (): EmptyTopics => (
-    { type: constants.TOPICS_EMPTY }
+export const buildEmptyTopicsType = () => (
+    helpers.makeEmptyType(constants.TOPICS_EMPTY)
 );
 
-export const buildEmptyAlgorithmIdType = (): EmptyAlgorithmId => (
-    { type: constants.ALGORITHM_EMPTY }
+export const buildEmptyAlgorithmIdType = () => (
+    helpers.makeEmptyType(constants.ALGORITHM_EMPTY)
 );
 
-export const buildInvalidAlgorithmsType = (errorMessage: string): InvalidAlgorithms => (
-    { type: constants.ALGORITHMS_ERROR, errorMessage }
+export const buildInvalidAlgorithmsType = (errorMessage: string) => (
+    helpers.makeTypeWithErrorMessage(constants.ALGORITHMS_ERROR, errorMessage)
 );
 
-export const buildInvalidLocationsType = (errorMessage: string): InvalidLocations => (
-    { type: constants.LOCATIONS_ERROR, errorMessage }
+export const buildInvalidLocationsType = (errorMessage: string) => (
+    helpers.makeTypeWithErrorMessage(constants.LOCATIONS_ERROR, errorMessage)
 );
 
-export const buildInvalidTopicsType = (errorMessage: string): InvalidTopics => (
-    { type: constants.TOPICS_ERROR, errorMessage }
+export const buildInvalidTopicsType = (errorMessage: string) => (
+    helpers.makeTypeWithErrorMessage(constants.TOPICS_ERROR, errorMessage)
 );
 
-export const buildInvalidServicesType = (errorMessage: string): InvalidServices => (
-    { type: constants.SERVICES_ERROR, errorMessage }
+export const buildInvalidServicesType = (errorMessage: string) => (
+    helpers.makeTypeWithErrorMessage(constants.SERVICES_ERROR, errorMessage)
 );
 
-export const buildLocationType = (location: Location): Location => (
-    { type: constants.LOCATION, ...location }
+export const buildLocationType = (location: Location) => (
+    helpers.makeTypeWithLocation(constants.LOCATION, location.id, location.name, location.latitude, location.longitude)
 );
 
 export const buildTopicType = (topic: Topic): Topic => (
-    { type: constants.TOPIC, ...topic }
+    helpers.makeTypeWithTopic(constants.TOPIC, topic.id)
 );
 
-export const buildSuccessLocationsCollectionType = (locations: ReadonlyArray<Location>): ValidLocationsCollection => (
-    { type: constants.LOCATIONS_COLLECTION_SUCCESS, items: locations }
+export const buildSuccessLocationsCollectionType = (locations: ReadonlyArray<Location>) => (
+    helpers.makeTypeWithItems(constants.LOCATIONS_COLLECTION_SUCCESS, locations)
 );
 
-export const buildEmptyLocationsCollectionType = (): EmptyLocationsCollection => (
-    { type: constants.LOCATIONS_COLLECTION_EMPTY }
+export const buildEmptyLocationsCollectionType = () => (
+    helpers.makeEmptyType(constants.LOCATIONS_COLLECTION_EMPTY)
 );
 
-export const buildSuccessTopicsCollectionsType = (topics: ReadonlyArray<Topic>): ValidTopicsCollection => (
-    { type: constants.TOPICS_COLLECTION_SUCCESS, items: topics}
+export const buildSuccessTopicsCollectionsType = (topics: ReadonlyArray<Topic>) => (
+    helpers.makeTypeWithItems(constants.TOPICS_COLLECTION_SUCCESS, topics)
 );
 
-export const buildEmptyTopicsCollectionType = (): EmptyTopicsCollection => (
-    { type: constants.TOPICS_COLLECTION_EMPTY }
+export const buildEmptyTopicsCollectionType = () => (
+    helpers.makeEmptyType(constants.TOPICS_COLLECTION_EMPTY)
 );

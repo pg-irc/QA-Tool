@@ -1,11 +1,10 @@
 // tslint:disable:no-expression-statement
 import { requestServices } from '../../api/services';
 import { ApiQueryPickerProps } from './api_query_picker';
-import { ValidAlgorithms, SetAlgorithmId, Locations, Location, Topics, Algorithm } from '../../application/types';
+import { ValidAlgorithms, SetAlgorithmId, Locations, Location, Algorithm } from '../../application/types';
 import { ValidLocationId } from './types';
 import * as Builders from '../../application/build_types';
 import * as constants from '../../application/constants';
-import { LocationsCollection, TopicsCollection } from '../dropdown/types';
 
 export const updateServices = (props: ApiQueryPickerProps): void => {
     if (props.algorithms.type === constants.ALGORITHMS_SUCCESS) {
@@ -47,17 +46,3 @@ export const getValidLocations = (locations: Locations): ReadonlyArray<Location>
     }
     return locations.locations;
 };
-
-export const getLocationsForDropdown = (locations: Locations): LocationsCollection => {
-   if (locations.type !== constants.LOCATIONS_SUCCESS) {
-       return Builders.buildEmptyLocationsCollectionType();
-   }
-   return Builders.buildSuccessLocationsCollectionType(locations.locations);
-};
-
-export const getTopicsForDropdown = (topics: Topics): TopicsCollection => {
-    if (topics.type !== constants.TOPICS_SUCCESS) {
-        return Builders.buildEmptyTopicsCollectionType();
-    }
-    return Builders.buildSuccessTopicsCollectionsType(topics.topics);
- };

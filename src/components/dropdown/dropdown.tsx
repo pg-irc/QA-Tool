@@ -1,15 +1,16 @@
 import React from 'react';
-import { DropdownItemsCollection, ValidLocationsCollection, ValidTopicsCollection } from './types';
+import { DropdownItems } from './types';
 import { LocationId, TopicId } from '../api_query_picker/types';
 import * as constants from '../../application/constants';
-import { Location, Topic} from '../../application/types';
+import { Location, Topic, ValidLocations, ValidTopics} from '../../application/types';
 import * as R from 'ramda';
 import { getDropdownValue } from './get_dropdown_value';
 
 export type SelectedOption = TopicId | LocationId;
+
 export interface DropdownProps {
   readonly selectedOption: SelectedOption;
-  readonly dropdownItemsCollection: DropdownItemsCollection;
+  readonly dropdownItems: DropdownItems;
   readonly title: string;
 }
 
@@ -23,36 +24,36 @@ export const Dropdown = (props: Props): JSX.Element => (
   <React.Fragment>
       <label>{props.title}</label>
       <select value={getDropdownValue(props.selectedOption)} onChange={props.onSetOption}>
-        {renderAllDropdownOptions(props.dropdownItemsCollection)}
+        {renderAllDropdownOptions(props.dropdownItems)}
       </select>
   </React.Fragment>
 );
 
-const renderAllDropdownOptions = (options: DropdownItemsCollection): JSX.Element => {
+const renderAllDropdownOptions = (options: DropdownItems): JSX.Element => {
   switch (options.type) {
-    case constants.LOCATIONS_COLLECTION_SUCCESS:
+    case constants.LOCATIONS_SUCCESS:
       return renderLocationsOptions(options);
-    case constants.TOPICS_COLLECTION_SUCCESS:
+    case constants.TOPICS_SUCCESS:
       return renderTopicsOptions(options);
     default:
       return <EmptyOption />;
   }
 };
 
-const renderLocationsOptions = (locations: ValidLocationsCollection): JSX.Element => {
+const renderLocationsOptions = (locations: ValidLocations): JSX.Element => {
   return (
     <React.Fragment>
       <option value={0}>Select a location</option>
-      { R.map(LocationOption, locations.items) }
+      { R.map(LocationOption, locations.locations) }
     </React.Fragment>
   );
 };
 
-const renderTopicsOptions = (topics: ValidTopicsCollection): JSX.Element => {
+const renderTopicsOptions = (topics: ValidTopics): JSX.Element => {
   return (
     <React.Fragment>
       <option value={0}>Select a topic</option>
-      { R.map(TopicOption, topics.items) }
+      { R.map(TopicOption, topics.topics) }
     </React.Fragment>
   );
 };

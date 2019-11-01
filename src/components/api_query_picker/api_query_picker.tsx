@@ -5,9 +5,9 @@ import { LocationId, TopicId } from './types';
 import { buildEmptyLocationIdType, buildEmptyTopicIdType, buildEmptyServicesType, buildLocationIdType, buildTopicIdType} from '../../application/build_types';
 import { SharedStateAndCallbacks } from '../../application';
 import { Locations, Topics } from '../../application/types';
-import { updateServices, getLocationsForDropdown, getTopicsForDropdown } from './update_services';
+import { updateServices } from './update_services';
 import * as constants from '../../application/constants';
-import { isEnabled } from './helpers/is_enabled';
+import { isDisabled } from './helpers/is_disabled';
 
 export interface LocationsAndTopicsProps {
     readonly locations: Locations;
@@ -33,8 +33,8 @@ export const ApiQueryPicker = (props: ApiQueryPickerProps): JSX.Element => {
     };
     return (
         <div>
-            {renderTopicsDropdownOrError(props.topic, props.topics, onSetTopic)}
-            {renderLocationsDropdownOrError(props.location, props.locations, onSetLocation)}
+            {renderTopicsDropdownOrStatus(props.topic, props.topics, onSetTopic)}
+            {renderLocationsDropdownOrStatus(props.location, props.locations, onSetLocation)}
             <ClearButton clearSelectionOptions={clearSelectedOptions} />
             <SendButton {...props} />
         </div>
@@ -52,27 +52,36 @@ const ClearButton = (props: ClearButtonProps): JSX.Element => (
 const SendButton = (props: ApiQueryPickerProps): JSX.Element => {
     return (
         <button
-        disabled={isEnabled(props)}
+        disabled={isDisabled(props)}
         onClick={(): void => updateServices(props)}>
             Send
         </button>
     );
 };
 
-const renderTopicsDropdownOrError = (topic: TopicId, topics: Topics, onSetTopic: OnSetTopic): JSX.Element => {
-    if (topics.type === constants.TOPICS_ERROR) {
-        return <div>Topics: {topics.errorMessage}. Refresh the page or contact the QA Tool administrator.</div>;
+const renderTopicsDropdownOrStatus = (topic: TopicId, topics: Topics, onSetTopic: OnSetTopic): JSX.Element => {
+    switch (topics.type) {
+        case constants.TOPICS_SUCCESS:
+            return <Dropdown title={'Topics'} selectedOption={topic} onSetOption={onSetTopic} dropdownItems={topics} />;
+        case constants.TOPICS_ERROR:
+            return <p>Topics: {topics.errorMessage}. Refresh the page or contact the QA Tool administrator.</p>;
+        case constants.TOPICS_LOADING:
+            return <p>Topics: ...Loading</p>;
+        default:
+            return <p>Topics: Empty</p>;
     }
-    return (<Dropdown title={'Topic'} selectedOption={topic}
-        onSetOption={onSetTopic} dropdownItemsCollection={getTopicsForDropdown(topics)} />
-    );
 };
 
-const renderLocationsDropdownOrError = (location: LocationId, locations: Locations, onSetLocation: OnSetLocation): JSX.Element => {
-    if (locations.type === constants.LOCATIONS_ERROR) {
-        return <div>Locations: {locations.errorMessage}. Refresh the page or contact the QA Tool administrator.</div>;
+const renderLocationsDropdownOrStatus = (location: LocationId, locations: Locations, onSetLocation: OnSetLocation): JSX.Element => {
+    switch (locations.type) {
+        case constants.LOCATIONS_SUCCESS:
+            return <Dropdown title={'Locations'} selectedOption={location} onSetOption={onSetLocation}
+                dropdownItems={locations} />;
+        case constants.LOCATIONS_ERROR:
+            return <p>Locations: {locations.errorMessage}. Refresh the page or contact the QA Tool administrator.</p>;
+        case constants.LOCATIONS_EMPTY:
+            return <p>Locations: ...Loading</p>;
+        default:
+            return <p>Locations: Empty</p>;
     }
-    return (<Dropdown title={'Locations'} selectedOption={location}
-        onSetOption={onSetLocation} dropdownItemsCollection={getLocationsForDropdown(locations)} />
-    );
 };

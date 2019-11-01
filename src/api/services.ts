@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement
 import axios, { AxiosResponse } from 'axios';
 import { ValidTopicId } from '../components/api_query_picker/types';
-import * as ServiceTypes from '../application/types';
+import { Services, ValidatedServiceAtLocationJSON} from '../application/types';
 import { isResponseError, isValidationError } from './errors';
 import * as R from 'ramda';
 import buildUrl from 'build-url';
@@ -10,11 +10,11 @@ import { Location } from '../application/types';
 import { buildEmptyServicesType, buildInvalidServicesType } from '../application/build_types';
 import * as constants from '../application/constants';
 
-export const requestServices = async (topic: ValidTopicId, location: Location, algorithmUrl: string): Promise<AxiosResponse> => {
+export const requestServices = async (topic: ValidTopicId, location: Location, algorithmUrl: string): Promise<Services> => {
     const url = buildUrlFromTopicIdAndLocation(topic, location, algorithmUrl);
     return await axios.get(url)
-    .then((response: AxiosResponse): AxiosResponse => {
-      return response;
+    .then((response: AxiosResponse): Services => {
+      return validateServicesResponse(response);
   });
 };
 
@@ -37,7 +37,7 @@ const buildLongLatParameter = (location: Location): string => {
     return `${location.longitude}, ${location.latitude}`;
  };
 
-export const validateServicesResponse = (response: AxiosResponse): ServiceTypes.Services => {
+export const validateServicesResponse = (response: AxiosResponse): Services => {
     if (isResponseError(response)) {
         return buildInvalidServicesType(response.statusText);
     }
@@ -51,7 +51,6 @@ export const validateServicesResponse = (response: AxiosResponse): ServiceTypes.
     }
     return {
         type: constants.SERVICES_SUCCESS,
-        services: response.data.map((val: ServiceTypes.ValidatedServiceAtLocationJSON) => serviceFromValidatedJSON(val)),
+        services: response.data.map((val: ValidatedServiceAtLocationJSON) => serviceFromValidatedJSON(val)),
     };
 };
-

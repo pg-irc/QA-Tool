@@ -8,11 +8,11 @@ import { buildEmptyAlgorithmsType, buildInvalidAlgorithmsType } from '../../appl
 import { validateAlgorithmsArray } from './validate';
 import * as constants from '../../application/constants';
 
-export const requestAlgorithms = async (): Promise<AxiosResponse>  => {
+export const requestAlgorithms = async (): Promise<Algorithms>  => {
     const url = buildUrlForAlgorithms();
     return await axios.get(url)
-    .then((response: AxiosResponse): AxiosResponse  => {
-        return response;
+    .then((response: AxiosResponse): Algorithms  => {
+        return validateAlgorithmsResponse(response);
     });
 };
 

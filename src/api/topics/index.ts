@@ -8,11 +8,11 @@ import { buildEmptyTopicsType, buildInvalidTopicsType, buildTopicType } from '..
 import { validateTopicsArray } from './validate';
 import * as constants from '../../application/constants';
 
-export const requestTopics = async (): Promise<AxiosResponse>  => {
+export const requestTopics = async (): Promise<Topics>  => {
     const url = buildUrlForTopics();
     return await axios.get(url)
-    .then((response: AxiosResponse): AxiosResponse  => {
-        return response;
+    .then((response: AxiosResponse): Topics  => {
+        return validateTopicsResponse(response);
     });
 };
 

@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement
 import axios, { AxiosResponse } from 'axios';
 import { ValidTopicId } from '../components/api_query_picker/types';
-import * as ServiceTypes from '../components/services/types';
+import * as ServiceTypes from '../application/types';
 import { isResponseError, isValidationError } from './errors';
 import * as R from 'ramda';
 import buildUrl from 'build-url';
@@ -33,6 +33,10 @@ const buildUrlFromTopicIdAndLocation = (topic: ValidTopicId, location: Location,
     });
 };
 
+const buildLongLatParameter = (location: Location): string => {
+    return `${location.longitude}, ${location.latitude}`;
+ };
+
 export const validateServicesResponse = (response: AxiosResponse): ServiceTypes.Services => {
     if (isResponseError(response)) {
         return buildInvalidServicesType(response.statusText);
@@ -51,6 +55,3 @@ export const validateServicesResponse = (response: AxiosResponse): ServiceTypes.
     };
 };
 
-const buildLongLatParameter = (location: Location): string => {
-    return `${location.longitude}, ${location.latitude}`;
- };

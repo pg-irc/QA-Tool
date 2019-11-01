@@ -16,6 +16,14 @@ export const requestAlgorithms = async (): Promise<AxiosResponse>  => {
     });
 };
 
+const buildUrlForAlgorithms = (): string => {
+    const path = 'v1/algorithms';
+    const baseUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000/';
+    return buildUrl(baseUrl, {
+        path,
+    });
+};
+
 export const validateAlgorithmsResponse = (response: AxiosResponse): Algorithms => {
     if (isResponseError(response)) {
         return buildInvalidAlgorithmsType(response.statusText);
@@ -31,12 +39,4 @@ export const validateAlgorithmsResponse = (response: AxiosResponse): Algorithms 
     return {
         type: constants.ALGORITHMS_SUCCESS, algorithms: response.data,
     };
-};
-
-const buildUrlForAlgorithms = (): string => {
-    const path = 'v1/algorithms';
-    const baseUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000/';
-    return buildUrl(baseUrl, {
-        path,
-    });
 };

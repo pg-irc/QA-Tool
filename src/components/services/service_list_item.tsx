@@ -1,5 +1,5 @@
 import React from 'react';
-import { Service, Address } from '../services/types';
+import { Service, Address } from '../../application/types';
 import { ScoreButtons } from '../relevancy_score_buttons/score_buttons';
 import { SendRelevancyScore } from './services_list';
 import { filterPhysicalAddresses } from './filter_physical_address';

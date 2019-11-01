@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { TopicId, LocationId } from '../components/api_query_picker/types';
-import { Service } from '../components/services/types';
+import { Service } from '../application/types';
 import buildUrl from 'build-url';
 import { ScoreValue } from '../application/types';
 

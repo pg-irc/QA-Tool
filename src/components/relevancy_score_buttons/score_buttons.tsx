@@ -1,7 +1,6 @@
 import React from 'react';
 import { SendRelevancyScore } from '../services/services_list';
-import { Service } from '../services/types';
-import { ScoreValue } from '../../application/types';
+import { ScoreValue, Service } from '../../application/types';
 
 export interface ScoreButtonsProps {
     readonly service: Service;

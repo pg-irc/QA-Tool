@@ -1,12 +1,11 @@
 // tslint:disable:no-expression-statement no-let
 import React, { useState, useEffect } from 'react';
 import { ApiQueryPicker } from '../components/api_query_picker/api_query_picker';
-import { Services, SetServices } from '../components/services/types';
 import { ServicesList } from '../components/services/services_list';
 import { SetTopic, TopicId, SetLocation, LocationId } from '../components/api_query_picker/types';
 import { getAlgorithms, getLocations, getTopics } from './get_relevancy_score_items';
 import * as Builder from './build_types'; 
-import { Locations, SetLocations, Topics, SetTopics, Algorithms, SetAlgorithms, SetAlgorithmId, AlgorithmId } from './types';
+import { Locations, SetLocations, Topics, SetTopics, Algorithms, SetAlgorithms, SetAlgorithmId, AlgorithmId, Services, SetServices } from './types';
 import * as constants from './constants';
 
 export interface SharedStateAndCallbacks {

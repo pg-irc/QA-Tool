@@ -2,13 +2,11 @@
 import React from 'react';
 import { ValidServices, InvalidServices, Service, Services } from '../../application/types';
 import { ServiceListItem } from './service_list_item';
-import { SharedStateAndCallbacks } from '../../application';
 import { requestSendRelevancyScore } from '../../api/relevancy_score';
 import { TopicId, LocationId } from '../api_query_picker/types';
 import { AlgorithmId, ScoreValue } from '../../application/types';
 import * as constants from '../../application/constants';
-
-type Props = SharedStateAndCallbacks;
+import { SharedStateAndCallbacks } from '../../application';
 
 export interface ScoreForService {
     readonly topic: TopicId;
@@ -20,7 +18,7 @@ export interface ScoreForService {
 
 export type SendRelevancyScore = (service: Service, score: ScoreValue) => void;
 
-export const ServicesList = (props: Props): JSX.Element => {
+export const ServicesList = (props: SharedStateAndCallbacks): JSX.Element => {
     const sendRelevancyScore = (service: Service, value: ScoreValue): void => {
         const topic: TopicId = props.topic;
         const location: LocationId = props.location;

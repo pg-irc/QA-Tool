@@ -59,12 +59,12 @@ export const buildInvalidServicesType = (errorMessage: string) => (
     helpers.makeTypeWithErrorMessage(constants.SERVICES_ERROR, errorMessage)
 );
 
-export const buildLocationType = (location: Location) => (
-    helpers.makeTypeWithLocation(constants.LOCATION, location.id, location.name, location.latitude, location.longitude)
+export const buildLocationType = (location: Location): Location => (
+    { ...location }
 );
 
 export const buildTopicType = (topic: Topic): Topic => (
-    helpers.makeTypeWithTopic(constants.TOPIC, topic.id)
+    { ...topic }
 );
 
 export const buildSuccessLocationsCollectionType = (locations: ReadonlyArray<Location>) => (

@@ -43,7 +43,7 @@ const renderAllDropdownOptions = (options: DropdownItems): JSX.Element => {
 const renderLocationsOptions = (locations: ValidLocations): JSX.Element => {
   return (
     <React.Fragment>
-      <option value={0}>Select a location</option>
+      <option value=''>Select a location</option>
       { R.map(LocationOption, locations.locations) }
     </React.Fragment>
   );
@@ -52,7 +52,7 @@ const renderLocationsOptions = (locations: ValidLocations): JSX.Element => {
 const renderTopicsOptions = (topics: ValidTopics): JSX.Element => {
   return (
     <React.Fragment>
-      <option value={0}>Select a topic</option>
+      <option value=''>Select a topic</option>
       { R.map(TopicOption, topics.topics) }
     </React.Fragment>
   );

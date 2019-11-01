@@ -21,10 +21,18 @@ export type OnSetTopic = (event: ChangeEvent<HTMLSelectElement>) => void;
 
 export const ApiQueryPicker = (props: ApiQueryPickerProps): JSX.Element => {
     const onSetTopic = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-        props.setTopic(buildTopicIdType(event.target.value));
+        if (event.target.value) {
+            props.setTopic(buildTopicIdType(event.target.value));
+        } else {
+            props.setTopic(buildEmptyTopicIdType());
+        }
     };
     const onSetLocation = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-        props.setLocation(buildLocationIdType(Number(event.target.value)));
+        if (event.target.value) {
+            props.setLocation(buildLocationIdType(Number(event.target.value)));
+        } else {
+            props.setLocation(buildEmptyLocationIdType());
+        }
     };
     const clearSelectedOptions = (): void => {
         props.setTopic(buildEmptyTopicIdType());

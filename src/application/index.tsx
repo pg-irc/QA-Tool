@@ -3,10 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { ApiQueryPicker } from '../components/api_query_picker/api_query_picker';
 import { ServicesList } from '../components/services/services_list';
 import { SetTopic, TopicId, SetLocation, LocationId } from '../components/api_query_picker/types';
-import { getAlgorithms, getLocations, getTopics } from './get_relevancy_score_items';
 import * as Builder from './build_types'; 
 import { Locations, SetLocations, Topics, SetTopics, Algorithms, SetAlgorithms, SetAlgorithmId, AlgorithmId, Services, SetServices } from './types';
 import * as constants from './constants';
+import { requestAlgorithms } from '../api/algorithms';
+import { requestLocations } from '../api/locations';
+import { requestTopics } from '../api/topics';
 
 export interface SharedStateAndCallbacks {
   readonly services: Services;
@@ -31,9 +33,9 @@ export const Application = (): JSX.Element => {
   const [topics, setTopics]: [Topics, SetTopics] = useState<Topics>(Builder.buildEmptyTopicsType());
   useEffect(() => {
     const buildRelevancyScoreItemsFromApi = async (): Promise<void> => {
-      const algorithmsFromApi = await getAlgorithms();
-      const locationsFromApi = await getLocations();
-      const topicsFromApi = await getTopics();
+      const algorithmsFromApi = await requestAlgorithms();
+      const locationsFromApi = await requestLocations();
+      const topicsFromApi = await requestTopics();
       setAlgorithms(algorithmsFromApi);
       setLocations(locationsFromApi);
       setTopics(topicsFromApi);

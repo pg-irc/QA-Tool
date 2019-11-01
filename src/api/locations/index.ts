@@ -8,11 +8,11 @@ import { buildEmptyLocationsType, buildInvalidLocationsType, buildLocationType }
 import { validateLocationsArray } from './validate';
 import * as constants from '../../application/constants';
 
-export const requestLocations = async (): Promise<AxiosResponse>  => {
+export const requestLocations = async (): Promise<Locations>  => {
     const url = buildUrlForLocations();
     return await axios.get(url)
-    .then((response: AxiosResponse): AxiosResponse  => {
-        return response;
+    .then((response: AxiosResponse): Locations  => {
+        return validateLocationsResponse(response);
     });
 };
 

@@ -17,7 +17,7 @@ describe('Locations response validation', () => {
     describe('with invalid data', () => {
         it('fails schema validation', () => {
             const validator = validateLocationsArray([{
-                id: aNumber(),
+                // id: anInteger(),
                 name: aString(),
                 latitude: aString(),
                 longitude: aString(),

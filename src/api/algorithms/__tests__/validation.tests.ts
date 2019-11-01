@@ -16,7 +16,7 @@ describe('Algorithms response validation', () => {
     describe('with invalid data', () => {
         it('fails schema validation', () => {
             const validator = validateAlgorithmsArray([{
-                id: aString(),
+                // id: anInteger(),
                 url: aString(),
                 name: aString(),
             }]);

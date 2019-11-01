@@ -1,6 +1,6 @@
 // tslint:disable: no-expression-statement
 import React from 'react';
-import { ValidServices, InvalidServices, Service, Services } from './types';
+import { ValidServices, InvalidServices, Service, Services } from '../../application/types';
 import { ServiceListItem } from './service_list_item';
 import { SharedStateAndCallbacks } from '../../application';
 import { requestSendRelevancyScore } from '../../api/relevancy_score';

@@ -5,8 +5,9 @@ import buildUrl from 'build-url';
 import { isResponseError, isValidationError } from '../errors';
 import * as R from 'ramda';
 import { buildEmptyLocationsType, buildInvalidLocationsType, buildLocationType } from '../../application/build_types';
-import { validateLocationsArray } from './validate';
+import { validateIncomingData } from '../validation';
 import * as constants from '../../application/constants';
+import { locationsArray } from './schema';
 
 export const requestLocations = async (): Promise<Locations>  => {
     const url = buildUrlForLocations();
@@ -28,7 +29,7 @@ export const validateLocationsResponse = (response: AxiosResponse): Locations =>
     if (isResponseError(response)) {
         return buildInvalidLocationsType(response.statusText);
     }
-    const validator = validateLocationsArray(response.data);
+    const validator = validateIncomingData(locationsArray, response.data);
     if (isValidationError(validator)) {
         const errorMessage = 'Error: locations response data failed schema validation';
         return buildInvalidLocationsType(errorMessage);

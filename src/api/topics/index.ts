@@ -5,8 +5,9 @@ import buildUrl from 'build-url';
 import { isResponseError, isValidationError } from '../errors';
 import * as R from 'ramda';
 import { buildEmptyTopicsType, buildInvalidTopicsType, buildTopicType } from '../../application/build_types';
-import { validateTopicsArray } from './validate';
+import { validateIncomingData } from '../validation';
 import * as constants from '../../application/constants';
+import { topicsArray } from './schema';
 
 export const requestTopics = async (): Promise<Topics>  => {
     const url = buildUrlForTopics();
@@ -32,7 +33,7 @@ export const validateTopicsResponse = (response: AxiosResponse): Topics => {
     if (isResponseError(response)) {
         return buildInvalidTopicsType(response.statusText);
     }
-    const validator = validateTopicsArray(response.data);
+    const validator = validateIncomingData(topicsArray, response.data);
     if (isValidationError(validator)) {
         const errorMessage = 'Error: locations response data failed schema validation';
         return buildInvalidTopicsType(errorMessage);

@@ -5,8 +5,9 @@ import buildUrl from 'build-url';
 import { isResponseError, isValidationError } from '../errors';
 import * as R from 'ramda';
 import { buildEmptyAlgorithmsType, buildInvalidAlgorithmsType } from '../../application/build_types';
-import { validateAlgorithmsArray } from './validate';
+import { validateIncomingData } from '../validation';
 import * as constants from '../../application/constants';
+import { algorithmsArray } from './schema';
 
 export const requestAlgorithms = async (): Promise<Algorithms>  => {
     const url = buildUrlForAlgorithms();
@@ -28,7 +29,7 @@ export const validateAlgorithmsResponse = (response: AxiosResponse): Algorithms 
     if (isResponseError(response)) {
         return buildInvalidAlgorithmsType(response.statusText);
     }
-    const validator = validateAlgorithmsArray(response.data);
+    const validator = validateIncomingData(algorithmsArray, response.data);
     if (isValidationError(validator)) {
         const errorMessage = 'Error: algorithms response data failed schema validation';
         return buildInvalidAlgorithmsType(errorMessage);

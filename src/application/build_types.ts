@@ -43,6 +43,14 @@ export const buildEmptyAlgorithmIdType = () => (
     helpers.makeEmptyType(constants.ALGORITHM_EMPTY)
 );
 
+export const buildEmptyTopicsCollectionType = () => (
+    helpers.makeEmptyType(constants.TOPICS_COLLECTION_EMPTY)
+);
+
+export const buildEmptyLocationsCollectionType = () => (
+    helpers.makeEmptyType(constants.LOCATIONS_COLLECTION_EMPTY)
+);
+
 export const buildInvalidAlgorithmsType = (errorMessage: string) => (
     helpers.makeTypeWithErrorMessage(constants.ALGORITHMS_ERROR, errorMessage)
 );
@@ -71,14 +79,6 @@ export const buildSuccessLocationsCollectionType = (locations: ReadonlyArray<Loc
     helpers.makeTypeWithItems(constants.LOCATIONS_COLLECTION_SUCCESS, locations)
 );
 
-export const buildEmptyLocationsCollectionType = () => (
-    helpers.makeEmptyType(constants.LOCATIONS_COLLECTION_EMPTY)
-);
-
 export const buildSuccessTopicsCollectionsType = (topics: ReadonlyArray<Topic>) => (
     helpers.makeTypeWithItems(constants.TOPICS_COLLECTION_SUCCESS, topics)
-);
-
-export const buildEmptyTopicsCollectionType = () => (
-    helpers.makeEmptyType(constants.TOPICS_COLLECTION_EMPTY)
 );

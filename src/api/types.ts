@@ -8,6 +8,6 @@ export interface ValidationResult {
 }
 
 export interface IncomingDataSchema {
-    readonly type: string;
+    readonly type: 'array';
     readonly items: any;
 }

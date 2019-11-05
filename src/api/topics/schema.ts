@@ -1,3 +1,5 @@
+import { IncomingDataSchema } from '../types';
+
 // tslint:disable:quotemark trailing-comma
 
 export const topic = {
@@ -10,7 +12,7 @@ export const topic = {
     "required": ["id"],
 };
 
-export const topicsArray = {
+export const topicsArray: IncomingDataSchema = {
     "type": "array",
     "items": topic,
 };

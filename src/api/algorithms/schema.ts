@@ -1,3 +1,5 @@
+import { IncomingDataSchema } from "../types";
+
 // tslint:disable:quotemark trailing-comma
 
 export const algorithm = {
@@ -19,7 +21,7 @@ export const algorithm = {
     "required": ["id", "url"],
 };
 
-export const algorithmsArray = {
+export const algorithmsArray: IncomingDataSchema = {
     "type": "array",
     "items": algorithm,
 };

@@ -1,3 +1,5 @@
+import { IncomingDataSchema } from '../types';
+
 // tslint:disable:quotemark trailing-comma
 
 export const location = {
@@ -19,7 +21,7 @@ export const location = {
     "required": ["id", "name", "latitude", "longitude"],
 };
 
-export const locationsArray = {
+export const locationsArray: IncomingDataSchema = {
     "type": "array",
     "items": location,
 };

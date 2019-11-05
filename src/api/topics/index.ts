@@ -1,10 +1,10 @@
 // tslint:disable:no-expression-statement
-import { Topics, Topic } from '../../application/types';
+import { Topics } from '../../application/types';
 import axios, { AxiosResponse } from 'axios';
 import buildUrl from 'build-url';
 import { isResponseError, isValidationError } from '../errors';
 import * as R from 'ramda';
-import { buildEmptyTopicsType, buildInvalidTopicsType, buildTopicType } from '../../application/build_types';
+import { buildEmptyTopicsType, buildInvalidTopicsType } from '../../application/build_types';
 import { validateIncomingData } from '../validation';
 import * as constants from '../../application/constants';
 import { topicsArray } from './schema';
@@ -42,7 +42,6 @@ export const validateTopicsResponse = (response: AxiosResponse): Topics => {
         return buildEmptyTopicsType();
     }
     return {
-        type: constants.TOPICS_SUCCESS, topics: response.data.map((topic: Topic): Topic => buildTopicType(topic)),
+        type: constants.TOPICS_SUCCESS, topics: response.data,
     };
 };
-

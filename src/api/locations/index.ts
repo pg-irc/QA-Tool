@@ -1,10 +1,10 @@
 // tslint:disable:no-expression-statement no-any
-import { Locations, Location } from '../../application/types';
+import { Locations } from '../../application/types';
 import axios, { AxiosResponse } from 'axios';
 import buildUrl from 'build-url';
 import { isResponseError, isValidationError } from '../errors';
 import * as R from 'ramda';
-import { buildEmptyLocationsType, buildInvalidLocationsType, buildLocationType } from '../../application/build_types';
+import { buildEmptyLocationsType, buildInvalidLocationsType } from '../../application/build_types';
 import { validateIncomingData } from '../validation';
 import * as constants from '../../application/constants';
 import { locationsArray } from './schema';
@@ -38,7 +38,7 @@ export const validateLocationsResponse = (response: AxiosResponse): Locations =>
         return buildEmptyLocationsType();
     }
     return {
-        type: constants.LOCATIONS_SUCCESS, locations: response.data.map((location: Location ) => buildLocationType(location)),
+        type: constants.LOCATIONS_SUCCESS, locations: response.data,
     };
 };
 

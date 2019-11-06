@@ -23,6 +23,18 @@ export const buildServicesLoadingType = () => (
     helpers.makeEmptyType(constants.SERVICES_LOADING)
 );
 
+export const buildAlgorithmsLoadingType = () => (
+    helpers.makeEmptyType(constants.ALGORITHMS_LOADING)
+);
+
+export const buildLocationsLoadingType = () => (
+    helpers.makeEmptyType(constants.LOCATIONS_LOADING)
+);
+
+export const buildTopicsLoadingType = () => (
+    helpers.makeEmptyType(constants.TOPICS_LOADING)
+);
+
 export const buildEmptyServicesType = () => (
     helpers.makeEmptyType(constants.SERVICES_EMPTY)
 );

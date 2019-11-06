@@ -33,14 +33,17 @@ export const Application = (): JSX.Element => {
   const [topics, setTopics]: [Topics, SetTopics] = useState<Topics>(Builder.buildEmptyTopicsType());
   useEffect(() => {
     const buildAlgorithmsFromApi = async (): Promise<void> => {
+      setAlgorithms(Builder.buildAlgorithmsLoadingType);
       const algorithmsFromApi = await requestAlgorithms();
       setAlgorithms(algorithmsFromApi);
     };
     const buildLocationsFromApi = async (): Promise<void> => {
+      setLocations(Builder.buildLocationsLoadingType);
       const locationsFromApi = await requestLocations();
       setLocations(locationsFromApi);
     };
     const buildTopicsFromApi = async (): Promise<void> => {
+      setTopics(Builder.buildTopicsLoadingType);
       const topicsFromApi = await requestTopics();
       setTopics(topicsFromApi);
     };

@@ -87,7 +87,7 @@ const renderLocationsDropdownOrStatus = (location: LocationId, locations: Locati
                 dropdownItems={locations} />;
         case constants.LOCATIONS_ERROR:
             return <p>Locations: {locations.errorMessage}. Refresh the page or contact the QA Tool administrator.</p>;
-        case constants.LOCATIONS_EMPTY:
+        case constants.LOCATIONS_LOADING:
             return <p>Locations: ...Loading</p>;
         default:
             return <p>Locations: Empty</p>;

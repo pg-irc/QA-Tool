@@ -32,15 +32,21 @@ export const Application = (): JSX.Element => {
   const [locations, setLocations]: [Locations, SetLocations] = useState<Locations>(Builder.buildEmptyLocationsType());
   const [topics, setTopics]: [Topics, SetTopics] = useState<Topics>(Builder.buildEmptyTopicsType());
   useEffect(() => {
-    const buildRelevancyScoreItemsFromApi = async (): Promise<void> => {
+    const buildAlgorithmsFromApi = async (): Promise<void> => {
       const algorithmsFromApi = await requestAlgorithms();
-      const locationsFromApi = await requestLocations();
-      const topicsFromApi = await requestTopics();
       setAlgorithms(algorithmsFromApi);
+    };
+    const buildLocationsFromApi = async (): Promise<void> => {
+      const locationsFromApi = await requestLocations();
       setLocations(locationsFromApi);
+    };
+    const buildTopicsFromApi = async (): Promise<void> => {
+      const topicsFromApi = await requestTopics();
       setTopics(topicsFromApi);
     };
-    buildRelevancyScoreItemsFromApi();
+    buildAlgorithmsFromApi();
+    buildLocationsFromApi();
+    buildTopicsFromApi();
   }, []);
   const sharedStateAndCallbacks: SharedStateAndCallbacks = {
     services,
@@ -64,7 +70,7 @@ export const Application = (): JSX.Element => {
 };
 
 const renderErrorIfAlgorithmsErrorType = (algorithms: Algorithms): JSX.Element|void => {
-  if (algorithms.type === constants.ALGORITHMS_EMPTY) {
+  if (algorithms.type === constants.ALGORITHMS_ERROR) {
     return <div>Failed to load algorithms for use.</div>;
   }
 };

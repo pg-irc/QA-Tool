@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { Topics } from '../../application/types';
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 import buildUrl from 'build-url';
 import { isResponseError, isValidationError } from '../errors';
 import * as R from 'ramda';
@@ -14,7 +14,7 @@ export const requestTopics = async (): Promise<Topics>  => {
     return await axios.get(url)
     .then((response: AxiosResponse): Topics  => {
         return validateTopicsResponse(response);
-    });
+    }).catch((error: AxiosError): Topics => buildInvalidTopicsType(error.message));
 };
 
 const buildUrlForTopics = (): string => {

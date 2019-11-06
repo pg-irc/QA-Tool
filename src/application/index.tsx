@@ -1,14 +1,12 @@
-// tslint:disable:no-expression-statement no-let
+// tslint:disable:no-expression-statement
 import React, { useState, useEffect } from 'react';
 import { ApiQueryPicker } from '../components/api_query_picker/api_query_picker';
 import { ServicesList } from '../components/services/services_list';
 import { SetTopic, TopicId, SetLocation, LocationId } from '../components/api_query_picker/types';
-import * as Builder from './build_types'; 
+import * as Builder from './build_types';
 import { Locations, SetLocations, Topics, SetTopics, Algorithms, SetAlgorithms, SetAlgorithmId, AlgorithmId, Services, SetServices } from './types';
 import * as constants from './constants';
-import { requestAlgorithms } from '../api/algorithms';
-import { requestLocations } from '../api/locations';
-import { requestTopics } from '../api/topics';
+import { buildAlgorithmsFromApi, buildLocationsFromApi, buildTopicsFromApi } from './build_initial_states';
 
 export interface SharedStateAndCallbacks {
   readonly services: Services;
@@ -31,25 +29,11 @@ export const Application = (): JSX.Element => {
   const [algorithmId, setAlgorithmId]: [AlgorithmId, SetAlgorithmId] = useState<AlgorithmId>(Builder.buildEmptyAlgorithmIdType());
   const [locations, setLocations]: [Locations, SetLocations] = useState<Locations>(Builder.buildEmptyLocationsType());
   const [topics, setTopics]: [Topics, SetTopics] = useState<Topics>(Builder.buildEmptyTopicsType());
+
   useEffect(() => {
-    const buildAlgorithmsFromApi = async (): Promise<void> => {
-      setAlgorithms(Builder.buildAlgorithmsLoadingType);
-      const algorithmsFromApi = await requestAlgorithms();
-      setAlgorithms(algorithmsFromApi);
-    };
-    const buildLocationsFromApi = async (): Promise<void> => {
-      setLocations(Builder.buildLocationsLoadingType);
-      const locationsFromApi = await requestLocations();
-      setLocations(locationsFromApi);
-    };
-    const buildTopicsFromApi = async (): Promise<void> => {
-      setTopics(Builder.buildTopicsLoadingType);
-      const topicsFromApi = await requestTopics();
-      setTopics(topicsFromApi);
-    };
-    buildAlgorithmsFromApi();
-    buildLocationsFromApi();
-    buildTopicsFromApi();
+    buildAlgorithmsFromApi(setAlgorithms);
+    buildLocationsFromApi(setLocations);
+    buildTopicsFromApi(setTopics);
   }, []);
   const sharedStateAndCallbacks: SharedStateAndCallbacks = {
     services,

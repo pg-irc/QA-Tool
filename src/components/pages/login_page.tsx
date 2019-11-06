@@ -1,18 +1,18 @@
 import React from 'react';
 import useForm from 'react-hook-form';
+import { requestLogin } from '../../api/login';
 
-export interface FormData {
+export interface LoginData {
     readonly username: string;
     readonly password: string;
 }
 
 export const Login = (): JSX.Element => {
 // tslint:disable-next-line: typedef
-  const { register, handleSubmit, errors } = useForm<FormData>();
-  const onSubmit = (data: FormData): void => console.log(data);
+  const { register, handleSubmit, errors } = useForm<LoginData>();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(requestLogin)}>
         <h1>Login</h1>
         <label>Username</label>
         <input name='username' ref={register({ required: true })} />

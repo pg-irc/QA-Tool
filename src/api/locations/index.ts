@@ -18,7 +18,7 @@ export const requestLocations = async (): Promise<Locations>  => {
 };
 
 const buildUrlForLocations = (): string => {
-    const path = 'v1/searchlocations';
+    const path = 'qa/v1/searchlocations';
     const baseUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000/';
     return buildUrl(baseUrl, {
         path,

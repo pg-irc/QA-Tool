@@ -18,7 +18,7 @@ export const requestAlgorithms = async (): Promise<Algorithms>  => {
 };
 
 const buildUrlForAlgorithms = (): string => {
-    const path = 'v1/algorithms';
+    const path = 'qa/v1/algorithms';
     const baseUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000/';
     return buildUrl(baseUrl, {
         path,

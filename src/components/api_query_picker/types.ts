@@ -1,15 +1,26 @@
 import { Dispatch, SetStateAction } from 'react';
 
-export interface SelectedTopic {
-    readonly type: 'Topic';
-    readonly value: string;
+export interface ValidTopicId {
+    readonly type: 'TOPIC_ID:SUCCESS';
+    readonly id: string;
 }
 
-export interface SelectedLocation {
-    readonly type: 'Location';
-    readonly value: string;
+export interface EmptyTopicId {
+    readonly type: 'TOPIC_ID:EMPTY';
 }
 
-export type SetTopic = Dispatch<SetStateAction<SelectedTopic>>;
+export type TopicId = ValidTopicId | EmptyTopicId;
 
-export type SetLocation = Dispatch<SetStateAction<SelectedLocation>>;
+export interface ValidLocationId {
+    readonly type: 'LOCATION_ID:SUCCESS';
+    readonly id: number;
+}
+export interface EmptyLocationId {
+    readonly type: 'LOCATION_ID:EMPTY';
+}
+
+export type LocationId = ValidLocationId | EmptyLocationId;
+
+export type SetTopic = Dispatch<SetStateAction<TopicId>>;
+
+export type SetLocation = Dispatch<SetStateAction<LocationId>>;

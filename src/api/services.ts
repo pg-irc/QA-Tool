@@ -1,52 +1,56 @@
 // tslint:disable:no-expression-statement
 import axios, { AxiosResponse } from 'axios';
-import { SelectedTopic, SelectedLocation } from '../components/api_query_picker/types';
-import * as ServiceTypes from '../components/services/types';
+import { ValidTopicId } from '../components/api_query_picker/types';
+import { Services, ValidatedServiceAtLocationJSON} from '../application/types';
 import { isResponseError, isValidationError } from './errors';
 import * as R from 'ramda';
-import { availableServerUrls, UrlList } from './available_servers';
 import buildUrl from 'build-url';
-import { ValidationException } from './exceptions';
-import { serviceFromValidatedJSON, validateServicesAtLocationArray } from '../pathways-frontend/src/stores/services/validation';
+import { serviceFromValidatedJSON, validateServicesAtLocationArray } from '../pathways-frontend/src/validation/services';
+import { Location } from '../application/types';
+import { buildEmptyServicesType, buildInvalidServicesType } from '../application/build_types';
+import * as constants from '../application/constants';
 
-export const requestServices = async (topic: SelectedTopic, location: SelectedLocation): Promise<AxiosResponse> => {
-    const url = buildUrlFromSelectedTopicAndLocation(topic, location);
+export const requestServices = async (topic: ValidTopicId, location: Location, algorithmUrl: string): Promise<Services> => {
+    const url = buildUrlFromTopicIdAndLocation(topic, location, algorithmUrl);
     return await axios.get(url)
-    .then((response: AxiosResponse): AxiosResponse => {
-      return response;
+    .then((response: AxiosResponse): Services => {
+      return validateServicesResponse(response);
   });
 };
 
-const buildUrlFromSelectedTopicAndLocation = (topic: SelectedTopic, location: SelectedLocation): string => {
+const buildUrlFromTopicIdAndLocation = (topic: ValidTopicId, location: Location, algorithmUrl: string): string => {
     const path = 'v1/services_at_location';
-    const baseUrl = chooseServerUrlAtRandom(availableServerUrls);
+    const baseUrl = algorithmUrl;
+    const numberOfRecordsToGet = '5';
+    const longLat =  buildLongLatParameter(location);
     return buildUrl(baseUrl, {
         path: path,
         queryParams: {
-            user_location: location.value,
-            related_to_topic: topic.value,
+            user_location: longLat,
+            related_to_topic: topic.id,
+            per_page: numberOfRecordsToGet,
         },
     });
 };
 
-export const validateServicesResponse = (response: AxiosResponse): ServiceTypes.Services => {
+const buildLongLatParameter = (location: Location): string => {
+    return `${location.longitude}, ${location.latitude}`;
+ };
+
+export const validateServicesResponse = (response: AxiosResponse): Services => {
     if (isResponseError(response)) {
-        throw new ValidationException(response.statusText);
+        return buildInvalidServicesType(response.statusText);
     }
     const validator = validateServicesAtLocationArray(response.data);
     if (isValidationError(validator)) {
         const errorMessage = 'Error: response data failed schema validation';
-        throw new ValidationException(errorMessage);
+        return buildInvalidServicesType(errorMessage);
     }
     if (R.isEmpty(response.data)) {
-        return { type: 'Services:Empty' };
+        return buildEmptyServicesType();
     }
     return {
-        type: 'Services:Success', services: response.data.map((val: ServiceTypes.ValidatedServiceAtLocationJSON) => serviceFromValidatedJSON(val)),
+        type: constants.SERVICES_SUCCESS,
+        services: response.data.map((val: ValidatedServiceAtLocationJSON) => serviceFromValidatedJSON(val)),
     };
-};
-
-const chooseServerUrlAtRandom = (urlList: UrlList ): string => {
-    const randomIndex = Math.floor(Math.random() * urlList.length);
-    return urlList[randomIndex];
 };

@@ -1,16 +1,20 @@
 import React from 'react';
-import { Service, Address } from '../services/types';
-import * as R from 'ramda';
+import { Service, Address } from '../../application/types';
+import { ScoreButtons } from '../relevancy_score_buttons/score_buttons';
+import { SendRelevancyScore } from './services_list';
+import { filterPhysicalAddresses } from './filter_physical_address';
 
-export interface Props {
+export interface ServiceListItemProps {
     readonly service: Service;
+    readonly sendRelevancyScore: SendRelevancyScore;
 }
 
-export const ServiceListItem = (props: Props): JSX.Element => (
+export const ServiceListItem = (props: ServiceListItemProps): JSX.Element => (
     <li key={props.service.id}>
         { renderName(props.service.name) }
         { renderDescription(props.service.description) }
         { renderAddresses(filterPhysicalAddresses(props.service.addresses))}
+        <ScoreButtons service={props.service} sendRelevancyScore={props.sendRelevancyScore}/>
     </li>
 );
 
@@ -26,5 +30,3 @@ export const renderAddresses = (addresses: ReadonlyArray<Address>): ReadonlyArra
     addresses.map((address: Address) =>
             <p key={address.id}>{address.address} {address.city}  {address.stateProvince} {address.postalCode ? address.postalCode : ''} </p>)
 );
-
-const filterPhysicalAddresses = R.filter(R.propEq('type', 'physical_address'));

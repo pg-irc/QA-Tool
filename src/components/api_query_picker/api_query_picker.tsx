@@ -1,63 +1,50 @@
-// tslint:disable:no-expression-statement no-let
-import React, { useState } from 'react';
+// tslint:disable:no-expression-statement
+import React, { ChangeEvent } from 'react';
 import { Dropdown } from '../dropdown/dropdown';
-import { topicsForQA } from '../../fixtures/dropdown_data/topics';
-import { locationsForQA } from '../../fixtures/dropdown_data/locations';
-import { Services, SetServices, LoadingServices } from '../services/types';
-import { requestServices, validateServicesResponse } from '../../api/services';
-import { SelectedLocation, SelectedTopic, SetTopic, SetLocation} from './types';
+import { LocationId, TopicId } from './types';
+import { buildEmptyLocationIdType, buildEmptyTopicIdType, buildEmptyServicesType, buildLocationIdType, buildTopicIdType} from '../../application/build_types';
+import { SharedStateAndCallbacks } from '../../application';
+import { Locations, Topics } from '../../application/types';
+import { updateServices } from './update_services';
+import * as constants from '../../application/constants';
+import { isDisabled } from './helpers/is_disabled';
 
-export interface ApiQueryPickerProps {
-    readonly services: Services;
+export interface LocationsAndTopicsProps {
+    readonly locations: Locations;
+    readonly topics: Topics;
 }
 
-export interface ApiQueryPickerActions {
-    readonly setServices: SetServices;
-}
+export type ApiQueryPickerProps = LocationsAndTopicsProps & SharedStateAndCallbacks;
 
-type Props = ApiQueryPickerProps & ApiQueryPickerActions;
+export type OnSetLocation = (event: ChangeEvent<HTMLSelectElement>) => void;
+export type OnSetTopic = (event: ChangeEvent<HTMLSelectElement>) => void;
 
-export const ApiQueryPicker = (props: Props): JSX.Element => {
-
-    let selectedTopic: SelectedTopic = {
-        type: 'Topic',
-        value: '',
-    };
-
-    let selectedLocation: SelectedLocation = {
-        type: 'Location',
-        value: '',
-    };
-
-    const [topic, setTopic]: [SelectedTopic, SetTopic] = useState(selectedTopic);
-    const [location, setLocation]: [SelectedLocation, SetLocation] = useState(selectedLocation);
+export const ApiQueryPicker = (props: ApiQueryPickerProps): JSX.Element => {
     const onSetTopic = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-        selectedTopic = {
-            type: 'Topic',
-            value: event.target.value,
-        };
-        setTopic(selectedTopic);
+        if (event.target.value) {
+            props.setTopic(buildTopicIdType(event.target.value));
+        } else {
+            props.setTopic(buildEmptyTopicIdType());
+        }
     };
     const onSetLocation = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-        selectedLocation = {
-            type: 'Location',
-            value: event.target.value,
-        };
-        setLocation(selectedLocation);
+        if (event.target.value) {
+            props.setLocation(buildLocationIdType(Number(event.target.value)));
+        } else {
+            props.setLocation(buildEmptyLocationIdType());
+        }
     };
-        const clearSelectedOptions = (): void => {
-       setTopic(selectedTopic);
-       setLocation(selectedLocation);
-       props.setServices({type: 'Services:Empty'});
+    const clearSelectedOptions = (): void => {
+        props.setTopic(buildEmptyTopicIdType());
+        props.setLocation(buildEmptyLocationIdType());
+        props.setServices(buildEmptyServicesType());
     };
     return (
         <div>
-            <Dropdown title={'Topic'} selectedOption={topic} onSetOption={onSetTopic} dropdownItemCollection={topicsForQA} />
-            <Dropdown title={'Location'} selectedOption={location} onSetOption={onSetLocation}
-                dropdownItemCollection={locationsForQA} />
-            <ClearButton clearSelectionOptions={clearSelectedOptions}/>
-            <SendButton topic={topic} location={location}
-                services={props.services} setServices={props.setServices} />
+            {renderTopicsDropdownOrStatus(props.topic, props.topics, onSetTopic)}
+            {renderLocationsDropdownOrStatus(props.location, props.locations, onSetLocation)}
+            <ClearButton clearSelectionOptions={clearSelectedOptions} />
+            <SendButton {...props} />
         </div>
     );
 };
@@ -70,35 +57,39 @@ const ClearButton = (props: ClearButtonProps): JSX.Element => (
     <button onClick={(): void => props.clearSelectionOptions()}>Clear</button>
 );
 
-export interface SendButtonProps {
-    readonly topic: SelectedTopic;
-    readonly location: SelectedLocation;
-    readonly services: Services;
-    readonly setServices: SetServices;
-}
-
-const SendButton = (props: SendButtonProps): JSX.Element => {
-    const enabled = props.topic && props.location;
+const SendButton = (props: ApiQueryPickerProps): JSX.Element => {
     return (
         <button
-            disabled={!enabled}
-            onClick={(): Promise<void> => updateServices(props.topic, props.location, props.setServices)}>
+        disabled={isDisabled(props)}
+        onClick={(): void => updateServices(props)}>
             Send
         </button>
     );
 };
 
-const updateServices = async (topic: SelectedTopic, location: SelectedLocation, setServices: SetServices): Promise<void> => {
-    try {
-        const servicesResponse = await requestServices(topic, location);
-        setServices(buildServicesLoadingType());
-        const successServices = validateServicesResponse(servicesResponse);
-        setServices(successServices);
-    } catch (error) {
-        setServices(error.buildErrorServiceType());
+const renderTopicsDropdownOrStatus = (topic: TopicId, topics: Topics, onSetTopic: OnSetTopic): JSX.Element => {
+    switch (topics.type) {
+        case constants.TOPICS_SUCCESS:
+            return <Dropdown title={'Topics'} selectedOption={topic} onSetOption={onSetTopic} dropdownItems={topics} />;
+        case constants.TOPICS_ERROR:
+            return <p>Topics: {topics.errorMessage}. Refresh the page or contact the QA Tool administrator.</p>;
+        case constants.TOPICS_LOADING:
+            return <p>Topics: ...Loading</p>;
+        default:
+            return <p>Topics: Empty</p>;
     }
 };
 
-const buildServicesLoadingType = (): LoadingServices  => (
-    { type: 'Services:Loading' }
-);
+const renderLocationsDropdownOrStatus = (location: LocationId, locations: Locations, onSetLocation: OnSetLocation): JSX.Element => {
+    switch (locations.type) {
+        case constants.LOCATIONS_SUCCESS:
+            return <Dropdown title={'Locations'} selectedOption={location} onSetOption={onSetLocation}
+                dropdownItems={locations} />;
+        case constants.LOCATIONS_ERROR:
+            return <p>Locations: {locations.errorMessage}. Refresh the page or contact the QA Tool administrator.</p>;
+        case constants.LOCATIONS_LOADING:
+            return <p>Locations: ...Loading</p>;
+        default:
+            return <p>Locations: Empty</p>;
+    }
+};

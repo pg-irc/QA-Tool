@@ -11,7 +11,7 @@ export const requestLogin = async (loginData: LoginData): Promise<void> => {
         password: loginData.password,
     })
     .then((response: AxiosResponse): void => {
-        Cookies.set('api-token', response.data.token);
+        Cookies.set('token', response.data.token);
     })
     .catch((error: AxiosError): void =>  console.log(error.message));
 };

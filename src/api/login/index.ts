@@ -1,6 +1,8 @@
+// tslint:disable no-expression-statement
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import buildUrl from 'build-url';
 import { LoginData } from '../../components/pages/login_page';
+import Cookies from 'js-cookie';
 
 export const requestLogin = async (loginData: LoginData): Promise<void> => {
     const url = buildLoginUrl();
@@ -8,7 +10,9 @@ export const requestLogin = async (loginData: LoginData): Promise<void> => {
         username: loginData.username,
         password: loginData.password,
     })
-    .then((response: AxiosResponse): void => console.log(response.data))
+    .then((response: AxiosResponse): void => {
+        Cookies.set('api-token', response.data.token);
+    })
     .catch((error: AxiosError): void =>  console.log(error.message));
 };
 

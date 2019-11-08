@@ -79,10 +79,22 @@ export const buildInvalidServicesType = (errorMessage: string) => (
     helpers.makeTypeWithErrorMessage(constants.SERVICES_ERROR, errorMessage)
 );
 
+export const buildInvalidUserType = (errorMessage: string) => (
+    helpers.makeTypeWithErrorMessage(constants.USER_INVALID, errorMessage)
+);
+
 export const buildSuccessLocationsCollectionType = (locations: ReadonlyArray<Location>) => (
     helpers.makeTypeWithItems(constants.LOCATIONS_COLLECTION_SUCCESS, locations)
 );
 
 export const buildSuccessTopicsCollectionsType = (topics: ReadonlyArray<Topic>) => (
     helpers.makeTypeWithItems(constants.TOPICS_COLLECTION_SUCCESS, topics)
+);
+
+export const buildEmptyUserType = () => (
+    helpers.makeEmptyType(constants.USER_EMPTY)
+);
+
+export const buildValidUserType = () => (
+    helpers.makeEmptyType(constants.USER_VALID)
 );

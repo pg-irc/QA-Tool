@@ -42,4 +42,3 @@ export const validateLocationsResponse = (response: AxiosResponse): Locations =>
         type: constants.LOCATIONS_SUCCESS, locations: response.data,
     };
 };
-

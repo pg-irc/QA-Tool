@@ -5,7 +5,7 @@ import { requestLogin } from '../../../api/login';
 import { RouteChildrenProps } from 'react-router';
 import { User } from '../../../application/types';
 import * as constants from '../../../application/constants';
-import { UserProps } from '../../../application';
+import { UserProps } from '../../../application/types';
 
 export interface LoginData {
     readonly username: string;

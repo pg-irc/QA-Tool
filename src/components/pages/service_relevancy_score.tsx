@@ -7,7 +7,7 @@ import * as Builder from '../../application/build_types';
 import { Locations, SetLocations, Topics, SetTopics, Algorithms, SetAlgorithms, SetAlgorithmId, AlgorithmId, Services, SetServices } from '../../application/types';
 import * as constants from '../../application/constants';
 import { buildAlgorithmsFromApi, buildLocationsFromApi, buildTopicsFromApi } from '../../application/build_initial_states';
-import { UserProps } from '../../application';
+import { UserProps } from '../../application/types';
 import { RouterProps } from 'react-router';
 import { LogoutButton } from '../logout/logout_button';
 

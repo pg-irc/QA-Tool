@@ -6,6 +6,7 @@ import { RouteChildrenProps } from 'react-router';
 import { User } from '../../../application/types';
 import * as constants from '../../../application/constants';
 import { UserProps } from '../../../application/types';
+import { redirectIfValidUser } from './redirect_if_valid_user';
 
 export interface LoginData {
     readonly username: string;
@@ -48,11 +49,5 @@ const renderUserStatusMessage = (user: User): JSX.Element => {
     return <h2>Username/Password invalid. Please try again. </h2>;
     default:
       return <div></div>;
-  }
-};
-
-const redirectIfValidUser = (user: User, props: LoginProps): void => {
-  if (user.type === constants.USER_VALID) {
-    props.history.push('/');
   }
 };

@@ -1,24 +1,24 @@
 // tslint:disable: no-expression-statement
 import React from 'react';
 import useForm from 'react-hook-form';
-import { requestLogin } from '../../api/login';
+import { requestLogin } from '../../../api/login';
 import { RouteChildrenProps } from 'react-router';
-import { SetUser, User } from '../../application/types';
-import * as constants from '../../application/constants';
+import { SetUser, User } from '../../../application/types';
+import * as constants from '../../../application/constants';
 
 export interface LoginData {
     readonly username: string;
     readonly password: string;
 }
 
-export interface LoginProps {
+export interface UserProps {
   readonly user: User;
   readonly setUser: SetUser;
 }
 
-type Props = LoginProps & RouteChildrenProps;
+export type LoginProps = UserProps & RouteChildrenProps;
 
-export const Login = (props: Props): JSX.Element => {
+export const Login = (props: LoginProps): JSX.Element => {
 // tslint:disable-next-line: typedef
   const { register, handleSubmit, errors } = useForm<LoginData>();
   const loginUser = async (loginData: LoginData): Promise<void> => {
@@ -44,7 +44,7 @@ export const Login = (props: Props): JSX.Element => {
   );
 };
 
-const renderUserStatusMessage = (user: User): JSX.Element | void => {
+const renderUserStatusMessage = (user: User): JSX.Element => {
   switch (user.type) {
     case constants.USER_VALID:
       return <h2>Login Success!</h2>;
@@ -55,7 +55,7 @@ const renderUserStatusMessage = (user: User): JSX.Element | void => {
   }
 };
 
-const redirectIfValidUser = (user: User, props: Props): void => {
+const redirectIfValidUser = (user: User, props: LoginProps): void => {
   if (user.type === constants.USER_VALID) {
     props.history.push('/');
   }

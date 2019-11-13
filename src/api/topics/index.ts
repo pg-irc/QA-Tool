@@ -8,11 +8,11 @@ import { buildEmptyTopicsType, buildInvalidTopicsType } from '../../application/
 import { validateIncomingData } from '../validation';
 import * as constants from '../../application/constants';
 import { topicsArray } from './schema';
-import { axiosRequest } from '../axios_config';
+import { authenticatedAxiosRequest } from '../axios_config';
 
 export const requestTopics = async (): Promise<Topics>  => {
     const url = buildUrlForTopics();
-    return await axiosRequest.get(url)
+    return await authenticatedAxiosRequest.get(url)
     .then((response: AxiosResponse): Topics  => {
         return validateTopicsResponse(response);
     }).catch((error: AxiosError): Topics => buildInvalidTopicsType(error.message));

@@ -15,18 +15,23 @@ export const Application = (): JSX.Element => {
             <Switch>
                 <Route exact path={'/login'} render={(props: RouteChildrenProps): JSX.Element =>
                     <Login {...props} user={user} setUser={setUser}/>} />
-                <PrivateRoute user={user} Component={ServiceRelevancyScore}/>
+                <PrivateRoute user={user} setUser={setUser} Component={ServiceRelevancyScore}/>
             </Switch>
         </Router>
         );
 };
 
-export interface PrivateRouteProps {
-    readonly Component: React.ComponentType<RouterProps>;
+export interface UserProps {
     readonly user: User;
+    readonly setUser: SetUser;
+}
+export interface PrivateRouteProps {
+    readonly Component: React.ComponentType<RouterProps&UserProps>;
 }
 
-const PrivateRoute = (props: PrivateRouteProps): JSX.Element => {
+type Props = UserProps & PrivateRouteProps;
+
+const PrivateRoute = (props: Props): JSX.Element => {
     return (
         <Route exact path={'/'} {...props} render={(renderProps: RouteChildrenProps): JSX.Element =>
            renderComponentOrRedirect(props, renderProps)
@@ -35,10 +40,10 @@ const PrivateRoute = (props: PrivateRouteProps): JSX.Element => {
     );
   };
 
-const renderComponentOrRedirect = (props: PrivateRouteProps, renderProps: RouteChildrenProps): JSX.Element => {
+const renderComponentOrRedirect = (props: Props, renderProps: RouteChildrenProps): JSX.Element => {
     const Component = props.Component;
     if (props.user.type !== constants.USER_VALID) {
         return <Redirect to='/login'/>;
     }
-    return <Component {...renderProps}/>;
+    return <Component {...props} {...renderProps}/>;
 }

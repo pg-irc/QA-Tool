@@ -3,17 +3,13 @@ import React from 'react';
 import useForm from 'react-hook-form';
 import { requestLogin } from '../../../api/login';
 import { RouteChildrenProps } from 'react-router';
-import { SetUser, User } from '../../../application/types';
+import { User } from '../../../application/types';
 import * as constants from '../../../application/constants';
+import { UserProps } from '../../../application';
 
 export interface LoginData {
     readonly username: string;
     readonly password: string;
-}
-
-export interface UserProps {
-  readonly user: User;
-  readonly setUser: SetUser;
 }
 
 export type LoginProps = UserProps & RouteChildrenProps;

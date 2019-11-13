@@ -205,3 +205,8 @@ export interface InvalidUser {
 export type User = EmptyUser | ValidUser | InvalidUser;
 
 export type SetUser = Dispatch<SetStateAction<User>>;
+
+export interface UserProps {
+    readonly user: User;
+    readonly setUser: SetUser;
+}

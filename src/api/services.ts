@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 import { ValidTopicId } from '../components/api_query_picker/types';
 import { Services, ValidatedServiceAtLocationJSON} from '../application/types';
 import { isResponseError, isValidationError } from './errors';
@@ -15,7 +15,7 @@ export const requestServices = async (topic: ValidTopicId, location: Location, a
     return await axios.get(url)
     .then((response: AxiosResponse): Services => {
       return validateServicesResponse(response);
-  });
+  }).catch((error: AxiosError): Services => buildInvalidServicesType(error.message));
 };
 
 const buildUrlFromTopicIdAndLocation = (topic: ValidTopicId, location: Location, algorithmUrl: string): string => {

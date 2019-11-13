@@ -20,6 +20,7 @@ export const Application = (): JSX.Element => {
         </Router>
         );
 };
+
 export interface PrivateRouteProps {
     readonly Component: React.ComponentType<RouterProps>;
     readonly user: User;
@@ -27,11 +28,17 @@ export interface PrivateRouteProps {
 
 const PrivateRoute = (props: PrivateRouteProps): JSX.Element => {
     return (
-        <Route exact path={'/'} {...props} render={(foo: RouteChildrenProps): JSX.Element =>
-            props.user.type === constants.USER_VALID
-            ? <props.Component {...foo} />
-            : <Redirect to='/login'/>
+        <Route exact path={'/'} {...props} render={(renderProps: RouteChildrenProps): JSX.Element =>
+           renderComponentOrRedirect(props, renderProps)
         }
       />
     );
   };
+
+const renderComponentOrRedirect = (props: PrivateRouteProps, renderProps: RouteChildrenProps): JSX.Element => {
+    const Component = props.Component;
+    if (props.user.type !== constants.USER_VALID) {
+        return <Redirect to='/login'/>;
+    }
+    return <Component {...renderProps}/>;
+}

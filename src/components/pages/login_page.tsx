@@ -21,14 +21,15 @@ type Props = LoginProps & RouteChildrenProps;
 export const Login = (props: Props): JSX.Element => {
 // tslint:disable-next-line: typedef
   const { register, handleSubmit, errors } = useForm<LoginData>();
-  const getUserFromApi = async (loginData: LoginData): Promise<void> => {
+  const loginUser = async (loginData: LoginData): Promise<void> => {
     const userState = await requestLogin(loginData);
     props.setUser(userState);
+    redirectIfValidUser(userState, props);
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit(getUserFromApi)}>
+      <form onSubmit={handleSubmit(loginUser)}>
           <h1>Login</h1>
           <label>Username</label>
           <input name='username' ref={register({ required: true })} />
@@ -51,5 +52,11 @@ const renderUserStatusMessage = (user: User): JSX.Element | void => {
     return <h2>Username/Password invalid. Please try again. </h2>;
     default:
       return <div></div>;
+  }
+};
+
+const redirectIfValidUser = (user: User, props: Props): void => {
+  if (user.type === constants.USER_VALID) {
+    props.history.push('/');
   }
 };

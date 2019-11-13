@@ -7,6 +7,9 @@ import * as Builder from '../../application/build_types';
 import { Locations, SetLocations, Topics, SetTopics, Algorithms, SetAlgorithms, SetAlgorithmId, AlgorithmId, Services, SetServices } from '../../application/types';
 import * as constants from '../../application/constants';
 import { buildAlgorithmsFromApi, buildLocationsFromApi, buildTopicsFromApi } from '../../application/build_initial_states';
+import { UserProps } from '../../application';
+import { RouterProps } from 'react-router';
+import { LogoutButton } from '../logout/logout_button';
 
 export interface SharedStateAndCallbacks {
   readonly services: Services;
@@ -21,7 +24,9 @@ export interface SharedStateAndCallbacks {
   readonly setAlgorithmId: SetAlgorithmId;
 }
 
-export const ServiceRelevancyScore = (): JSX.Element => {
+type Props = UserProps & RouterProps;
+
+export const ServiceRelevancyScore = (props: Props): JSX.Element => {
   const [services, setServices]: [Services, SetServices] = useState<Services>(Builder.buildEmptyServicesType());
   const [topic, setTopic]: [TopicId, SetTopic] = useState<TopicId>(Builder.buildEmptyTopicIdType());
   const [location, setLocation]: [LocationId, SetLocation] = useState<LocationId>(Builder.buildEmptyLocationIdType());
@@ -49,6 +54,7 @@ export const ServiceRelevancyScore = (): JSX.Element => {
   };
   return (
     <div>
+      <LogoutButton user={props.user} setUser={props.setUser}/>
       <ApiQueryPicker {...sharedStateAndCallbacks} locations={locations} topics={topics}/>
       {renderErrorIfAlgorithmsErrorType(algorithms)}
       <ServicesList {...sharedStateAndCallbacks} />

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { ServiceRelevancyScore } from '../components/pages/service_relevancy_score';
-import { Login } from '../components/pages/login_page';
+import { Login } from '../components/pages/login/login';
 import { User, SetUser } from './types';
 import { buildEmptyUserType } from './build_types';
 import { RouteChildrenProps, RouterProps } from 'react-router';

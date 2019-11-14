@@ -16,9 +16,7 @@ export const requestLogin = async (loginData: LoginData): Promise<User> => {
         username: loginData.username,
         password: loginData.password,
     })
-    .then((response: AxiosResponse): User => {
-        return validateLoginResponse(response);
-    })
+    .then((response: AxiosResponse): User => validateLoginResponse(response))
     .catch((error: AxiosError): InvalidUser =>  buildInvalidUserType(error.message));
 };
 

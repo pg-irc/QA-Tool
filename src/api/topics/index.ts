@@ -13,9 +13,8 @@ import { authenticatedAxiosRequest } from '../axios_config';
 export const requestTopics = async (): Promise<Topics>  => {
     const url = buildUrlForTopics();
     return await authenticatedAxiosRequest.get(url)
-    .then((response: AxiosResponse): Topics  => {
-        return validateTopicsResponse(response);
-    }).catch((error: AxiosError): Topics => buildInvalidTopicsType(error.message));
+    .then((response: AxiosResponse): Topics  => validateTopicsResponse(response))
+    .catch((error: AxiosError): Topics => buildInvalidTopicsType(error.message));
 };
 
 const buildUrlForTopics = (): string => {

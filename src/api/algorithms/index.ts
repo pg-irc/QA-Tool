@@ -13,9 +13,8 @@ import { authenticatedAxiosRequest } from '../axios_config';
 export const requestAlgorithms = async (): Promise<Algorithms>  => {
     const url = buildUrlForAlgorithms();
     return await authenticatedAxiosRequest.get(url)
-    .then((response: AxiosResponse): Algorithms  => {
-        return validateAlgorithmsResponse(response);
-    }).catch((error: AxiosError): Algorithms => buildInvalidAlgorithmsType(error.message));
+    .then((response: AxiosResponse): Algorithms  => validateAlgorithmsResponse(response))
+    .catch((error: AxiosError): Algorithms => buildInvalidAlgorithmsType(error.message));
 };
 
 const buildUrlForAlgorithms = (): string => {

@@ -9,13 +9,11 @@ export interface PrivateRouteProps {
 
 type Props = UserProps & PrivateRouteProps;
 
-export const PrivateRoute = (props: Props): JSX.Element => {
-    return (
-        <Route exact path={'/'} {...props} render={(renderProps: RouteChildrenProps): JSX.Element =>
-           renderComponentOrRedirect(props, renderProps)
-        } />
-    );
-  };
+export const PrivateRoute = (props: Props): JSX.Element => (
+    <Route exact path={'/'} {...props} render={(renderProps: RouteChildrenProps): JSX.Element =>
+        renderComponentOrRedirect(props, renderProps)
+    } />
+);
 
 const renderComponentOrRedirect = (props: Props, renderProps: RouteChildrenProps): JSX.Element => {
     const Component = props.Component;

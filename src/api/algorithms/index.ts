@@ -8,11 +8,11 @@ import { buildEmptyAlgorithmsType, buildInvalidAlgorithmsType } from '../../appl
 import { validateIncomingData } from '../validation';
 import * as constants from '../../application/constants';
 import { algorithmsArray } from './schema';
-import { authenticatedAxiosRequest } from '../axios_config';
+import { authenticatedAxiosInstance } from '../axios_config';
 
 export const requestAlgorithms = async (): Promise<Algorithms>  => {
     const url = buildUrlForAlgorithms();
-    return await authenticatedAxiosRequest.get(url)
+    return await authenticatedAxiosInstance.get(url)
     .then((response: AxiosResponse): Algorithms  => validateAlgorithmsResponse(response))
     .catch((error: AxiosError): Algorithms => buildInvalidAlgorithmsType(error.message));
 };

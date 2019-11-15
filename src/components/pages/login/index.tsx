@@ -6,6 +6,7 @@ import { RouteChildrenProps } from 'react-router';
 import { User } from '../../../application/types';
 import * as constants from '../../../application/constants';
 import { UserProps } from '../../../application/types';
+import { setTokenIfValidUser } from './set_token_if_valid_user';
 import { redirectIfValidUser } from './redirect_if_valid_user';
 
 export interface LoginData {
@@ -21,6 +22,7 @@ export const Login = (props: LoginProps): JSX.Element => {
   const loginUser = async (loginData: LoginData): Promise<void> => {
     const userState = await requestLogin(loginData);
     props.setUser(userState);
+    setTokenIfValidUser(userState);
     redirectIfValidUser(userState, props);
   };
 

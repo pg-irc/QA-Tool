@@ -196,6 +196,7 @@ export interface EmptyUser {
 }
 export interface ValidUser {
     readonly type: 'USER:VALID';
+    readonly token: string;
 }
 
 export interface InvalidUser {

@@ -66,4 +66,5 @@ const renderErrorIfAlgorithmsErrorType = (algorithms: Algorithms): JSX.Element|v
   if (algorithms.type === constants.ALGORITHMS_ERROR) {
     return <div>Failed to load algorithms for use.</div>;
   }
+  return <div/>;
 };

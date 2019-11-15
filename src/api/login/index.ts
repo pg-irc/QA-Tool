@@ -1,7 +1,7 @@
 // tslint:disable no-expression-statement
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import buildUrl from 'build-url';
-import { LoginData } from '../../components/pages/login/login';
+import { LoginData } from '../../components/pages/login';
 import Cookies from 'js-cookie';
 import { User, InvalidUser } from '../../application/types';
 import { buildInvalidUserType, buildEmptyUserType } from '../../application/build_types';

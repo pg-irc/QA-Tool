@@ -48,6 +48,6 @@ const renderUserStatusMessage = (user: User): JSX.Element => {
     case constants.USER_INVALID:
     return <h2>Username/Password invalid. Please try again. </h2>;
     default:
-      return <div></div>;
+      return <div/>;
   }
 };

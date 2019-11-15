@@ -2,7 +2,6 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import buildUrl from 'build-url';
 import { LoginData } from '../../components/pages/login';
-import Cookies from 'js-cookie';
 import { User, InvalidUser } from '../../application/types';
 import { buildInvalidUserType, buildEmptyUserType } from '../../application/build_types';
 import { isResponseError, isValidationError } from '../errors';
@@ -40,8 +39,8 @@ export const validateLoginResponse = (response: AxiosResponse): User => {
     if (R.isEmpty(response.data)) {
         return buildEmptyUserType();
     }
-    Cookies.set('token', response.data.token);
     return {
         type: constants.USER_VALID,
+        token: response.data.token,
     };
 };

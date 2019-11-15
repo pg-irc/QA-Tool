@@ -1,5 +1,5 @@
 // tslint:disable typedef
-import { Location, Topic } from './types';
+import { Location, Topic, ValidUser } from './types';
 import * as constants from './constants';
 import * as helpers from '../application/helpers/make_types';
 
@@ -95,6 +95,6 @@ export const buildEmptyUserType = () => (
     helpers.makeEmptyType(constants.USER_EMPTY)
 );
 
-export const buildValidUserType = () => (
-    helpers.makeEmptyType(constants.USER_VALID)
+export const buildValidUserType = (token: string): ValidUser => (
+    { type: constants.USER_VALID, token: token }
 );

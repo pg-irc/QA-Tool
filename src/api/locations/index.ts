@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement no-any
 import { Locations } from '../../application/types';
-import { AxiosResponse, AxiosError } from 'axios';
+import { AxiosResponse } from 'axios';
 import buildUrl from 'build-url';
 import { isResponseError, isValidationError } from '../errors';
 import * as R from 'ramda';
@@ -13,8 +13,8 @@ import { authenticatedAxiosInstance } from '../axios_config';
 export const requestLocations = async (): Promise<Locations>  => {
     const url = buildUrlForLocations();
     return await authenticatedAxiosInstance.get(url)
-    .then((response: AxiosResponse): Locations  => validateLocationsResponse(response))
-    .catch((error: AxiosError): Locations => buildInvalidLocationsType(error.message));
+    .then(validateLocationsResponse)
+    .catch(buildInvalidLocationsType);
 };
 
 const buildUrlForLocations = (): string => {

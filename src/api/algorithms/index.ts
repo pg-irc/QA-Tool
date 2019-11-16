@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { Algorithms } from '../../application/types';
-import { AxiosResponse, AxiosError } from 'axios';
+import { AxiosResponse } from 'axios';
 import buildUrl from 'build-url';
 import { isResponseError, isValidationError } from '../errors';
 import * as R from 'ramda';
@@ -13,8 +13,8 @@ import { authenticatedAxiosInstance } from '../axios_config';
 export const requestAlgorithms = async (): Promise<Algorithms>  => {
     const url = buildUrlForAlgorithms();
     return await authenticatedAxiosInstance.get(url)
-    .then((response: AxiosResponse): Algorithms  => validateAlgorithmsResponse(response))
-    .catch((error: AxiosError): Algorithms => buildInvalidAlgorithmsType(error.message));
+    .then(validateAlgorithmsResponse)
+    .catch(buildInvalidAlgorithmsType);
 };
 
 const buildUrlForAlgorithms = (): string => {

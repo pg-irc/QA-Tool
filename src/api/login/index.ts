@@ -1,8 +1,8 @@
 // tslint:disable no-expression-statement
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import buildUrl from 'build-url';
 import { LoginData } from '../../components/pages/login';
-import { User, InvalidUser } from '../../application/types';
+import { User } from '../../application/types';
 import { buildInvalidUserType, buildEmptyUserType } from '../../application/build_types';
 import { isResponseError, isValidationError } from '../errors';
 import { validateIncomingToken } from '../validation';
@@ -15,8 +15,8 @@ export const requestLogin = async (loginData: LoginData): Promise<User> => {
         username: loginData.username,
         password: loginData.password,
     })
-    .then((response: AxiosResponse): User => validateLoginResponse(response))
-    .catch((error: AxiosError): InvalidUser =>  buildInvalidUserType(error.message));
+    .then(validateLoginResponse)
+    .catch(buildInvalidUserType);
 };
 
 export const buildLoginUrl = (): string => {

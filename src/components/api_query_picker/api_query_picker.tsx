@@ -3,7 +3,7 @@ import React, { ChangeEvent } from 'react';
 import { Dropdown } from '../dropdown/dropdown';
 import { LocationId, TopicId } from './types';
 import { buildEmptyLocationIdType, buildEmptyTopicIdType, buildEmptyServicesType, buildLocationIdType, buildTopicIdType} from '../../application/build_types';
-import { SharedStateAndCallbacks } from '../../application';
+import { SharedStateAndCallbacks } from '../pages/service_relevancy_score';
 import { Locations, Topics } from '../../application/types';
 import { updateServices } from './update_services';
 import * as constants from '../../application/constants';

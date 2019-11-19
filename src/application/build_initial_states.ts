@@ -3,7 +3,8 @@ import * as Builder from './build_types';
 import { requestAlgorithms } from '../api/algorithms';
 import { requestLocations } from '../api/locations';
 import { requestTopics } from '../api/topics';
-import { SetAlgorithms, SetLocations, SetTopics } from './types';
+import { SetAlgorithms, SetLocations, SetTopics, SetUser } from './types';
+import Cookies from 'js-cookie';
 
 export const buildAlgorithmsFromApi = async (setAlgorithms: SetAlgorithms): Promise<void> => {
     setAlgorithms(Builder.buildAlgorithmsLoadingType());
@@ -21,4 +22,21 @@ export const buildTopicsFromApi = async (setTopics: SetTopics): Promise<void> =>
     setTopics(Builder.buildTopicsLoadingType());
     const topicsFromApi = await requestTopics();
     setTopics(topicsFromApi);
+};
+
+export const buildInitialUserType = (setUser: SetUser): void => {
+    const token = retrieveTokenIfExists();
+    buildTypeBasedOnToken(token, setUser);
+};
+
+const retrieveTokenIfExists = (): string | undefined => {
+    return Cookies.get('token');
+};
+
+const buildTypeBasedOnToken = (token: string | undefined, setUser: SetUser): void => {
+    if (token) {
+        setUser(Builder.buildValidUserType(token));
+    } else {
+        setUser(Builder.buildEmptyUserType());
+    }
 };

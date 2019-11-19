@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement no-any
 import { Locations } from '../../application/types';
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import { AxiosResponse } from 'axios';
 import buildUrl from 'build-url';
 import { isResponseError, isValidationError } from '../errors';
 import * as R from 'ramda';
@@ -8,17 +8,17 @@ import { buildEmptyLocationsType, buildInvalidLocationsType } from '../../applic
 import { validateIncomingData } from '../validation';
 import * as constants from '../../application/constants';
 import { locationsArray } from './schema';
+import { authenticatedAxiosInstance } from '../axios_config';
 
 export const requestLocations = async (): Promise<Locations>  => {
     const url = buildUrlForLocations();
-    return await axios.get(url)
-    .then((response: AxiosResponse): Locations  => {
-        return validateLocationsResponse(response);
-    }).catch((error: AxiosError): Locations => buildInvalidLocationsType(error.message));
+    return await authenticatedAxiosInstance.get(url)
+    .then(validateLocationsResponse)
+    .catch(buildInvalidLocationsType);
 };
 
 const buildUrlForLocations = (): string => {
-    const path = 'v1/searchlocations';
+    const path = 'qa/v1/searchlocations';
     const baseUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000/';
     return buildUrl(baseUrl, {
         path,
@@ -41,4 +41,3 @@ export const validateLocationsResponse = (response: AxiosResponse): Locations =>
         type: constants.LOCATIONS_SUCCESS, locations: response.data,
     };
 };
-

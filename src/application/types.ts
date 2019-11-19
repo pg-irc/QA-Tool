@@ -190,3 +190,24 @@ export interface ValidatedServiceAtLocationJSON {
     readonly service: ValidatedServiceJSON;
     readonly location: ValidatedLocationJSON;
 }
+
+export interface EmptyUser {
+    readonly type: 'USER:EMPTY';
+}
+export interface ValidUser {
+    readonly type: 'USER:VALID';
+    readonly token: string;
+}
+
+export interface InvalidUser {
+    readonly type: 'USER:INVALID';
+}
+
+export type User = EmptyUser | ValidUser | InvalidUser;
+
+export type SetUser = Dispatch<SetStateAction<User>>;
+
+export interface UserProps {
+    readonly user: User;
+    readonly setUser: SetUser;
+}

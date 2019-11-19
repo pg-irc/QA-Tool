@@ -13,9 +13,8 @@ import * as constants from '../application/constants';
 export const requestServices = async (topic: ValidTopicId, location: Location, algorithmUrl: string): Promise<Services> => {
     const url = buildUrlFromTopicIdAndLocation(topic, location, algorithmUrl);
     return await axios.get(url)
-    .then((response: AxiosResponse): Services => {
-      return validateServicesResponse(response);
-  });
+    .then(validateServicesResponse)
+    .catch(buildInvalidServicesType);
 };
 
 const buildUrlFromTopicIdAndLocation = (topic: ValidTopicId, location: Location, algorithmUrl: string): string => {
@@ -33,9 +32,9 @@ const buildUrlFromTopicIdAndLocation = (topic: ValidTopicId, location: Location,
     });
 };
 
-const buildLongLatParameter = (location: Location): string => {
-    return `${location.longitude}, ${location.latitude}`;
- };
+const buildLongLatParameter = (location: Location): string => (
+    `${location.longitude}, ${location.latitude}`
+);
 
 export const validateServicesResponse = (response: AxiosResponse): Services => {
     if (isResponseError(response)) {

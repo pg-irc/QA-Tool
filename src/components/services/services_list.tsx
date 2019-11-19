@@ -6,7 +6,7 @@ import { requestSendRelevancyScore } from '../../api/relevancy_score';
 import { TopicId, LocationId } from '../api_query_picker/types';
 import { AlgorithmId, ScoreValue } from '../../application/types';
 import * as constants from '../../application/constants';
-import { SharedStateAndCallbacks } from '../../application';
+import { SharedStateAndCallbacks } from '../pages/service_relevancy_score';
 
 export interface ScoreForService {
     readonly topic: TopicId;

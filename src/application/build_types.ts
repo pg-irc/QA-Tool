@@ -1,5 +1,5 @@
 // tslint:disable typedef
-import { Location, Topic } from './types';
+import { Location, Topic, ValidUser } from './types';
 import * as constants from './constants';
 import * as helpers from '../application/helpers/make_types';
 
@@ -79,10 +79,22 @@ export const buildInvalidServicesType = (errorMessage: string) => (
     helpers.makeTypeWithErrorMessage(constants.SERVICES_ERROR, errorMessage)
 );
 
+export const buildInvalidUserType = (errorMessage: string) => (
+    helpers.makeTypeWithErrorMessage(constants.USER_INVALID, errorMessage)
+);
+
 export const buildSuccessLocationsCollectionType = (locations: ReadonlyArray<Location>) => (
     helpers.makeTypeWithItems(constants.LOCATIONS_COLLECTION_SUCCESS, locations)
 );
 
 export const buildSuccessTopicsCollectionsType = (topics: ReadonlyArray<Topic>) => (
     helpers.makeTypeWithItems(constants.TOPICS_COLLECTION_SUCCESS, topics)
+);
+
+export const buildEmptyUserType = () => (
+    helpers.makeEmptyType(constants.USER_EMPTY)
+);
+
+export const buildValidUserType = (token: string): ValidUser => (
+    { type: constants.USER_VALID, token: token }
 );

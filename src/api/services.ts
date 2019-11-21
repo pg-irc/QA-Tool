@@ -10,16 +10,17 @@ import { Location } from '../application/types';
 import { buildEmptyServicesType, buildInvalidServicesType } from '../application/build_types';
 import * as constants from '../application/constants';
 
-export const requestServices = async (topic: ValidTopicId, location: Location, algorithmUrl: string): Promise<Services> => {
-    const url = buildUrlFromTopicIdAndLocation(topic, location, algorithmUrl);
+export const requestServices = async (topic: ValidTopicId, location: Location): Promise<Services> => {
+    const url = buildUrlFromTopicIdAndLocation(topic, location);
     return await axios.get(url)
     .then(validateServicesResponse)
     .catch(buildInvalidServicesType);
 };
 
-const buildUrlFromTopicIdAndLocation = (topic: ValidTopicId, location: Location, algorithmUrl: string): string => {
+const buildUrlFromTopicIdAndLocation = (topic: ValidTopicId, location: Location,): string => {
     const path = 'v1/services_at_location';
-    const baseUrl = algorithmUrl;
+    const baseUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000/';
+    // this will need to be reverted back to algorithmUrl when servers are updated with services_at_locations
     const numberOfRecordsToGet = '5';
     const longLat =  buildLongLatParameter(location);
     return buildUrl(baseUrl, {
@@ -37,6 +38,7 @@ const buildLongLatParameter = (location: Location): string => (
 );
 
 export const validateServicesResponse = (response: AxiosResponse): Services => {
+    console.log(response)
     if (isResponseError(response)) {
         return buildInvalidServicesType(response.statusText);
     }

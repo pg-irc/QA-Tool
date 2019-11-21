@@ -1,8 +1,9 @@
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { TopicId, LocationId } from '../components/api_query_picker/types';
 import { Service } from '../application/types';
 import buildUrl from 'build-url';
 import { ScoreValue } from '../application/types';
+import { authenticatedAxiosInstance } from './axios_config';
 
 export interface RelevancyScore {
     readonly topic: TopicId;
@@ -13,7 +14,7 @@ export interface RelevancyScore {
 
 export const requestSendRelevancyScore = async (relevancyScore: RelevancyScore): Promise<AxiosResponse> => {
     const url = buildUrlFromServiceScore();
-    return await axios.post(url, {
+    return await authenticatedAxiosInstance.post(url, {
         topic: relevancyScore.topic,
         location: relevancyScore.location,
         service: relevancyScore.service,
@@ -25,6 +26,9 @@ export const requestSendRelevancyScore = async (relevancyScore: RelevancyScore):
 };
 
 const buildUrlFromServiceScore = (): string => {
-    const path = 'v1/foo';
-    return buildUrl(path);
+    const path = 'qa/v1/relevancyscores/';
+    const baseUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000/';
+    return buildUrl(baseUrl, {
+        path,
+    });
 };

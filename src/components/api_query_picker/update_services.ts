@@ -8,22 +8,22 @@ import * as constants from '../../application/constants';
 
 export const updateServices = (props: ApiQueryPickerProps): void => {
     if (props.algorithms.type === constants.ALGORITHMS_SUCCESS) {
-        const randomAlgorithmUrl = getRandomAlgorithmUrl(props.algorithms, props.setAlgorithmId);
-        getServices(props, randomAlgorithmUrl);
+        // const randomAlgorithmUrl = getRandomAlgorithmUrl(props.algorithms, props.setAlgorithmId);
+        getServices(props);
     }
 };
 
-const getRandomAlgorithmUrl = (algorithms: ValidAlgorithms, setAlgorithm: SetAlgorithmId): string => {
+export const getRandomAlgorithmUrl = (algorithms: ValidAlgorithms, setAlgorithm: SetAlgorithmId): string => {
     const randomAlgorithm = chooseAlgorithmAtRandom(algorithms);
     setAlgorithm(randomAlgorithm.id);
     return randomAlgorithm.url;
 };
 
-const getServices = async (props: ApiQueryPickerProps, randomAlgorithmUrl: string): Promise<void> => {
+const getServices = async (props: ApiQueryPickerProps): Promise<void> => {
     if (props.location.type === constants.LOCATION_ID_SUCCESS && props.topic.type === constants.TOPIC_ID_SUCCESS) {
         const selectedLocationLongLat = getLocationFromId(props.location, props.locations);
         props.setServices(Builders.buildServicesLoadingType());
-        const services = await requestServices(props.topic, selectedLocationLongLat, randomAlgorithmUrl);
+        const services = await requestServices(props.topic, selectedLocationLongLat);
         props.setServices(services);
     }
 };

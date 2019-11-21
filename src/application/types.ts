@@ -187,6 +187,7 @@ export interface ValidatedLocationJSON {
 }
 
 export interface ValidatedServiceAtLocationJSON {
+    readonly id: number;
     readonly service: ValidatedServiceJSON;
     readonly location: ValidatedLocationJSON;
 }

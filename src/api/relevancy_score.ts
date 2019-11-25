@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { TopicId, LocationId } from '../components/api_query_picker/types';
-import { Service } from '../application/types';
+import { Service, AlgorithmId } from '../application/types';
 import buildUrl from 'build-url';
 import { ScoreValue } from '../application/types';
 import { authenticatedAxiosInstance } from './axios_config';
@@ -10,6 +10,7 @@ export interface RelevancyScore {
     readonly location: LocationId;
     readonly service: Service;
     readonly value: ScoreValue;
+    readonly algorithmId: AlgorithmId;
 }
 
 export const requestSendRelevancyScore = async (relevancyScore: RelevancyScore): Promise<AxiosResponse> => {
@@ -18,6 +19,7 @@ export const requestSendRelevancyScore = async (relevancyScore: RelevancyScore):
         topic: relevancyScore.topic,
         location: relevancyScore.location,
         service: relevancyScore.service,
+        algorithmId: relevancyScore.algorithmId,
         value: relevancyScore.value,
     })
     .then((response: AxiosResponse): AxiosResponse => {

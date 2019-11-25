@@ -116,6 +116,7 @@ export interface Address {
 }
 
 export interface Service {
+    readonly service_at_location: number;
     readonly id: string;
     readonly latitude?: number;
     readonly longitude?: number;

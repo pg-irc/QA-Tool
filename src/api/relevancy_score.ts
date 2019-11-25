@@ -1,24 +1,14 @@
 import { AxiosResponse } from 'axios';
-import { TopicId, LocationId } from '../components/api_query_picker/types';
-import { Service, AlgorithmId } from '../application/types';
 import buildUrl from 'build-url';
-import { ScoreValue } from '../application/types';
 import { authenticatedAxiosInstance } from './axios_config';
+import { ScoreForService } from '../components/services/services_list';
 
-export interface RelevancyScore {
-    readonly topic: TopicId;
-    readonly location: LocationId;
-    readonly service: Service;
-    readonly value: ScoreValue;
-    readonly algorithmId: AlgorithmId;
-}
-
-export const requestSendRelevancyScore = async (relevancyScore: RelevancyScore): Promise<AxiosResponse> => {
+export const requestSendRelevancyScore = async (relevancyScore: ScoreForService): Promise<AxiosResponse> => {
     const url = buildUrlFromServiceScore();
     return await authenticatedAxiosInstance.post(url, {
-        topic: relevancyScore.topic,
-        location: relevancyScore.location,
-        service: relevancyScore.service,
+        topic: relevancyScore.topic.id,
+        location: relevancyScore.location.id,
+        service: relevancyScore.service.service_at_location,
         algorithmId: relevancyScore.algorithmId,
         value: relevancyScore.value,
     })

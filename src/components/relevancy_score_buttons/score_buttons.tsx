@@ -9,13 +9,13 @@ export interface ScoreButtonsProps {
 
 export const ScoreButtons = (props: ScoreButtonsProps): JSX.Element => (
     <div>
-        {renderButton(props, '1')}
-        {renderButton(props, '2')}
-        {renderButton(props, '3')}
+        {renderButton(props, 1)}
+        {renderButton(props, 2)}
+        {renderButton(props, 3)}
     </div>
 );
 
-const renderButton = (props: ScoreButtonsProps, scoreValue: string): JSX.Element => (
+const renderButton = (props: ScoreButtonsProps, scoreValue: number): JSX.Element => (
     <Button scoreButtonsProps={props} scoreValue={scoreValue}/>
 );
 

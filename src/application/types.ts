@@ -98,7 +98,7 @@ export interface LoadingAlgorithms {
 
 export type Algorithms = ValidAlgorithms | InvalidAlgorithms | LoadingAlgorithms | EmptyAlgorithms;
 
-export type ScoreValue = string;
+export type ScoreValue = number;
 
 export interface PhoneNumber {
     readonly type: string;
@@ -116,7 +116,7 @@ export interface Address {
 }
 
 export interface Service {
-    readonly service_at_location: number;
+    readonly services_at_location_id: number;
     readonly id: string;
     readonly latitude?: number;
     readonly longitude?: number;

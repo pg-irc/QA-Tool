@@ -1,8 +1,8 @@
 // tslint:disable: no-expression-statement
 import React from 'react';
-import { ValidServices, InvalidServices, Service, Services, SetServices } from '../../application/types';
+import { ValidServices, InvalidServices, Service, Services, SetServices, RelevancyScore } from '../../application/types';
 import { ServiceListItem } from './service_list_item';
-import { requestSendRelevancyScore } from '../../api/relevancy_score';
+import { requestSendRelevancyScore } from '../../api/relevancy_scores/relevancy_score';
 import { ValidTopicId, ValidLocationId } from '../api_query_picker/types';
 import { AlgorithmId, ScoreValue } from '../../application/types';
 import * as constants from '../../application/constants';
@@ -23,10 +23,10 @@ export interface ServicesListProps {
     readonly setServices: SetServices;
 }
 
-export type SendRelevancyScore = (service: Service, score: ScoreValue) => void;
+export type SendRelevancyScore = (service: Service, score: ScoreValue) => Promise<RelevancyScore>;
 
 export const ServicesList = (props: ServicesListProps): JSX.Element => {
-    const sendRelevancyScore = (service: Service, value: ScoreValue): void => {
+    const sendRelevancyScore = async (service: Service, value: ScoreValue): Promise<RelevancyScore> => {
         const topic = props.topic;
         const location = props.location;
         const algorithmId = props.algorithmId;
@@ -38,7 +38,7 @@ export const ServicesList = (props: ServicesListProps): JSX.Element => {
             value,
             algorithmId,
         };
-        requestSendRelevancyScore(scoreForService);
+        return await requestSendRelevancyScore(scoreForService);
     };
     return (
         <div>
@@ -63,7 +63,7 @@ const renderServicesBasedOnType = (services: Services, sendRelevancyScore: SendR
 const renderList = (validServices: ValidServices, sendRelevancyScore: SendRelevancyScore): JSX.Element => (
         <ol>
             {validServices.services.map((service: Service ) => <ServiceListItem key={service.id} service={service}
-            sendRelevancyScore={sendRelevancyScore} />)}
+            sendRelevancyScore={sendRelevancyScore}/>)}
         </ol>
 );
 

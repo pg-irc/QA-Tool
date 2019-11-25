@@ -213,3 +213,20 @@ export interface UserProps {
     readonly user: User;
     readonly setUser: SetUser;
 }
+
+export interface ValidRelevancyScore {
+    readonly type: 'RELEVANCY_SCORE:SUCCESS';
+    readonly value: number;
+}
+
+export interface InvalidRelevancyScore {
+    readonly type: 'RELEVANCY_SCORE:ERROR';
+}
+
+export interface EmptyRelevancyScore {
+    readonly type: 'RELEVANCY_SCORE:EMPTY';
+}
+
+export type RelevancyScore = ValidRelevancyScore | InvalidRelevancyScore | EmptyRelevancyScore;
+
+export type SetRelevancyScore= Dispatch<SetStateAction<RelevancyScore>>;

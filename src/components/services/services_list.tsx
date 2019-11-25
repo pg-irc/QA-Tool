@@ -1,28 +1,35 @@
 // tslint:disable: no-expression-statement
 import React from 'react';
-import { ValidServices, InvalidServices, Service, Services } from '../../application/types';
+import { ValidServices, InvalidServices, Service, Services, SetServices } from '../../application/types';
 import { ServiceListItem } from './service_list_item';
 import { requestSendRelevancyScore } from '../../api/relevancy_score';
-import { TopicId, LocationId } from '../api_query_picker/types';
+import { ValidTopicId, ValidLocationId } from '../api_query_picker/types';
 import { AlgorithmId, ScoreValue } from '../../application/types';
 import * as constants from '../../application/constants';
-import { SharedStateAndCallbacks } from '../pages/service_relevancy_score';
 
 export interface ScoreForService {
-    readonly topic: TopicId;
-    readonly location: LocationId;
+    readonly topic: ValidTopicId;
+    readonly location: ValidLocationId;
     readonly service: Service;
     readonly value: ScoreValue;
     readonly algorithmId: AlgorithmId;
 }
 
+export interface ServicesListProps {
+    readonly topic: ValidTopicId;
+    readonly location: ValidLocationId;
+    readonly algorithmId: AlgorithmId;
+    readonly services: Services;
+    readonly setServices: SetServices;
+}
+
 export type SendRelevancyScore = (service: Service, score: ScoreValue) => void;
 
-export const ServicesList = (props: SharedStateAndCallbacks): JSX.Element => {
+export const ServicesList = (props: ServicesListProps): JSX.Element => {
     const sendRelevancyScore = (service: Service, value: ScoreValue): void => {
-        const topic: TopicId = props.topic;
-        const location: LocationId = props.location;
-        const algorithmId: AlgorithmId = props.algorithmId;
+        const topic = props.topic;
+        const location = props.location;
+        const algorithmId = props.algorithmId;
 
         const scoreForService: ScoreForService = {
             topic,

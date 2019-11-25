@@ -6,11 +6,11 @@ import { ScoreForService } from '../components/services/services_list';
 export const requestSendRelevancyScore = async (relevancyScore: ScoreForService): Promise<AxiosResponse> => {
     const url = buildUrlFromServiceScore();
     return await authenticatedAxiosInstance.post(url, {
+        value: Number(relevancyScore.value),
+        algorithm: relevancyScore.algorithmId,
+        search_location: relevancyScore.location.id,
+        service_at_location: relevancyScore.service.services_at_location_id,
         topic: relevancyScore.topic.id,
-        location: relevancyScore.location.id,
-        service: relevancyScore.service.service_at_location,
-        algorithmId: relevancyScore.algorithmId,
-        value: relevancyScore.value,
     })
     .then((response: AxiosResponse): AxiosResponse => {
       return response;

@@ -14,17 +14,12 @@ export const ScoreButtons = (props: ScoreButtonsProps): JSX.Element => {
     const [relevancyScore, setRelevancyScore]: [RelevancyScore, SetRelevancyScore] = useState<RelevancyScore>(buildEmptyRelevancyScoreType());
     return (
     <div>
-        {renderButton(props, 1, relevancyScore, setRelevancyScore)}
-        {renderButton(props, 2, relevancyScore, setRelevancyScore)}
-        {renderButton(props, 3, relevancyScore, setRelevancyScore)}
+        <Button {...props} relevancyScore={relevancyScore} setRelevancyScore={setRelevancyScore} scoreValue={1} />
+        <Button {...props} relevancyScore={relevancyScore} setRelevancyScore={setRelevancyScore} scoreValue={2} />
+        <Button {...props} relevancyScore={relevancyScore} setRelevancyScore={setRelevancyScore} scoreValue={3} />
     </div>
     );
 };
-
-const renderButton = (props: ScoreButtonsProps, scoreValue: ScoreValue,
-        relevancyScore: RelevancyScore, setRelevancyScore: SetRelevancyScore): JSX.Element => (
-    <Button {...props} scoreValue={scoreValue} relevancyScore={relevancyScore} setRelevancyScore={setRelevancyScore} />
-);
 
 export interface ButtonProps {
     readonly service: Service;

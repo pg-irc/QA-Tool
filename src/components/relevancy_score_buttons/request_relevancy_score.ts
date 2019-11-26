@@ -5,10 +5,10 @@ import { requestPutRelevancyScore } from '../../api/relevancy_scores/relevancy_s
 import * as constants from '../../application/constants';
 
 export const requestRelevancyScore = (props: ButtonProps): void => {
-    if (props.relevancyScore.type !== constants.RELEVANCY_SCORE_VALID) {
-        postRelevancyScore(props);
-    } else {
+    if (props.relevancyScore.type === constants.RELEVANCY_SCORE_VALID) {
         putRelevancyScore(props.relevancyScore, props.setRelevancyScore, props.scoreValue);
+    } else {
+        postRelevancyScore(props);
     }
 };
 

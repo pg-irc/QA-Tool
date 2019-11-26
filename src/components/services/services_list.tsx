@@ -16,11 +16,11 @@ export interface ScoreForService {
 }
 
 export interface ServicesListProps {
+    readonly servicesList: Services;
+    readonly setServices: SetServices;
     readonly topic: ValidTopicId;
     readonly location: ValidLocationId;
     readonly algorithmId: AlgorithmId;
-    readonly services: Services;
-    readonly setServices: SetServices;
 }
 
 export type SendRelevancyScore = (service: Service, score: ScoreValue) => Promise<RelevancyScore>;
@@ -43,7 +43,7 @@ export const ServicesList = (props: ServicesListProps): JSX.Element => {
     return (
         <div>
             <h3>Services</h3>
-            {renderServicesBasedOnType(props.services, sendRelevancyScore)}
+            {renderServicesBasedOnType(props.servicesList, sendRelevancyScore)}
          </div>
     );
 };

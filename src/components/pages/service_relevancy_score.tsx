@@ -72,12 +72,11 @@ const renderErrorIfAlgorithmsErrorType = (algorithms: Algorithms): JSX.Element =
 const validateServicesListStates = (props: SharedStateAndCallbacks): JSX.Element => {
   if (props.topic.type !== constants.TOPIC_ID_SUCCESS || props.location.type !== constants.LOCATION_ID_SUCCESS) {
       return <div />;
-  } else {
-    return <ServicesList
+  }
+  return <ServicesList
       topic={props.topic}
       location={props.location}
       algorithmId={props.algorithmId}
-      services={props.services}
+      servicesList={props.services}
       setServices={props.setServices} />;
-  }
-};
+}

@@ -10,5 +10,5 @@ export const isValidationError = (validator: ValidationResult): boolean => (
 );
 
 export const isRelevancyScoreResponseError = (response: AxiosResponse): boolean => (
-    response.status !== 201 && response.status !== 200
+    !(response.status === 201 || response.status === 200)
 );

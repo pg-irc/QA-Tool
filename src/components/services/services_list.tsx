@@ -2,7 +2,7 @@
 import React from 'react';
 import { ValidServices, InvalidServices, Service, Services, SetServices, RelevancyScore } from '../../application/types';
 import { ServiceListItem } from './service_list_item';
-import { requestSendRelevancyScore } from '../../api/relevancy_scores/relevancy_score';
+import { requestPostRelevancyScore } from '../../api/relevancy_scores/relevancy_score';
 import { ValidTopicId, ValidLocationId } from '../api_query_picker/types';
 import { AlgorithmId, ScoreValue } from '../../application/types';
 import * as constants from '../../application/constants';
@@ -38,7 +38,7 @@ export const ServicesList = (props: ServicesListProps): JSX.Element => {
             value,
             algorithmId,
         };
-        return await requestSendRelevancyScore(scoreForService);
+        return await requestPostRelevancyScore(scoreForService);
     };
     return (
         <div>

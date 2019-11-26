@@ -1,9 +1,8 @@
-// tslint:disable: no-expression-statement
 import React, { useState } from 'react';
 import { SendRelevancyScore } from '../services/services_list';
 import { ScoreValue, Service, RelevancyScore, SetRelevancyScore } from '../../application/types';
-import * as constants from '../../application/constants';
 import { buildEmptyRelevancyScoreType } from '../../application/build_types';
+import { isPreviouslyScored, requestRelevancyScore } from './request_relevancy_score';
 
 export interface ScoreButtonsProps {
     readonly service: Service;
@@ -37,23 +36,8 @@ export interface ButtonProps {
 const Button = (props: ButtonProps): JSX.Element => {
     return (
         <button
-        disabled={checkIfPreviouslyScored(props.relevancyScore, props.scoreValue)}
-        onClick={(): Promise<void> =>
-            updateRelevancyScore(props)}>{props.scoreValue}</button>
+        disabled={isPreviouslyScored(props.relevancyScore, props.scoreValue)}
+        onClick={(): void =>
+           requestRelevancyScore(props)}>{props.scoreValue}</button>
     );
-};
-
-const updateRelevancyScore = async (props: ButtonProps): Promise<void> => {
-    const blah = await props.sendRelevancyScore(props.service, props.scoreValue);
-    props.setRelevancyScore(blah);
-};
-
-const checkIfPreviouslyScored = (relevancyScore: RelevancyScore, scoreValue: ScoreValue): boolean => {
-    if (relevancyScore.type !== constants.RELEVANCY_SCORE_VALID) {
-        return false;
-    }
-    if (relevancyScore.value !== scoreValue) {
-        return false;
-    }
-    return true;
 };

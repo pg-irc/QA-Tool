@@ -37,7 +37,6 @@ const buildLongLatParameter = (location: Location): string => (
 );
 
 export const validateServicesResponse = (response: AxiosResponse): Services => {
-    console.log(response)
     if (isResponseError(response)) {
         return buildInvalidServicesType(response.statusText);
     }

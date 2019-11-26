@@ -20,7 +20,7 @@ export const requestServices = async (topic: ValidTopicId, location: Location, a
 const buildUrlFromTopicIdAndLocation = (topic: ValidTopicId, location: Location, algorithmUrl: string): string => {
     const path = 'v1/services_at_location';
     const baseUrl = algorithmUrl;
-    const numberOfRecordsToGet = '5';
+    const numberOfRecordsToGet = '100';
     const longLat =  buildLongLatParameter(location);
     return buildUrl(baseUrl, {
         path: path,

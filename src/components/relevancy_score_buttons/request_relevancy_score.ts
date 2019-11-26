@@ -1,7 +1,7 @@
 // tslint:disable: no-expression-statement
 import { ButtonProps } from './score_buttons';
 import { ValidRelevancyScore, SetRelevancyScore, ScoreValue } from '../../application/types';
-import { requestPutRelevancyScore } from '../../api/relevancy_scores/relevancy_score';
+import { requestPutRelevancyScore } from '../../api/relevancy_scores';
 import * as constants from '../../application/constants';
 
 export const requestRelevancyScore = (props: ButtonProps): void => {

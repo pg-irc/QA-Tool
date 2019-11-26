@@ -30,7 +30,7 @@ export const relevancyScore = {
             "type": "string"
         }
     },
-    "required": ["id", "value"],
+    "required": ["id", "value", "algorithm", "search_location", "service_at_location", "topic"],
 };
 
 export const relevancyScoreData: IncomingPostResponseSchema = {

@@ -216,7 +216,12 @@ export interface UserProps {
 
 export interface ValidRelevancyScore {
     readonly type: 'RELEVANCY_SCORE:SUCCESS';
+    readonly id: number;
     readonly value: number;
+    readonly algorithm: number;
+    readonly search_location: number;
+    readonly service_at_location: number;
+    readonly topic: string;
 }
 
 export interface InvalidRelevancyScore {

@@ -100,7 +100,15 @@ export const buildSuccessTopicsCollectionsType = (topics: ReadonlyArray<Topic>) 
 );
 
 export const buildSuccessRelevancyScoreType = (relevancyScore: ValidRelevancyScore) => (
-    { type: constants.RELEVANCY_SCORE_VALID, id: relevancyScore.value}
+    {
+        type: constants.RELEVANCY_SCORE_VALID,
+        id: relevancyScore.id,
+        value: relevancyScore.value,
+        algorithm: relevancyScore.algorithm,
+        search_location: relevancyScore.search_location,
+        service_at_location: relevancyScore.service_at_location,
+        topic: relevancyScore.topic,
+    }
 );
 
 export const buildEmptyUserType = () => (

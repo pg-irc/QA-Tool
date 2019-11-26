@@ -13,7 +13,7 @@ export const updateServices = (props: ApiQueryPickerProps): void => {
     }
 };
 
-export const getRandomAlgorithmUrl = (algorithms: ValidAlgorithms, setAlgorithm: SetAlgorithmId): string => {
+const getRandomAlgorithmUrl = (algorithms: ValidAlgorithms, setAlgorithm: SetAlgorithmId): string => {
     const randomAlgorithm = chooseAlgorithmAtRandom(algorithms);
     setAlgorithm(randomAlgorithm.id);
     return randomAlgorithm.url;

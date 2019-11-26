@@ -17,8 +17,8 @@ export const ServiceListItem = (props: ServiceListItemProps): JSX.Element => {
         { renderAddresses(filterPhysicalAddresses(props.service.addresses))}
         <ScoreButtons service={props.service} sendRelevancyScore={props.sendRelevancyScore} />
     </li>
-    )
-}
+    );
+};
 
 export const renderName = (name: string): JSX.Element => (
     <h4>{ name }</h4>

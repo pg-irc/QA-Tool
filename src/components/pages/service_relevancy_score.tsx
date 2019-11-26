@@ -66,19 +66,18 @@ const renderErrorIfAlgorithmsErrorType = (algorithms: Algorithms): JSX.Element =
   if (algorithms.type === constants.ALGORITHMS_ERROR) {
     return <div>Failed to load algorithms for use.</div>;
   }
-  return <div/>;
+  return <div />;
 };
 
 const validateServicesListStates = (props: SharedStateAndCallbacks): JSX.Element => {
-// tslint:disable-next-line: max-line-length
   if (props.topic.type !== constants.TOPIC_ID_SUCCESS || props.location.type !== constants.LOCATION_ID_SUCCESS) {
-      return <div/>;
+      return <div />;
   } else {
     return <ServicesList
       topic={props.topic}
       location={props.location}
       algorithmId={props.algorithmId}
       services={props.services}
-      setServices={props.setServices}/>;
+      setServices={props.setServices} />;
   }
 };

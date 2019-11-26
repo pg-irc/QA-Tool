@@ -63,7 +63,7 @@ const renderServicesBasedOnType = (services: Services, sendRelevancyScore: SendR
 const renderList = (validServices: ValidServices, sendRelevancyScore: SendRelevancyScore): JSX.Element => (
         <ol>
             {validServices.services.map((service: Service ) => <ServiceListItem key={service.id} service={service}
-            sendRelevancyScore={sendRelevancyScore}/>)}
+            sendRelevancyScore={sendRelevancyScore} />)}
         </ol>
 );
 

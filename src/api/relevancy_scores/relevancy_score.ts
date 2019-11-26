@@ -52,7 +52,7 @@ const buildUrlFromRelevancyScore = (relevancyScoreId: number): string => {
     });
 };
 
-export const validateRelevancyScoreResponse = (response: AxiosResponse): RelevancyScore => {
+const validateRelevancyScoreResponse = (response: AxiosResponse): RelevancyScore => {
     if (isRelevancyScoreResponseError(response)) {
         return buildInvalidRelevancyScoreType(response.statusText);
     }

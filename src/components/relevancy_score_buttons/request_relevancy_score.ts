@@ -1,6 +1,6 @@
 // tslint:disable: no-expression-statement
 import { ButtonProps } from './score_buttons';
-import { ValidRelevancyScore, SetRelevancyScore, RelevancyScore, ScoreValue } from '../../application/types';
+import { ValidRelevancyScore, SetRelevancyScore, ScoreValue } from '../../application/types';
 import { requestPutRelevancyScore } from '../../api/relevancy_scores/relevancy_score';
 import * as constants from '../../application/constants';
 
@@ -21,14 +21,4 @@ const putRelevancyScore = async (relevancyScore: ValidRelevancyScore, setRelevan
         updatedScoreValue: ScoreValue): Promise<void> => {
     const relevancyScoreResponse = await requestPutRelevancyScore(relevancyScore, updatedScoreValue);
     setRelevancyScore(relevancyScoreResponse);
-};
-
-export const isPreviouslyScored = (relevancyScore: RelevancyScore, scoreValue: ScoreValue): boolean => {
-    if (relevancyScore.type !== constants.RELEVANCY_SCORE_VALID) {
-        return false;
-    }
-    if (relevancyScore.value !== scoreValue) {
-        return false;
-    }
-    return true;
 };

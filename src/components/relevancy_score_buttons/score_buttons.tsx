@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { SendRelevancyScore } from '../services/services_list';
 import { ScoreValue, Service, RelevancyScore, SetRelevancyScore } from '../../application/types';
 import { buildEmptyRelevancyScoreType } from '../../application/build_types';
-import { isPreviouslyScored, requestRelevancyScore } from './request_relevancy_score';
+import { requestRelevancyScore } from './request_relevancy_score';
+import { isPreviouslyScored } from './is_previously_scored';
 
 export interface ScoreButtonsProps {
     readonly service: Service;
@@ -20,9 +21,9 @@ export const ScoreButtons = (props: ScoreButtonsProps): JSX.Element => {
     );
 };
 
-const renderButton = (props: ScoreButtonsProps, scoreValue: number,
+const renderButton = (props: ScoreButtonsProps, scoreValue: ScoreValue,
         relevancyScore: RelevancyScore, setRelevancyScore: SetRelevancyScore): JSX.Element => (
-    <Button {...props} scoreValue={scoreValue} relevancyScore={relevancyScore} setRelevancyScore={setRelevancyScore}/>
+    <Button {...props} scoreValue={scoreValue} relevancyScore={relevancyScore} setRelevancyScore={setRelevancyScore} />
 );
 
 export interface ButtonProps {

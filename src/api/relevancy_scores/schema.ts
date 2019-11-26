@@ -1,5 +1,4 @@
 import { IncomingPostResponseSchema } from '../types';
-
 // tslint:disable:quotemark trailing-comma
 
 export const relevancyScore = {

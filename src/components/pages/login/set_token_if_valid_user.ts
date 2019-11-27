@@ -5,6 +5,6 @@ import { User } from '../../../application/types';
 
 export const setTokenIfValidUser = (user: User): void => {
     if (user.type === constants.USER_VALID) {
-      Cookies.set('token', user.token);
+      Cookies.set('token', user.token, {expires: 7});
     }
 };

@@ -1,6 +1,5 @@
-import { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import buildUrl from 'build-url';
-import { authenticatedAxiosInstance } from '../axios_config';
 import { ScoreForService } from '../../components/services/services_list';
 import { RelevancyScore, ValidRelevancyScore, ScoreValue } from '../../application/types';
 import { isRelevancyScoreResponseError, isValidationError } from '../errors';
@@ -9,15 +8,22 @@ import { validateIncomingData } from '../validation';
 import { relevancyScoreData } from './schema';
 import * as constants from '../../application/constants';
 import * as R from 'ramda';
+import Cookies from 'js-cookie';
+
+const createHeadersConfiguration = (): any => ({
+    'Authorization': `Token ${Cookies.get('token')}`,
+});
 
 export const requestPostRelevancyScore = async (relevancyScore: ScoreForService): Promise<RelevancyScore> => {
     const url = buildUrlFromServiceScore();
-    return await authenticatedAxiosInstance.post(url, {
+    return await axios.post(url, {
         value: relevancyScore.value,
         algorithm: relevancyScore.algorithmId,
         search_location: relevancyScore.location.id,
         service_at_location: relevancyScore.service.services_at_location_id,
         topic: relevancyScore.topic.id,
+    }, {
+        headers: createHeadersConfiguration(),
     })
     .then(validateRelevancyScoreResponse)
     .catch(buildInvalidRelevancyScoreType);
@@ -33,12 +39,14 @@ const buildUrlFromServiceScore = (): string => {
 
 export const requestPutRelevancyScore = async (relevancyScore: ValidRelevancyScore, updatedScoreValue: ScoreValue): Promise<RelevancyScore> => {
     const url = buildUrlFromRelevancyScore(relevancyScore.id);
-    return await authenticatedAxiosInstance.put(url, {
+    return await axios.put(url, {
         value: updatedScoreValue,
         algorithm: relevancyScore.algorithm,
         search_location: relevancyScore.search_location,
         service_at_location: relevancyScore.service_at_location,
         topic: relevancyScore.topic,
+    }, {
+        headers: createHeadersConfiguration(),
     })
     .then(validateRelevancyScoreResponse)
     .catch(buildInvalidRelevancyScoreType);

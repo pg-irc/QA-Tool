@@ -11,3 +11,4 @@ export interface IncomingDataSchema {
     readonly type: 'array';
     readonly items: any;
 }
+export type IncomingPostResponseSchema = any;

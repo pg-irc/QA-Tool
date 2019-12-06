@@ -98,7 +98,7 @@ export interface LoadingAlgorithms {
 
 export type Algorithms = ValidAlgorithms | InvalidAlgorithms | LoadingAlgorithms | EmptyAlgorithms;
 
-export type ScoreValue = string;
+export type ScoreValue = number;
 
 export interface PhoneNumber {
     readonly type: string;
@@ -116,6 +116,7 @@ export interface Address {
 }
 
 export interface Service {
+    readonly services_at_location_id: number;
     readonly id: string;
     readonly latitude?: number;
     readonly longitude?: number;
@@ -187,6 +188,7 @@ export interface ValidatedLocationJSON {
 }
 
 export interface ValidatedServiceAtLocationJSON {
+    readonly id: number;
     readonly service: ValidatedServiceJSON;
     readonly location: ValidatedLocationJSON;
 }
@@ -211,3 +213,25 @@ export interface UserProps {
     readonly user: User;
     readonly setUser: SetUser;
 }
+
+export interface ValidRelevancyScore {
+    readonly type: 'RELEVANCY_SCORE:SUCCESS';
+    readonly id: number;
+    readonly value: number;
+    readonly algorithm: number;
+    readonly search_location: number;
+    readonly service_at_location: number;
+    readonly topic: string;
+}
+
+export interface InvalidRelevancyScore {
+    readonly type: 'RELEVANCY_SCORE:ERROR';
+}
+
+export interface EmptyRelevancyScore {
+    readonly type: 'RELEVANCY_SCORE:EMPTY';
+}
+
+export type RelevancyScore = ValidRelevancyScore | InvalidRelevancyScore | EmptyRelevancyScore;
+
+export type SetRelevancyScore= Dispatch<SetStateAction<RelevancyScore>>;

@@ -57,14 +57,26 @@ export const ServiceRelevancyScore = (props: Props): JSX.Element => {
       <LogoutButton user={props.user} setUser={props.setUser}/>
       <ApiQueryPicker {...sharedStateAndCallbacks} locations={locations} topics={topics}/>
       {renderErrorIfAlgorithmsErrorType(algorithms)}
-      <ServicesList {...sharedStateAndCallbacks} />
+      {validateServicesListStates(sharedStateAndCallbacks)}
     </div>
   );
 };
 
-const renderErrorIfAlgorithmsErrorType = (algorithms: Algorithms): JSX.Element|void => {
+const renderErrorIfAlgorithmsErrorType = (algorithms: Algorithms): JSX.Element => {
   if (algorithms.type === constants.ALGORITHMS_ERROR) {
     return <div>Failed to load algorithms for use.</div>;
   }
-  return <div/>;
+  return <div />;
 };
+
+const validateServicesListStates = (props: SharedStateAndCallbacks): JSX.Element => {
+  if (props.topic.type !== constants.TOPIC_ID_SUCCESS || props.location.type !== constants.LOCATION_ID_SUCCESS) {
+      return <div />;
+  }
+  return <ServicesList
+      topic={props.topic}
+      location={props.location}
+      algorithmId={props.algorithmId}
+      servicesList={props.services}
+      setServices={props.setServices} />;
+}

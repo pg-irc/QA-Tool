@@ -1,25 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SendRelevancyScore } from '../services/services_list';
-import { ScoreValue, Service } from '../../application/types';
+import { ScoreValue, Service, RelevancyScore, SetRelevancyScore } from '../../application/types';
+import { buildEmptyRelevancyScoreType } from '../../application/build_types';
+import { requestRelevancyScore } from './request_relevancy_score';
+import { isPreviouslyScored } from './is_previously_scored';
 
 export interface ScoreButtonsProps {
     readonly service: Service;
     readonly sendRelevancyScore: SendRelevancyScore;
 }
 
-export const ScoreButtons = (props: ScoreButtonsProps): JSX.Element => (
+export const ScoreButtons = (props: ScoreButtonsProps): JSX.Element => {
+    const [relevancyScore, setRelevancyScore]: [RelevancyScore, SetRelevancyScore] = useState<RelevancyScore>(buildEmptyRelevancyScoreType());
+    return (
     <div>
-        {renderButton(props, '1')}
-        {renderButton(props, '2')}
-        {renderButton(props, '3')}
+        <Button {...props} relevancyScore={relevancyScore} setRelevancyScore={setRelevancyScore} scoreValue={1} />
+        <Button {...props} relevancyScore={relevancyScore} setRelevancyScore={setRelevancyScore} scoreValue={2} />
+        <Button {...props} relevancyScore={relevancyScore} setRelevancyScore={setRelevancyScore} scoreValue={3} />
     </div>
-);
+    );
+};
 
-const renderButton = (props: ScoreButtonsProps, scoreValue: string): JSX.Element => (
-    <Button scoreButtonsProps={props} scoreValue={scoreValue}/>
-);
+export interface ButtonProps {
+    readonly service: Service;
+    readonly sendRelevancyScore: SendRelevancyScore;
+    readonly scoreValue: ScoreValue;
+    readonly relevancyScore: RelevancyScore;
+    readonly setRelevancyScore: SetRelevancyScore;
+}
 
-const Button = (props: {readonly scoreButtonsProps: ScoreButtonsProps, readonly scoreValue: ScoreValue}): JSX.Element => (
-    <button onClick={(): void =>
-            props.scoreButtonsProps.sendRelevancyScore(props.scoreButtonsProps.service, props.scoreValue)}>{props.scoreValue}</button>
-);
+const Button = (props: ButtonProps): JSX.Element => {
+    return (
+        <button
+        disabled={isPreviouslyScored(props.relevancyScore, props.scoreValue)}
+        onClick={(): void =>
+           requestRelevancyScore(props)}>{props.scoreValue}</button>
+    );
+};

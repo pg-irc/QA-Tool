@@ -8,3 +8,7 @@ export const isResponseError = (response: AxiosResponse): boolean => (
 export const isValidationError = (validator: ValidationResult): boolean => (
     !validator.isValid
 );
+
+export const isRelevancyScoreResponseError = (response: AxiosResponse): boolean => (
+    !(response.status === 201 || response.status === 200)
+);

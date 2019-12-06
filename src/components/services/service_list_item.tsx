@@ -9,14 +9,16 @@ export interface ServiceListItemProps {
     readonly sendRelevancyScore: SendRelevancyScore;
 }
 
-export const ServiceListItem = (props: ServiceListItemProps): JSX.Element => (
+export const ServiceListItem = (props: ServiceListItemProps): JSX.Element => {
+    return (
     <li key={props.service.id}>
         { renderName(props.service.name) }
         { renderDescription(props.service.description) }
         { renderAddresses(filterPhysicalAddresses(props.service.addresses))}
-        <ScoreButtons service={props.service} sendRelevancyScore={props.sendRelevancyScore}/>
+        <ScoreButtons service={props.service} sendRelevancyScore={props.sendRelevancyScore} />
     </li>
-);
+    );
+};
 
 export const renderName = (name: string): JSX.Element => (
     <h4>{ name }</h4>

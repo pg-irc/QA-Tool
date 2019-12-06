@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { Topics } from '../../application/types';
-import { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import buildUrl from 'build-url';
 import { isResponseError, isValidationError } from '../errors';
 import * as R from 'ramda';
@@ -8,11 +8,10 @@ import { buildEmptyTopicsType, buildInvalidTopicsType } from '../../application/
 import { validateIncomingData } from '../validation';
 import * as constants from '../../application/constants';
 import { topicsArray } from './schema';
-import { authenticatedAxiosInstance } from '../axios_config';
 
 export const requestTopics = async (): Promise<Topics>  => {
     const url = buildUrlForTopics();
-    return await authenticatedAxiosInstance.get(url)
+    return await axios.get(url)
     .then(validateTopicsResponse)
     .catch(buildInvalidTopicsType);
 };
